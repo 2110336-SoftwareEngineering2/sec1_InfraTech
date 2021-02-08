@@ -14,7 +14,7 @@ export class RegisterService {
     @InjectRepository(UserAuth)
     private userAuthRepository: Repository<UserAuth>,
   ) {}
-  async register(registerFormDto: RegisterFormDto): Promise<void> {
+  async register(registerFormDto: RegisterFormDto): Promise<UserAuth> {
     const userAuth = this.userAuthRepository.create();
 
     userAuth.email = registerFormDto.email;
@@ -31,6 +31,6 @@ export class RegisterService {
       }
     }
 
-    return Promise.resolve();
+    return userAuth;
   }
 }
