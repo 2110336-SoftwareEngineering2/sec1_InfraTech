@@ -14,14 +14,14 @@ import styles from '../styles/AppLayout.module.css';
 import Sider from './Sider';
 import Footer from './Footer';
 
-const { Header, Content} = Layout;
+const { Header, Content } = Layout;
 
 const AppLayout = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
 
   return (
     <Layout>
-      <Sider collapsed={collapsed}/>
+      <Sider collapsed={collapsed} userType={"trainer"} />
       <Layout className={styles['site-layout']}>
         <Header
           className={styles['site-layout-background']}
@@ -50,7 +50,7 @@ const AppLayout = ({ children }) => {
         >
           {children}
         </Content>
-        <Footer/>
+        <Footer />
       </Layout>
     </Layout>
   );
