@@ -12,5 +12,17 @@ services:
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
       - letx-db:/var/lib/mysql
+    logging:
+      driver: none
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.development
+    ports:
+      - 3000:3000
+    volumes:
+      - ./:/letx-backend
+    depends_on:
+      - mysqldb
 volumes:
   letx-db:
