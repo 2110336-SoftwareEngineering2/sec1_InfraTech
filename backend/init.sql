@@ -1,13 +1,13 @@
 USE letx;
 
 CREATE TABLE user_auth (
-	email VARCHAR(255) PRIMARY KEY,
+    email VARCHAR(255) PRIMARY KEY,
     password VARCHAR(255),
     salt VARCHAR(255)
 );
 
 CREATE TABLE trainer_profile (
-	email VARCHAR(255),
+    email VARCHAR(255),
     firstname VARCHAR(255),
     lastname VARCHAR(255),
     gender VARCHAR(10),
@@ -20,7 +20,7 @@ CREATE TABLE trainer_profile (
 );
 
 CREATE TABLE trainee_profile (
-	email VARCHAR(255),
+    email VARCHAR(255),
     firstname VARCHAR(255),
     lastname VARCHAR(255),
     gender VARCHAR(10),
