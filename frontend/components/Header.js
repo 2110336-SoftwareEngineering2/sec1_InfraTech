@@ -7,10 +7,10 @@ const { Header: AntdHeader } = Layout;
 const Header = ({ isSignIn, clickMenu, clickButton }) => {
   return (
     <AntdHeader className="bg-white px-6 flex justify-between items-center">
-      {React.createElement(MenuOutlined, {
-        className: 'cursor-pointer text-lg transition-colors hover:text-blue',
-        onClick: clickMenu,
-      })}
+      <MenuOutlined
+        className="cursor-pointer text-lg transition-colors hover:text-blue"
+        onClick={clickMenu}
+      />
       {isSignIn ? (
         <SignedOutHeader signIn={clickButton} />
       ) : (
@@ -33,10 +33,7 @@ const SignedInHeader = ({ signOut }) => (
 
 const SignedOutHeader = ({ signIn }) => (
   <div>
-    {React.createElement(UserOutlined, {
-      className:
-        'text-lg mr-2 rounded-full bg-gray-200 h-10 w-10 inline-flex items-center justify-center cursor-pointer ',
-    })}
+    <UserOutlined className="text-lg mr-2 rounded-full bg-gray-200 h-10 w-10 inline-flex items-center justify-center cursor-pointer " />
     <Button className="ml-2" onClick={signIn} type="primary" danger>
       Sign out
     </Button>

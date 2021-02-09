@@ -6,7 +6,7 @@ import {
   MessageOutlined,
 } from '@ant-design/icons';
 
-const MENU_ITEMS = {
+export const MENU_ITEMS = {
   guest: [
     {
       text: 'Browse',
@@ -58,5 +58,3 @@ const MENU_ITEMS = {
     },
   ],
 };
-
-export default MENU_ITEMS
