@@ -9,12 +9,17 @@ const { Content } = Layout;
 
 const AppLayout = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
+  const [isSignIn, setSignIn] = useState(false);
 
   return (
     <Layout>
       <Sider collapsed={collapsed} userType={'trainer'} />
       <Layout>
-        <Header isSignIn={true} clickMenu={() => setCollapsed(!collapsed)} />
+        <Header
+          isSignIn={isSignIn}
+          clickMenu={() => setCollapsed(!collapsed)}
+          clickButton={() => setSignIn(!isSignIn)}
+        />
         <Content>{children}</Content>
         <Footer />
       </Layout>
