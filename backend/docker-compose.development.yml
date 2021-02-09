@@ -15,9 +15,9 @@ services:
     logging:
       driver: none
   api:
-    build:
-      context: .
-      dockerfile: Dockerfile.development
+    image: node:14-alpine
+    working_dir: /letx-backend
+    command: yarn start:dev
     ports:
       - 3000:3000
     volumes:

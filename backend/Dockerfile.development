@@ -1,9 +1,0 @@
-FROM node:14-alpine
-
-WORKDIR /letx-backend
-
-COPY . /letx-backend
-
-RUN yarn install
-
-CMD yarn start:dev
