@@ -11,20 +11,15 @@ $ yarn install
 ## Running the app
 
 ```bash
-# development
-$ yarn start
-
-# watch mode
-$ yarn start:dev
-
 # production mode
 $ yarn start:prod
 ```
 
-## Running docker
+## Running development docker
 
 ```bash
-# mysql server for development only
+# - api
+# - mysqldb
 # see docker-compose.development.yml for connection info
 
 # docker-compose up
