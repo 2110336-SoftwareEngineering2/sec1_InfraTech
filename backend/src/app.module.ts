@@ -8,8 +8,8 @@ import { RegisterModule } from './register/register.module';
     TypeOrmModule.forRoot({
       // TODO: use configs
       type: 'mysql',
-      host: 'localhost',
-      port: 3307,
+      host: 'mysqldb',
+      port: 3306,
       username: 'root',
       password: 'admin',
       database: 'letx',
