@@ -22,7 +22,7 @@ import { LoginModule } from './login/login.module';
     RegisterModule,
     LoginModule,
   ],
-  controllers: [AppController, LoginController],
-  providers: [AppService, LoginService],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}
