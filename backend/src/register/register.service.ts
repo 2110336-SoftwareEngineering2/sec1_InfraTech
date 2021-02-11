@@ -19,7 +19,7 @@ export class RegisterService {
     const userAuth = this.userAuthRepository.create();
     const saltRounds = 10;
 
-    await new Promise((resolve, reject) => {
+    await new Promise<void>((resolve, reject) => {
       bcrypt.genSalt(saltRounds, function(err, salt) {
         if (err) {
           reject(err);
