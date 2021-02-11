@@ -6,7 +6,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { RegisterFormDto } from './dtos/register-form-dto';
-import { UserAuth } from './user-auth.entity';
+import { UserAuth } from '../entities/user-auth.entity';
 import * as bcrypt from 'bcryptjs';
 
 @Injectable()
