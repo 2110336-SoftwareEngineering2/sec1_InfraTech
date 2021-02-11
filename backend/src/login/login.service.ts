@@ -2,11 +2,16 @@ import {
   ConflictException,
   Injectable,
   InternalServerErrorException,
+  NotFoundException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserAuth } from './user-auth.entity';
 import { LoginFormDto } from './dtos/login-form-dto';
+import * as bcrypt from 'bcrypt'
+import { LoginTokenDto } from './dtos/login-token-dto';
+import * as jwt from 'jsonwebtoken';
 
 @Injectable()
 export class LoginService {
@@ -14,27 +19,49 @@ export class LoginService {
     @InjectRepository(UserAuth)
     private userAuthRepository: Repository<UserAuth>,
   ) {}
-  async login(loginFormDto: LoginFormDto): Promise<UserAuth> {
-    const userAuth = await this.userAuthRepository.findOneOrFail({
-      where: {
-        email: loginFormDto.email,
-      }
-    });
 
-    userAuth.email = loginFormDto.email;
-    userAuth.password = loginFormDto.password;
-    userAuth.salt = 'generated salt';
+  generateToken(email: string): LoginTokenDto {
+    const LIFETIME = 1000000; // In seconds
 
-    try {
-      await this.userAuthRepository.insert(userAuth);
-    } catch (error) {
-      if (error.code === 'ER_DUP_ENTRY') {
-        throw new ConflictException('This email already exists');
-      } else {
-        throw new InternalServerErrorException();
-      }
+    const token = jwt.sign({
+      sub: email,
+      email: email,
+      iat: Math.floor(Date.now() / 1000),
+      exp: Math.floor(Date.now() / 1000) + LIFETIME,
+    }, 'secret');
+
+    return {
+      email, token
     }
+  }
 
-    return userAuth;
+  async login(loginFormDto: LoginFormDto): Promise<LoginTokenDto> {
+    try {
+      const userAuth = await this.userAuthRepository.findOneOrFail({
+        where: {
+          email: loginFormDto.email,
+        }
+      });
+
+      await new Promise((resolve, reject) => {
+        bcrypt.compare(loginFormDto.password, userAuth.password, function(err, result) {
+          // result == true
+          if (err) {
+            reject(err);
+            return;
+          }
+
+          if (result) {
+            resolve();
+          } else {
+            reject(new UnauthorizedException());
+          }
+        });
+      })
+  
+      return this.generateToken(userAuth.email);
+    } catch (error) {
+      throw new NotFoundException();
+    }
   }
 }
