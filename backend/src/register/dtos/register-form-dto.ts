@@ -9,5 +9,5 @@ export class RegisterFormDto {
   birthdate: string;
   phoneNumber: string;
   profileImageUrl: string;
-  preference: string;
+  preferences: string;
 }
