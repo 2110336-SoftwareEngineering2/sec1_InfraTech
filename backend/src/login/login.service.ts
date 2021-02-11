@@ -15,7 +15,11 @@ export class LoginService {
     private userAuthRepository: Repository<UserAuth>,
   ) {}
   async login(loginFormDto: LoginFormDto): Promise<UserAuth> {
-    const userAuth = this.userAuthRepository.create();
+    const userAuth = await this.userAuthRepository.findOneOrFail({
+      where: {
+        email: loginFormDto.email,
+      }
+    });
 
     userAuth.email = loginFormDto.email;
     userAuth.password = loginFormDto.password;
