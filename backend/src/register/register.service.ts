@@ -6,7 +6,8 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { RegisterFormDto } from './dtos/register-form-dto';
-import { UserAuth } from './user-auth.entity';
+import { UserAuth } from '../entities/user-auth.entity';
+import * as bcrypt from 'bcryptjs';
 
 @Injectable()
 export class RegisterService {
@@ -16,10 +17,30 @@ export class RegisterService {
   ) {}
   async register(registerFormDto: RegisterFormDto): Promise<UserAuth> {
     const userAuth = this.userAuthRepository.create();
+    const saltRounds = 10;
+
+    await new Promise<void>((resolve, reject) => {
+      bcrypt.genSalt(saltRounds, function(err, salt) {
+        if (err) {
+          reject(err);
+          return;
+        }
+
+        bcrypt.hash(registerFormDto.password, salt, function(err, hash) {
+          // Store hash in your password DB.
+          if (err) {
+            reject(err);
+            return;
+          }
+
+          userAuth.password = hash;
+          userAuth.salt = salt;
+          resolve();
+        });
+      });
+    })
 
     userAuth.email = registerFormDto.email;
-    userAuth.password = registerFormDto.password;
-    userAuth.salt = 'generated salt';
 
     try {
       await this.userAuthRepository.insert(userAuth);
