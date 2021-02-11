@@ -7,9 +7,9 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { UserAuth } from './user-auth.entity';
+import { UserAuth } from '../register/user-auth.entity';
 import { LoginFormDto } from './dtos/login-form-dto';
-import * as bcrypt from 'bcrypt'
+import * as bcrypt from 'bcryptjs'
 import { LoginTokenDto } from './dtos/login-token-dto';
 import * as jwt from 'jsonwebtoken';
 
@@ -43,7 +43,7 @@ export class LoginService {
         }
       });
 
-      await new Promise((resolve, reject) => {
+      await new Promise<void>((resolve, reject) => {
         bcrypt.compare(loginFormDto.password, userAuth.password, function(err, result) {
           // result == true
           if (err) {

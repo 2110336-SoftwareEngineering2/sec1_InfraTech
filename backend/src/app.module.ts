@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { RegisterModule } from './register/register.module';
 import { LoginService } from './login/login.service';
 import { LoginController } from './login/login.controller';
+import { LoginModule } from './login/login.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -19,6 +20,7 @@ import { LoginController } from './login/login.controller';
       synchronize: false,
     }),
     RegisterModule,
+    LoginModule,
   ],
   controllers: [AppController, LoginController],
   providers: [AppService, LoginService],
