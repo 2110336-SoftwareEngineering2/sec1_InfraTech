@@ -3,9 +3,9 @@ import { UserAuth } from '../../entities/user-auth.entity';
 
 @Entity({ name: 'trainer_profile' })
 export class TrainerProfile {
-  @PrimaryColumn()
-  @OneToOne(() => UserAuth)
-  email: string;
+  @PrimaryColumn({ name: 'user_id' })
+  @OneToOne(() => UserAuth, (userAuth) => userAuth.id)
+  userId: string;
 
   @Column()
   firstname: string;
