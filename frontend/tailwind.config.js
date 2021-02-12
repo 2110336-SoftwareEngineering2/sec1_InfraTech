@@ -232,7 +232,11 @@ module.exports = {
       black: '900',
     },
     gap: (theme) => theme('spacing'),
-    gradientColorStops: (theme) => theme('colors'),
+    gradientColorStops: (theme) => ({
+      ...theme('colors'),
+      primary: '#2775ac',
+      secondary: '#741875'
+    }),
     gridAutoColumns: {
       auto: 'auto',
       min: 'min-content',
