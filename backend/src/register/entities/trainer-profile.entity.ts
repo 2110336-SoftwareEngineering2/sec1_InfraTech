@@ -27,7 +27,4 @@ export class TrainerProfile {
 
   @Column({ name: 'profile_image_url' })
   profileImageUrl: string;
-
-  @Column()
-  preferences: string;
 }

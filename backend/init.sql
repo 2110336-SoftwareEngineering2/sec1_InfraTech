@@ -14,7 +14,6 @@ CREATE TABLE trainer_profile (
     phone_number VARCHAR(15),
     birthdate DATETIME,
 	cid VARCHAR(13),
-    preferences VARCHAR(255),
     profile_image_url VARCHAR(255),
     CONSTRAINT FK_trainer_email FOREIGN KEY (email) REFERENCES user_auth(email) ON DELETE CASCADE
 );
@@ -26,7 +25,6 @@ CREATE TABLE trainee_profile (
     gender VARCHAR(10),
     phone_number VARCHAR(15),
     birthdate DATETIME,
-    preferences VARCHAR(255),
     profile_image_url VARCHAR(255),
     CONSTRAINT FK_trainee_email FOREIGN KEY (email) REFERENCES user_auth(email) ON DELETE CASCADE
 );
