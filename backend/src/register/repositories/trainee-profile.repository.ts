@@ -1,9 +1,8 @@
 import { EntityRepository, Repository } from 'typeorm';
-import { UserAuth } from '../../entities/user-auth.entity';
 import { RegisterFormDto } from '../dtos/register-form-dto';
 import { TraineeProfile } from '../entities/trainee-profile.entity';
 
-@EntityRepository(UserAuth)
+@EntityRepository(TraineeProfile)
 export class TraineeProfileRepository extends Repository<TraineeProfile> {
   createTraineeProfile(registerFormDto: RegisterFormDto): TraineeProfile {
     const {
