@@ -4,37 +4,41 @@ import {
   InternalServerErrorException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Connection, Repository } from 'typeorm';
-import * as bcrypt from 'bcryptjs';
+import { Connection } from 'typeorm';
 
 import { RegisterFormDto } from './dtos/register-form-dto';
 import { UserAuth } from '../entities/user-auth.entity';
 import { TrainerProfile } from './entities/trainer-profile.entity';
 import { TraineeProfile } from './entities/trainee-profile.entity';
 import { UserType } from './enums/user-type.enum';
+import { UserAuthRepository } from './repositories/user-auth.repository';
+import { TrainerProfileRepository } from './repositories/trainer-profile.repository';
+import { TraineeProfileRepository } from './repositories/trainee-profile.repository';
 
 @Injectable()
 export class RegisterService {
   constructor(
     @InjectRepository(UserAuth)
-    private userAuthRepository: Repository<UserAuth>,
+    private userAuthRepository: UserAuthRepository,
     @InjectRepository(TrainerProfile)
-    private trainerProfileRepository: Repository<TrainerProfile>,
+    private trainerProfileRepository: TrainerProfileRepository,
     @InjectRepository(TraineeProfile)
-    private traineeProfileRepository: Repository<TraineeProfile>,
+    private traineeProfileRepository: TraineeProfileRepository,
     private connection: Connection,
   ) {}
 
   async register(registerFormDto: RegisterFormDto): Promise<UserAuth> {
     const { userType } = registerFormDto;
 
-    const userAuth = await this.createUserAuth(registerFormDto);
+    const userAuth = await this.userAuthRepository.createUsingRegisterForm(
+      registerFormDto,
+    );
     const ProfileEntity =
       userType === UserType.Trainer ? TrainerProfile : TraineeProfile;
     const profile =
       userType === UserType.Trainer
-        ? this.createTrainerProfile(registerFormDto)
-        : this.createTraineeProfile(registerFormDto);
+        ? this.trainerProfileRepository.createUsingRegisterForm(registerFormDto)
+        : this.traineeProfileRepository.createTraineeProfile(registerFormDto);
 
     const queryRunner = this.connection.createQueryRunner();
     await queryRunner.connect();
@@ -57,92 +61,5 @@ export class RegisterService {
 
     // TODO: return view entity (UserAuth join with Profile)
     return userAuth;
-  }
-
-  async createUserAuth(registerFormDto: RegisterFormDto): Promise<UserAuth> {
-    const { email, password } = registerFormDto;
-    const userAuth = this.userAuthRepository.create();
-    // TODO: refactor duplicate hash logic
-    // #region hash password
-    const saltRounds = 10;
-
-    await new Promise<void>((resolve, reject) => {
-      bcrypt.genSalt(saltRounds, function (err, salt) {
-        if (err) {
-          reject(err);
-          return;
-        }
-
-        bcrypt.hash(password, salt, function (err, hash) {
-          // Store hash in your password DB.
-          if (err) {
-            reject(err);
-            return;
-          }
-
-          userAuth.password = hash;
-          userAuth.salt = salt;
-          resolve();
-        });
-      });
-    });
-    //#endregion
-
-    userAuth.email = email;
-    return userAuth;
-  }
-
-  createTrainerProfile(registerFormDto: RegisterFormDto): TrainerProfile {
-    const {
-      email,
-      firstname,
-      lastname,
-      cid,
-      gender,
-      birthdate,
-      phoneNumber,
-      profileImageUrl,
-      preferences,
-    } = registerFormDto;
-
-    const profile = this.trainerProfileRepository.create();
-
-    profile.email = email;
-    profile.firstname = firstname;
-    profile.lastname = lastname;
-    profile.cid = cid;
-    profile.gender = gender;
-    profile.birthdate = birthdate;
-    profile.phoneNumber = phoneNumber;
-    profile.profileImageUrl = profileImageUrl;
-    profile.preferences = preferences;
-
-    return profile;
-  }
-
-  createTraineeProfile(registerFormDto: RegisterFormDto): TraineeProfile {
-    const {
-      email,
-      firstname,
-      lastname,
-      gender,
-      birthdate,
-      phoneNumber,
-      profileImageUrl,
-      preferences,
-    } = registerFormDto;
-
-    const profile = this.traineeProfileRepository.create();
-
-    profile.email = email;
-    profile.firstname = firstname;
-    profile.lastname = lastname;
-    profile.gender = gender;
-    profile.birthdate = birthdate;
-    profile.phoneNumber = phoneNumber;
-    profile.profileImageUrl = profileImageUrl;
-    profile.preferences = preferences;
-
-    return profile;
   }
 }
