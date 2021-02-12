@@ -1,9 +1,12 @@
-import { Entity, Column, JoinColumn, PrimaryColumn } from 'typeorm';
+import { Entity, Column, JoinColumn, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'user_auth' })
 export class UserAuth {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn('uuid')
   @JoinColumn()
+  id: string;
+
+  @Column({ unique: true })
   email: string;
 
   @Column()
