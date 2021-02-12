@@ -4,7 +4,7 @@ const LoginForm = ({ form, onSubmit }) => {
   return (
     <Form
       className="mt-6 w-80"
-      layout={'vertical'}
+      layout='vertical'
       form={form}
       onFinish={onSubmit}
     >

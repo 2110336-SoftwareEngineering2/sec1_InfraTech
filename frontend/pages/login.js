@@ -5,8 +5,11 @@ import Image from 'next/image';
 import LoginForm from '../components/LoginForm';
 import Footer from '../components/Footer';
 
+// TODO: Implement responsive handling
 const Login = () => {
   const [form] = Form.useForm();
+
+  // TODO: Connect to API
   const onSubmit = (data) => console.log(data);
 
   return (
