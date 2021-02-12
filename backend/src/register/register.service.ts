@@ -40,7 +40,6 @@ export class RegisterService {
 
     try {
       const result = await queryRunner.manager.insert(UserAuth, userAuth);
-
       const userId = result.identifiers[0].id;
 
       const ProfileEntity =
@@ -61,8 +60,6 @@ export class RegisterService {
       await queryRunner.commitTransaction();
     } catch (error) {
       await queryRunner.rollbackTransaction();
-
-      console.log(error);
 
       if (error.code === 'ER_DUP_ENTRY') {
         throw new ConflictException('This email already exists');
