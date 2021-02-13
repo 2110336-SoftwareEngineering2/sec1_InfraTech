@@ -4,9 +4,11 @@ import { TrainerProfile } from '../entities/trainer-profile.entity';
 
 @EntityRepository(TrainerProfile)
 export class TrainerProfileRepository extends Repository<TrainerProfile> {
-  createUsingRegisterForm(registerFormDto: RegisterFormDto): TrainerProfile {
+  createUsingRegisterForm(
+    userId: string,
+    registerFormDto: RegisterFormDto,
+  ): TrainerProfile {
     const {
-      email,
       firstname,
       lastname,
       cid,
@@ -18,7 +20,7 @@ export class TrainerProfileRepository extends Repository<TrainerProfile> {
 
     const profile = this.create();
 
-    profile.email = email;
+    profile.userId = userId;
     profile.firstname = firstname;
     profile.lastname = lastname;
     profile.cid = cid;

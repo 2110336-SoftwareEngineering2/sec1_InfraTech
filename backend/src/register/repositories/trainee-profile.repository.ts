@@ -4,9 +4,11 @@ import { TraineeProfile } from '../entities/trainee-profile.entity';
 
 @EntityRepository(TraineeProfile)
 export class TraineeProfileRepository extends Repository<TraineeProfile> {
-  createTraineeProfile(registerFormDto: RegisterFormDto): TraineeProfile {
+  createUsingRegisterForm(
+    userId: string,
+    registerFormDto: RegisterFormDto,
+  ): TraineeProfile {
     const {
-      email,
       firstname,
       lastname,
       gender,
@@ -17,7 +19,7 @@ export class TraineeProfileRepository extends Repository<TraineeProfile> {
 
     const profile = this.create();
 
-    profile.email = email;
+    profile.userId = userId;
     profile.firstname = firstname;
     profile.lastname = lastname;
     profile.gender = gender;

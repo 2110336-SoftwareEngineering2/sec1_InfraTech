@@ -33,19 +33,28 @@ export class RegisterService {
     const userAuth = await this.userAuthRepository.createUsingRegisterForm(
       registerFormDto,
     );
-    const ProfileEntity =
-      userType === UserType.Trainer ? TrainerProfile : TraineeProfile;
-    const profile =
-      userType === UserType.Trainer
-        ? this.trainerProfileRepository.createUsingRegisterForm(registerFormDto)
-        : this.traineeProfileRepository.createTraineeProfile(registerFormDto);
 
     const queryRunner = this.connection.createQueryRunner();
     await queryRunner.connect();
     await queryRunner.startTransaction();
 
     try {
-      await queryRunner.manager.insert(UserAuth, userAuth);
+      const result = await queryRunner.manager.insert(UserAuth, userAuth);
+      const userId = result.identifiers[0].id;
+
+      const ProfileEntity =
+        userType === UserType.Trainer ? TrainerProfile : TraineeProfile;
+      const profile =
+        userType === UserType.Trainer
+          ? this.trainerProfileRepository.createUsingRegisterForm(
+              userId,
+              registerFormDto,
+            )
+          : this.traineeProfileRepository.createUsingRegisterForm(
+              userId,
+              registerFormDto,
+            );
+
       await queryRunner.manager.insert(ProfileEntity, profile);
 
       await queryRunner.commitTransaction();
