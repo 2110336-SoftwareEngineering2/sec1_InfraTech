@@ -50,7 +50,7 @@ export class RegisterService {
               userId,
               registerFormDto,
             )
-          : this.traineeProfileRepository.createTraineeProfile(
+          : this.traineeProfileRepository.createUsingRegisterForm(
               userId,
               registerFormDto,
             );

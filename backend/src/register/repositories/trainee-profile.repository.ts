@@ -4,7 +4,7 @@ import { TraineeProfile } from '../entities/trainee-profile.entity';
 
 @EntityRepository(TraineeProfile)
 export class TraineeProfileRepository extends Repository<TraineeProfile> {
-  createTraineeProfile(
+  createUsingRegisterForm(
     userId: string,
     registerFormDto: RegisterFormDto,
   ): TraineeProfile {
