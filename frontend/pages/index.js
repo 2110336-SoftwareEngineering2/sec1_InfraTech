@@ -16,9 +16,9 @@ export async function getServerSideProps({ req }) {
 
   // TODO: fetch user info from server
   const mockUserInfo = {
-    firstname: "John",
-    lastname: "Cena",
-    profile: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fmuc.fandom.com%2Fwiki%2FJohn_Cena&psig=AOvVaw2MtR7cbMqHVH2jUJg98g_X&ust=1613284647385000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCNCIuOef5u4CFQAAAAAdAAAAABAU",
+    firstname: "Somluck",
+    lastname: "Kamsing",
+    profileImageUrl: "https://www.aceshowbiz.com/images/photo/john_cena.jpg",
     userType: "trainer"
   }
   const userInfo = data?.user ? mockUserInfo : null

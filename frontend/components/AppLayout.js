@@ -8,26 +8,23 @@ import { USER_TYPE } from '../config/UserType.config';
 
 const { Content } = Layout;
 
-const AppLayout = ({ children }) => {
+const AppLayout = ({ userInfo, children }) => {
   const [collapsed, setCollapsed] = useState(false);
-  const [isSignIn, setSignIn] = useState(false);
-  const [userType, setUserType] = useState(USER_TYPE.GUEST);
+  const [userType, setUserType] = useState(
+    Object.values(USER_TYPE).includes(userInfo?.userType)
+      ? userInfo?.userType
+      : USER_TYPE.GUEST,
+  );
 
   return (
     <Layout>
       <Sider collapsed={collapsed} userType={userType} />
       <Layout>
         <Header
-          isSignIn={isSignIn}
+          username={userInfo?.firstname}
+          profileImageUrl={userInfo?.profileImageUrl}
           clickMenu={() => setCollapsed(!collapsed)}
-          clickButton={() => {
-            setSignIn(!isSignIn);
-            if (!isSignIn) {
-              setUserType(USER_TYPE.TRAINER);
-            } else {
-              setUserType(USER_TYPE.GUEST);
-            }
-          }}
+          handleSignOut={() => setUserType(USER_TYPE.GUEST)}
         />
         <Content>{children}</Content>
         <Footer />
