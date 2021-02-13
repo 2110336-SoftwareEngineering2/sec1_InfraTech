@@ -8,7 +8,7 @@ CREATE TABLE user_auth (
 );
 
 CREATE TABLE trainer_profile (
-	id VARCHAR(36) PRIMARY KEY,
+    id VARCHAR(36) PRIMARY KEY,
     user_id VARCHAR(36),
     firstname VARCHAR(255),
     lastname VARCHAR(255),
@@ -21,7 +21,7 @@ CREATE TABLE trainer_profile (
 );
 
 CREATE TABLE trainee_profile (
-	id VARCHAR(36) PRIMARY KEY,
+    id VARCHAR(36) PRIMARY KEY,
     user_id VARCHAR(36),
     firstname VARCHAR(255),
     lastname VARCHAR(255),
