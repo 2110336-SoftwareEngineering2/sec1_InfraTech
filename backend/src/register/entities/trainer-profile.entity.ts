@@ -1,9 +1,12 @@
-import { Entity, Column, OneToOne, PrimaryColumn } from 'typeorm';
+import { Entity, Column, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { UserAuth } from '../../entities/user-auth.entity';
 
 @Entity({ name: 'trainer_profile' })
 export class TrainerProfile {
-  @PrimaryColumn({ name: 'user_id' })
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
+  @Column({ name: 'user_id' })
   @OneToOne(() => UserAuth, (userAuth) => userAuth.id)
   userId: string;
 
