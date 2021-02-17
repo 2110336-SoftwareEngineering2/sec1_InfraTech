@@ -22,10 +22,12 @@ const Login = () => {
 
   return (
     <>
-      <div className="bg-gradient-blue-purple flex justify-center">
-        <div className="bg-white p-10 my-40 rounded-lg flex justify-between">
-          <Image src="/login.svg" width={240} height={300} />
-          <div className="mx-12 mt-16 text-4xl font-bold">
+      <div className="bg-gradient-blue-purple flex justify-center items-center">
+        <div className="bg-white h-80 md:h-96 lg:h-auto p-0 sm:p-10 my-40 mx-12 lg:mx-0 rounded-lg flex justify-between items-center">
+          <div className="hidden md:block mt-0 lg:mt-8">
+            <Image src="/login.svg" width={240} height={300} />
+          </div>
+          <div className="mx-8 md:mx-12 my-10 text-3xl sm:text-4xl font-bold">
             Welcome Back!
             <LoginForm form={form} onSubmit={handleSubmit} />
           </div>
