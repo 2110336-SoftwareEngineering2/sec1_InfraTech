@@ -3,7 +3,7 @@ import { Form, Input, Button } from 'antd';
 const LoginForm = ({ form, onSubmit }) => {
   return (
     <Form
-      className="mt-6 w-80"
+      className="mt-6 w-60 md:w-80"
       layout='vertical'
       form={form}
       onFinish={onSubmit}
