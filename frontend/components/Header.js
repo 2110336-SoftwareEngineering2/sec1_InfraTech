@@ -2,7 +2,6 @@ import React from 'react';
 import { useCookies } from 'react-cookie';
 import Link from 'next/link';
 import Image from 'next/image';
-// import { Image } from 'antd';
 
 import { Layout, Button } from 'antd';
 import { UserOutlined, MenuOutlined } from '@ant-design/icons';
