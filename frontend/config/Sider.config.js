@@ -4,16 +4,25 @@ import {
   RadarChartOutlined,
   CalendarOutlined,
   MessageOutlined,
+  HomeOutlined,
 } from '@ant-design/icons';
 
 export const MENU_ITEMS = {
   guest: [
+    {
+      text: 'Home',
+      icon: <HomeOutlined />,
+    },
     {
       text: 'Browse',
       icon: <SearchOutlined />,
     },
   ],
   trainer: [
+    {
+      text: 'Home',
+      icon: <HomeOutlined />,
+    },
     {
       text: 'Browse',
       icon: <SearchOutlined />,
@@ -36,6 +45,10 @@ export const MENU_ITEMS = {
     },
   ],
   trainee: [
+    {
+      text: 'Home',
+      icon: <HomeOutlined />,
+    },
     {
       text: 'Browse',
       icon: <SearchOutlined />,

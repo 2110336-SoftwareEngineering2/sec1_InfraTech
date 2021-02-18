@@ -1,19 +1,56 @@
+import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { Layout, Menu } from 'antd';
+
 import { MENU_ITEMS } from '../config/Sider.config';
 
 const { Sider: AntdSider } = Layout;
 
-const Sider = ({ collapsed, userType }) => (
-  <AntdSider trigger={null} collapsible collapsed={collapsed}>
-    <div className='h-8 bg-gray-400 bg-opacity-30 m-4 mb-8' />
-    <Menu theme="dark" mode="inline" defaultSelectedKeys={['0']}>
-      {MENU_ITEMS[userType].map(({ text, icon }, index) => (
-        <Menu.Item key={index} icon={icon}>
-          {text}
-        </Menu.Item>
-      ))}
-    </Menu>
-  </AntdSider>
-);
+const Sider = ({ collapsed, userType }) => {
+  const [isBroken, setIsBroken] = useState(collapsed);
+  const [showLogoText, setShowLogoText] = useState(!collapsed);
+
+  useEffect(() => {
+    if (collapsed) {
+      setTimeout(() => setShowLogoText(!collapsed), 30)
+    } else {
+      setTimeout(() => setShowLogoText(!collapsed), 145)
+    }
+  }, [collapsed])
+
+  return (
+    <AntdSider
+      trigger={null}
+      collapsible
+      collapsed={collapsed}
+      breakpoint="md"
+      collapsedWidth={isBroken ? 0 : 80}
+      width={isBroken ? 65 : 190}
+      onBreakpoint={(broken) => setIsBroken(broken)}
+    >
+      <div
+        className={`h-10 bg-black mx-3 mt-4 mb-8 flex items-center ${
+          collapsed ? 'justify-center' : 'justify-start'
+        } `}
+      >
+        <Image src="/logo.svg" width={40} height={40} />
+        <span className="text-lg font-bold text-yellow hidden md:inline">
+          {showLogoText && "Let's Exercise!"}
+        </span>
+      </div>
+      <Menu
+        theme="dark"
+        mode="inline"
+        defaultSelectedKeys={['0']}
+      >
+        {MENU_ITEMS[userType].map(({ text, icon }, index) => (
+          <Menu.Item key={index} icon={icon} title={text}>
+            {!isBroken && text}
+          </Menu.Item>
+        ))}
+      </Menu>
+    </AntdSider>
+  );
+};
 
 export default Sider;

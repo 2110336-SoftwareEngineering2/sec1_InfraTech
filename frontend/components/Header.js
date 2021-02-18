@@ -2,7 +2,6 @@ import React from 'react';
 import { useCookies } from 'react-cookie';
 import Link from 'next/link';
 import Image from 'next/image';
-// import { Image } from 'antd';
 
 import { Layout, Button } from 'antd';
 import { UserOutlined, MenuOutlined } from '@ant-design/icons';
@@ -10,7 +9,7 @@ import { UserOutlined, MenuOutlined } from '@ant-design/icons';
 const { Header: AntdHeader } = Layout;
 
 const Header = ({ clickMenu, username, profileImageUrl, handleSignOut }) => (
-  <AntdHeader className="bg-white px-6 flex justify-between items-center">
+  <AntdHeader className="bg-white px-4 sm:px-6 flex justify-between items-center">
     <MenuOutlined
       className="cursor-pointer text-lg transition-colors hover:text-blue"
       onClick={clickMenu}
@@ -49,12 +48,21 @@ const NonGuestHeader = ({ username, profileImageUrl, handleSignOut }) => {
     handleSignOut();
   };
 
-  // TODO: Set image to center
   return (
-    <div className="font-bold text-lg">
-      <UserOutlined className="text-lg mr-4 rounded-full bg-gray-200 h-10 w-10 inline-flex items-center justify-center cursor-pointer " />
-      {/* <Image className='rounded-full my-auto mx-0' src={profileImageUrl} width={40} height={40} /> */}
-      {username}
+    <div className="flex items-center text-lg">
+      {profileImageUrl ? (
+        <div className="rounded-full mt-1.5">
+          <Image
+            className="rounded-full"
+            src={profileImageUrl}
+            width={40}
+            height={40}
+          />
+        </div>
+      ) : (
+        <UserOutlined className="text-lg mr-4 rounded-full bg-gray-200 h-10 w-10 inline-flex items-center justify-center cursor-pointer" />
+      )}
+      <div className="font-bold ml-4 hidden sm:inline \">{username}</div>
       <Link href="/">
         <Button className="ml-6" onClick={onClick} type="primary" danger>
           Sign out
