@@ -6,8 +6,8 @@ const PreferrenceCard = ({ url, description, alt }) => {
   const [click, setClick] = useState(false);
   return (
     <div
-      className={`w-60 h-64 flex flex-col justify-center items-between rounded-md border-2 relative ${
-        click ? ' border-blue' : 'border-black-500 '
+      className={`w-60 h-64 relative flex flex-col justify-center items-between rounded-md border-2 bg-white ${
+        click ? ' border-blue' : 'border-black'
       }`}
       onClick={() => {
         setClick(!click);
@@ -16,10 +16,10 @@ const PreferrenceCard = ({ url, description, alt }) => {
       {click && (
         <CheckCircleFilled className="absolute text-blue text-base top-3 right-3 z-10" />
       )}
-      <div className="w-58 h-52 flex flex-col justify-center items-center rounded-md z-0 ">
-        <Image alt={alt} src={url} height={200} width={240} />
+      <div className="w-full h-52 relative rounded-md z-0 overflow-hidden">
+        <Image layout="fill" alt={alt} src={url} />
       </div>
-      <div className=" w-60 h-12 flex flex-row justify-center text-md">
+      <div className=" w-full h-12 relative flex rounded-md items-center justify-center text-md ">
         {description}
       </div>
     </div>
