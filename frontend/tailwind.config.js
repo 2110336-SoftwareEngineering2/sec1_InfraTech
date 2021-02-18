@@ -236,7 +236,7 @@ module.exports = {
     gradientColorStops: (theme) => ({
       ...theme('colors'),
       primary: '#2775ac',
-      secondary: '#741875'
+      secondary: '#741875',
     }),
     gridAutoColumns: {
       auto: 'auto',
