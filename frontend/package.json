@@ -17,6 +17,7 @@
     "react": "17.0.1",
     "react-cookie": "^4.0.3",
     "react-dom": "17.0.1",
+    "react-step-builder": "^2.0.6",
     "tailwindcss": "^2.0.2"
   }
 }
