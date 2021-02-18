@@ -4,7 +4,7 @@ import {
   InternalServerErrorException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Connection } from 'typeorm';
+import { Connection, In, Repository } from 'typeorm';
 
 import { RegisterFormDto } from './dtos/register-form-dto';
 import { UserAuth } from '../entities/user-auth.entity';
@@ -14,6 +14,7 @@ import { UserType } from './enums/user-type.enum';
 import { UserAuthRepository } from './repositories/user-auth.repository';
 import { TrainerProfileRepository } from './repositories/trainer-profile.repository';
 import { TraineeProfileRepository } from './repositories/trainee-profile.repository';
+import { Preference } from './entities/preference.entity';
 
 @Injectable()
 export class RegisterService {
@@ -24,15 +25,21 @@ export class RegisterService {
     private trainerProfileRepository: TrainerProfileRepository,
     @InjectRepository(TraineeProfile)
     private traineeProfileRepository: TraineeProfileRepository,
+    @InjectRepository(Preference)
+    private preferenceRepository: Repository<Preference>,
     private connection: Connection,
   ) {}
 
   async register(registerFormDto: RegisterFormDto): Promise<UserAuth> {
-    const { userType } = registerFormDto;
+    const { userType, preferences } = registerFormDto;
 
     const userAuth = await this.userAuthRepository.createUsingRegisterForm(
       registerFormDto,
     );
+
+    const selectedPreferences = await this.preferenceRepository.find({
+      where: { id: In(preferences) },
+    });
 
     const queryRunner = this.connection.createQueryRunner();
     await queryRunner.connect();
@@ -49,13 +56,15 @@ export class RegisterService {
           ? this.trainerProfileRepository.createUsingRegisterForm(
               userId,
               registerFormDto,
+              selectedPreferences,
             )
           : this.traineeProfileRepository.createUsingRegisterForm(
               userId,
               registerFormDto,
+              selectedPreferences,
             );
 
-      await queryRunner.manager.insert(ProfileEntity, profile);
+      await queryRunner.manager.save(ProfileEntity, profile);
 
       await queryRunner.commitTransaction();
     } catch (error) {
