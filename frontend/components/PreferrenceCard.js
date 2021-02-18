@@ -19,7 +19,7 @@ const PreferrenceCard = ({ url, description, alt }) => {
       <div className="w-full h-52 relative rounded-md z-0 overflow-hidden">
         <Image layout="fill" alt={alt} src={url} />
       </div>
-      <div className=" w-full h-12 relative flex rounded-md items-center justify-center text-xl ">
+      <div className=" w-full h-12 relative flex rounded-md items-center justify-center font-bold text-xl ">
         {description}
       </div>
     </div>
