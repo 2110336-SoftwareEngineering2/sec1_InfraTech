@@ -11,7 +11,7 @@ import Footer from '../components/Footer';
 
 const Register = () => {
   return (
-    <div>
+    <>
       <div className="bg-gradient-to-tl from-secondary to-primary min-h-screen flex justify-center items-center">
         <div className="bg-white p-10 rounded-lg flex justify-between">
           <Steps>
@@ -23,7 +23,7 @@ const Register = () => {
         </div>
       </div>
       <Footer />
-    </div>
+    </>
   );
 };
 
