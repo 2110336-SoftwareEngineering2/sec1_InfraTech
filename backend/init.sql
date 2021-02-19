@@ -40,18 +40,10 @@ INSERT INTO preference (id, name, svg_url) VALUES (UUID(), "Balance", "http://ww
 INSERT INTO preference (id, name, svg_url) VALUES (UUID(), "Flexibility", "http://www.svg.com/flexibility");
 INSERT INTO preference (id, name, svg_url) VALUES (UUID(), "Strength", "http://www.svg.com/strength");
 
-CREATE TABLE trainer_preference (
-    trainer_id VARCHAR(36),
+CREATE TABLE user_preference(
+    user_id VARCHAR(36),
     preference_id VARCHAR(36),
-    CONSTRAINT PK_user_preference PRIMARY KEY (trainer_id, preference_id),
-    CONSTRAINT FK_user_trainer_preference_trainer_id FOREIGN KEY (trainer_id) REFERENCES trainer(id) ON DELETE CASCADE,
-    CONSTRAINT FK_user_trainer_preference_preference_id FOREIGN KEY (preference_id) REFERENCES preference(id) ON DELETE CASCADE
-);
-
-CREATE TABLE trainee_preference (
-    trainee_id VARCHAR(36),
-    preference_id VARCHAR(36),
-    CONSTRAINT PK_user_preference PRIMARY KEY (trainee_id, preference_id),
-    CONSTRAINT FK_user_trainee_preference_trainee_id FOREIGN KEY (trainee_id) REFERENCES trainee(id) ON DELETE CASCADE,
-    CONSTRAINT FK_user_trainee_preference_preference_id FOREIGN KEY (preference_id) REFERENCES preference(id) ON DELETE CASCADE
+    CONSTRAINT PK_user_preference PRIMARY KEY (user_id, preference_id),
+    CONSTRAINT FK_user_preference_user_id FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE,
+    CONSTRAINT FK_user_preference_preference_id FOREIGN KEY (preference_id) REFERENCES preference(id) ON DELETE CASCADE
 );
