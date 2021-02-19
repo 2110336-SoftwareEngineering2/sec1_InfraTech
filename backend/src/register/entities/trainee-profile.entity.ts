@@ -6,7 +6,7 @@ import {
   ManyToMany,
   JoinTable,
 } from 'typeorm';
-import { UserAuth } from '../../entities/user-auth.entity';
+import { User } from '../../entities/user.entity';
 import { Preference } from './preference.entity';
 
 @Entity({ name: 'trainee_profile' })
@@ -15,7 +15,7 @@ export class TraineeProfile {
   id: string;
 
   @Column({ name: 'user_id' })
-  @OneToOne(() => UserAuth, (userAuth) => userAuth.id)
+  @OneToOne(() => User, (user) => user.id)
   userId: string;
 
   @Column()
