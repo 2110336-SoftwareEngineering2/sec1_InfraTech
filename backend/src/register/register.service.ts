@@ -8,11 +8,11 @@ import { Connection, In, Repository } from 'typeorm';
 
 import { RegisterFormDto } from './dtos/register-form-dto';
 import { User } from '../entities/user.entity';
-import { TrainerProfile } from './entities/trainer-profile.entity';
+import { Trainer } from './entities/trainer.entity';
 import { TraineeProfile } from './entities/trainee-profile.entity';
 import { UserType } from './enums/user-type.enum';
 import { UserRepository } from './repositories/user.repository';
-import { TrainerProfileRepository } from './repositories/trainer-profile.repository';
+import { TrainerRepository } from './repositories/trainer.repository';
 import { TraineeProfileRepository } from './repositories/trainee-profile.repository';
 import { Preference } from './entities/preference.entity';
 
@@ -21,8 +21,8 @@ export class RegisterService {
   constructor(
     @InjectRepository(User)
     private userRepository: UserRepository,
-    @InjectRepository(TrainerProfile)
-    private trainerProfileRepository: TrainerProfileRepository,
+    @InjectRepository(Trainer)
+    private trainerProfileRepository: TrainerRepository,
     @InjectRepository(TraineeProfile)
     private traineeProfileRepository: TraineeProfileRepository,
     @InjectRepository(Preference)
@@ -50,7 +50,7 @@ export class RegisterService {
       const userId = result.identifiers[0].id;
 
       const ProfileEntity =
-        userType === UserType.Trainer ? TrainerProfile : TraineeProfile;
+        userType === UserType.Trainer ? Trainer : TraineeProfile;
       const profile =
         userType === UserType.Trainer
           ? this.trainerProfileRepository.createUsingRegisterForm(
