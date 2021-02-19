@@ -9,11 +9,11 @@ import { Connection, In, Repository } from 'typeorm';
 import { RegisterFormDto } from './dtos/register-form-dto';
 import { User } from '../entities/user.entity';
 import { Trainer } from './entities/trainer.entity';
-import { TraineeProfile } from './entities/trainee-profile.entity';
+import { Trainee } from './entities/trainee.entity';
 import { UserType } from './enums/user-type.enum';
 import { UserRepository } from './repositories/user.repository';
 import { TrainerRepository } from './repositories/trainer.repository';
-import { TraineeProfileRepository } from './repositories/trainee-profile.repository';
+import { TraineeRepository } from './repositories/trainee.repository';
 import { Preference } from './entities/preference.entity';
 
 @Injectable()
@@ -23,8 +23,8 @@ export class RegisterService {
     private userRepository: UserRepository,
     @InjectRepository(Trainer)
     private trainerRepository: TrainerRepository,
-    @InjectRepository(TraineeProfile)
-    private traineeProfileRepository: TraineeProfileRepository,
+    @InjectRepository(Trainee)
+    private traineeRepository: TraineeRepository,
     @InjectRepository(Preference)
     private preferenceRepository: Repository<Preference>,
     private connection: Connection,
@@ -49,8 +49,7 @@ export class RegisterService {
       const result = await queryRunner.manager.insert(User, user);
       const userId = result.identifiers[0].id;
 
-      const ProfileEntity =
-        userType === UserType.Trainer ? Trainer : TraineeProfile;
+      const ProfileEntity = userType === UserType.Trainer ? Trainer : Trainee;
       const profile =
         userType === UserType.Trainer
           ? this.trainerRepository.createUsingRegisterForm(
@@ -58,7 +57,7 @@ export class RegisterService {
               registerFormDto,
               selectedPreferences,
             )
-          : this.traineeProfileRepository.createUsingRegisterForm(
+          : this.traineeRepository.createUsingRegisterForm(
               userId,
               registerFormDto,
               selectedPreferences,
