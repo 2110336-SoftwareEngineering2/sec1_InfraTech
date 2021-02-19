@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Form, Input } from 'antd';
+import { rule } from 'postcss';
 
 const CreateAccountForm = ({ getState, setState, size, current, next }) => {
   const [form] = Form.useForm();
@@ -21,15 +22,26 @@ const CreateAccountForm = ({ getState, setState, size, current, next }) => {
         initialValues={getState('create-account', {})}
         onFinish={onContinue}
       >
-        <Form.Item name="email">
+        <Form.Item name="email" hasFeedback rules={
+          [{type: 'email', message: 'Email format is incorrect'}, {required: true, message: 'Please provide an email.'}]
+        }>
           <Input type="email" placeholder="Email" />
         </Form.Item>
 
-        <Form.Item name="password" hasFeedback>
+        <Form.Item name="password" hasFeedback rules={
+          [{required: true, message: 'Please specify password.'}]
+        }>
           <Input.Password placeholder="Password" />
         </Form.Item>
 
-        <Form.Item name="confirm" hasFeedback>
+        <Form.Item name="confirm" hasFeedback dependencies={['password']} rules={
+          [{required: true, message: 'Please confirm your password.'}, ({ getFieldValue}) => ({
+            validator(_, value) {
+              if (!value || getFieldValue('password') === value) return Promise.resolve();
+              return Promise.reject('Password does not match.')
+            }
+          })]
+        }>
           <Input.Password placeholder="Confirm Password" />
         </Form.Item>
 
