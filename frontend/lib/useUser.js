@@ -2,15 +2,24 @@ import { useEffect } from 'react';
 import Router from 'next/router';
 import useSWR from 'swr';
 import axios from 'axios';
+import { useCookies } from 'react-cookie';
 
 export default function useUser({
   redirectTo = false,
   redirectIfFound = false,
 } = {}) {
+  const [token] = useCookies([process.env.NEXT_PUBLIC_COOKIE_NAME]);
+
   const { data: user, mutate: mutateUser } = useSWR(
-    '/api/user',
-    async (url) => {
-      const res = await axios.get(url);
+    ['/api/user', token],
+    async (url, token) => {
+      const res = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${
+            token[process.env.NEXT_PUBLIC_COOKIE_NAME] || ''
+          }`,
+        },
+      });
       return res.data;
     },
   );

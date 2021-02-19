@@ -1,6 +1,6 @@
 export default function handler(req, res) {
   if (req.method === 'GET') {
-    if (req?.cookies[process.env.NEXT_PUBLIC_COOKIE_NAME]) {
+    if (req?.headers?.authorization.substring(7) == 'mock_token') {
       res.status(200).json({
         firstname: 'Somluck',
         profileImageUrl:
