@@ -7,11 +7,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Connection, In, Repository } from 'typeorm';
 
 import { RegisterFormDto } from './dtos/register-form-dto';
-import { UserAuth } from '../entities/user-auth.entity';
+import { User } from '../entities/user.entity';
 import { TrainerProfile } from './entities/trainer-profile.entity';
 import { TraineeProfile } from './entities/trainee-profile.entity';
 import { UserType } from './enums/user-type.enum';
-import { UserAuthRepository } from './repositories/user-auth.repository';
+import { UserRepository } from './repositories/user.repository';
 import { TrainerProfileRepository } from './repositories/trainer-profile.repository';
 import { TraineeProfileRepository } from './repositories/trainee-profile.repository';
 import { Preference } from './entities/preference.entity';
@@ -19,8 +19,8 @@ import { Preference } from './entities/preference.entity';
 @Injectable()
 export class RegisterService {
   constructor(
-    @InjectRepository(UserAuth)
-    private userAuthRepository: UserAuthRepository,
+    @InjectRepository(User)
+    private userRepository: UserRepository,
     @InjectRepository(TrainerProfile)
     private trainerProfileRepository: TrainerProfileRepository,
     @InjectRepository(TraineeProfile)
@@ -30,10 +30,10 @@ export class RegisterService {
     private connection: Connection,
   ) {}
 
-  async register(registerFormDto: RegisterFormDto): Promise<UserAuth> {
+  async register(registerFormDto: RegisterFormDto): Promise<User> {
     const { userType, preferences } = registerFormDto;
 
-    const userAuth = await this.userAuthRepository.createUsingRegisterForm(
+    const user = await this.userRepository.createUsingRegisterForm(
       registerFormDto,
     );
 
@@ -46,7 +46,7 @@ export class RegisterService {
     await queryRunner.startTransaction();
 
     try {
-      const result = await queryRunner.manager.insert(UserAuth, userAuth);
+      const result = await queryRunner.manager.insert(User, user);
       const userId = result.identifiers[0].id;
 
       const ProfileEntity =
@@ -77,7 +77,7 @@ export class RegisterService {
       }
     }
 
-    // TODO: return view entity (UserAuth join with Profile)
-    return userAuth;
+    // TODO: return view entity (User join with Profile)
+    return user;
   }
 }
