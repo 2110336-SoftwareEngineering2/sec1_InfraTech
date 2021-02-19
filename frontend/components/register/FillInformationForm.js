@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, DatePicker, Form, Input, Select } from 'antd';
+import { Button, DatePicker, Form, Input, InputNumber, Select } from 'antd';
 
 // NOTE: draft version
 const FillInformationForm = ({ getState, setState, size, current, prev }) => {
@@ -33,30 +33,68 @@ const FillInformationForm = ({ getState, setState, size, current, prev }) => {
         initialValues={getState('information', {})}
         onFinish={onContinue}
       >
-        <Form.Item name="firstName">
+        <Form.Item name="firstName" hasFeedback rules={
+          [{required: true, message: 'Please provide first name.'}]
+        }>
           <Input placeholder="First Name" />
         </Form.Item>
 
-        <Form.Item name="lastName">
+        <Form.Item name="lastName" hasFeedback rules={
+          [{required: true, message: 'Please provide last name.'}]
+        }>
           <Input placeholder="Last Name" />
         </Form.Item>
 
-        <Form.Item name="gender">
+        <Form.Item name="gender" hasFeedback rules={
+          [{required: true, message: 'Gender is not specified'}]
+        }>
           <Select placeholder="Gender">
             <Select.Option value="male">Male</Select.Option>
             <Select.Option value="female">Female</Select.Option>
           </Select>
         </Form.Item>
 
-        <Form.Item name="dateOfBirth">
-          <DatePicker placeholder="Date of birth" format="DD/MM/YYYY" />
+        <Form.Item name="dateOfBirth" hasFeedback rules={
+          [
+            {type: 'date', message: 'Date format is incorrect.'},
+            {required: true, message: 'Please select birth date.'}
+          ]
+        }>
+          <DatePicker style={{ width: '100%' }} placeholder="Date of birth" format="DD/MM/YYYY" />
         </Form.Item>
 
-        <Form.Item name="citizenId">
+        <Form.Item name="citizenId" hasFeedback rules={
+          [
+            {required: true, message: 'Citizen ID must be specified.'},
+            {validator: (_, value) => {
+              // ref: https://snasui.com/wordpress/identification/
+
+              if (!value || value === "") return Promise.resolve();
+              if (!/^\d{13}$/.test(value)) return Promise.reject('Citizen ID must has only 13 digits.')
+
+              // find sum of adjusted first 12 digits
+              let sum = 0;
+              for(let i=0; i<12; i++) {
+                sum += parseInt(value.charAt(i), 10) * (13-i);
+              }
+                
+              // evaluate check digit
+              if (((11 - (sum % 11)) % 10).toString() === value.charAt(12)) {
+                return Promise.resolve();
+              }
+              return Promise.reject('Check digit of citizen ID is incorrect.');
+            }},
+          ]
+        }>
           <Input placeholder="Citizen ID" />
         </Form.Item>
 
-        <Form.Item name="phoneNumber">
+        <Form.Item name="phoneNumber" hasFeedback rules={
+          [
+            {pattern: /^\d{9,10}$/, message: 'Phone number format is incorrect (9 - 10 digits).'},
+            {required: true, message: 'Please provide phone number.'}
+          ]
+        }>
           <Input placeholder="Phone number" />
         </Form.Item>
 
