@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { UserAuth } from '../entities/user-auth.entity';
+import { User } from '../entities/user.entity';
 import { LoginFormDto } from './dtos/login-form-dto';
 import * as bcrypt from 'bcryptjs'
 import { LoginTokenDto } from './dtos/login-token-dto';
@@ -16,8 +16,8 @@ import * as jwt from 'jsonwebtoken';
 @Injectable()
 export class LoginService {
   constructor(
-    @InjectRepository(UserAuth)
-    private userAuthRepository: Repository<UserAuth>,
+    @InjectRepository(User)
+    private userRepository: Repository<User>,
   ) {}
 
   generateToken(email: string): LoginTokenDto {
@@ -37,14 +37,14 @@ export class LoginService {
 
   async login(loginFormDto: LoginFormDto): Promise<LoginTokenDto> {
     try {
-      const userAuth = await this.userAuthRepository.findOneOrFail({
+      const user = await this.userRepository.findOneOrFail({
         where: {
           email: loginFormDto.email,
         }
       });
 
       await new Promise<void>((resolve, reject) => {
-        bcrypt.compare(loginFormDto.password, userAuth.password, function(err, result) {
+        bcrypt.compare(loginFormDto.password, user.password, function(err, result) {
           // result == true
           if (err) {
             reject(err);
@@ -59,7 +59,7 @@ export class LoginService {
         });
       })
   
-      return this.generateToken(userAuth.email);
+      return this.generateToken(user.email);
     } catch (error) {
       throw new NotFoundException();
     }
