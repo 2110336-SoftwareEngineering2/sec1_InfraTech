@@ -12,20 +12,29 @@ import { LoginFormDto } from './dtos/login-form-dto';
 import * as bcrypt from 'bcryptjs'
 import { LoginTokenDto } from './dtos/login-token-dto';
 import * as jwt from 'jsonwebtoken';
+import { TrainerProfile } from 'src/entities/trainer-profile.entity';
+import { TraineeProfile } from 'src/entities/trainee-profile.entity';
 
 @Injectable()
 export class LoginService {
   constructor(
     @InjectRepository(UserAuth)
     private userAuthRepository: Repository<UserAuth>,
+
+    @InjectRepository(TraineeProfile)
+    private traineeProfileRepository: Repository<TraineeProfile>,
+
+    @InjectRepository(TrainerProfile)
+    private trainerProfileRepository: Repository<TrainerProfile>,
   ) {}
 
-  generateToken(email: string): LoginTokenDto {
+  generateToken(email: string, type: string): LoginTokenDto {
     const LIFETIME = 1000000; // In seconds
 
     const token = jwt.sign({
       sub: email,
       email: email,
+      type: type,
       iat: Math.floor(Date.now() / 1000),
       exp: Math.floor(Date.now() / 1000) + LIFETIME,
     }, 'secret');
@@ -58,6 +67,20 @@ export class LoginService {
           }
         });
       })
+
+      await this.userAuthRepository.findOne()
+
+      let type = loginFormDto.type;
+
+      if (!type) {
+        let traineeProfile = await this.traineeProfileRepository.findOne({
+          where: {
+            userId: userAuth.id
+          }
+        });
+
+        type = traineeProfile ? "trainee" : "trainer";
+      }
   
       return this.generateToken(userAuth.email);
     } catch (error) {

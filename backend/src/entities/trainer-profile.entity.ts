@@ -6,11 +6,11 @@ import {
   ManyToMany,
   JoinTable,
 } from 'typeorm';
-import { UserAuth } from '../../entities/user-auth.entity';
+import { UserAuth } from './user-auth.entity';
 import { Preference } from './preference.entity';
 
-@Entity({ name: 'trainee_profile' })
-export class TraineeProfile {
+@Entity({ name: 'trainer_profile' })
+export class TrainerProfile {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -23,6 +23,9 @@ export class TraineeProfile {
 
   @Column()
   lastname: string;
+
+  @Column()
+  cid: string;
 
   @Column()
   gender: string;
@@ -38,9 +41,9 @@ export class TraineeProfile {
 
   @ManyToMany(() => Preference, { cascade: true })
   @JoinTable({
-    name: 'trainee_preference',
+    name: 'trainer_preference',
     joinColumn: {
-      name: 'trainee_id',
+      name: 'trainer_id',
       referencedColumnName: 'id',
     },
     inverseJoinColumn: {

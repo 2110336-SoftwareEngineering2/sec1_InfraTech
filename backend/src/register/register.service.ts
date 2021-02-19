@@ -8,13 +8,13 @@ import { Connection, In, Repository } from 'typeorm';
 
 import { RegisterFormDto } from './dtos/register-form-dto';
 import { UserAuth } from '../entities/user-auth.entity';
-import { TrainerProfile } from './entities/trainer-profile.entity';
-import { TraineeProfile } from './entities/trainee-profile.entity';
+import { TrainerProfile } from '../entities/trainer-profile.entity';
+import { TraineeProfile } from '../entities/trainee-profile.entity';
 import { UserType } from './enums/user-type.enum';
 import { UserAuthRepository } from './repositories/user-auth.repository';
 import { TrainerProfileRepository } from './repositories/trainer-profile.repository';
 import { TraineeProfileRepository } from './repositories/trainee-profile.repository';
-import { Preference } from './entities/preference.entity';
+import { Preference } from '../entities/preference.entity';
 
 @Injectable()
 export class RegisterService {
