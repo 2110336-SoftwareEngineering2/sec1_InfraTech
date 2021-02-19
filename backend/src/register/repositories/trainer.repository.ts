@@ -1,15 +1,15 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { RegisterFormDto } from '../dtos/register-form-dto';
-import { TrainerProfile } from '../entities/trainer-profile.entity';
+import { Trainer } from '../entities/trainer.entity';
 import { Preference } from '../entities/preference.entity';
 
-@EntityRepository(TrainerProfile)
-export class TrainerProfileRepository extends Repository<TrainerProfile> {
+@EntityRepository(Trainer)
+export class TrainerRepository extends Repository<Trainer> {
   createUsingRegisterForm(
     userId: string,
     registerFormDto: RegisterFormDto,
     preferences: Preference[],
-  ): TrainerProfile {
+  ): Trainer {
     const {
       firstname,
       lastname,
