@@ -2,22 +2,37 @@ import React from 'react';
 import { useCookies } from 'react-cookie';
 import { Form } from 'antd';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
+import axios from 'axios';
 
+import useUser from '../lib/useUser';
 import LoginForm from '../components/LoginForm';
 import Footer from '../components/Footer';
 
-// TODO: Implement responsive handling
 const Login = () => {
   const [form] = Form.useForm();
-  const router = useRouter();
-  const [cookie, setCookie] = useCookies(['user']);
+  const [cookie, setCookie] = useCookies([process.env.NEXT_PUBLIC_COOKIE_NAME]);
+  const { user, mutateUser } = useUser({
+    redirectTo: '/',
+    redirectIfFound: true,
+  });
 
   // TODO: Connect to login API
-  const handleSubmit = ({ email, password }) => {
-    // console.log({ email, password });
-    setCookie('user', email, { path: '/', maxAge: 3600 });
-    router.push('/');
+  const handleSubmit = async ({ email, password }) => {
+    try {
+      const { data } = await axios.post('/api/login', {
+        email,
+        password,
+      });
+      if (data?.token) {
+        setCookie(process.env.NEXT_PUBLIC_COOKIE_NAME, data.token, {
+          path: '/',
+          maxAge: 3600,
+        });
+        mutateUser();
+      }
+    } catch (error) {
+      console.error('An unexpected error happened:', error);
+    }
   };
 
   return (

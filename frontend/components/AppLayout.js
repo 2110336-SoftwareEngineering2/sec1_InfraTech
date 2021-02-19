@@ -8,23 +8,18 @@ import { USER_TYPE } from '../config/UserType.config';
 
 const { Content } = Layout;
 
-const AppLayout = ({ userInfo, children }) => {
+const AppLayout = ({ user, mutateUser, children }) => {
   const [collapsed, setCollapsed] = useState(false);
-  const [userType, setUserType] = useState(
-    Object.values(USER_TYPE).includes(userInfo?.userType)
-      ? userInfo?.userType
-      : USER_TYPE.GUEST,
-  );
 
   return (
     <Layout>
-      <Sider collapsed={collapsed} userType={userType} />
+      <Sider collapsed={collapsed} userType={user?.userType ?? USER_TYPE.GUEST} />
       <Layout>
         <Header
-          username={userInfo?.firstname}
-          profileImageUrl={userInfo?.profileImageUrl}
+          username={user?.firstname}
+          profileImageUrl={user?.profileImageUrl}
           clickMenu={() => setCollapsed(!collapsed)}
-          handleSignOut={() => setUserType(USER_TYPE.GUEST)}
+          handleSignOut={mutateUser}
         />
         <Content>{children}</Content>
         <Footer />
