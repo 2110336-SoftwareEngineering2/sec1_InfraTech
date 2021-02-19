@@ -8,8 +8,7 @@ CREATE TABLE user (
 );
 
 CREATE TABLE trainer (
-    id VARCHAR(36) PRIMARY KEY,
-    user_id VARCHAR(36),
+    user_id VARCHAR(36) PRIMARY KEY,
     firstname VARCHAR(255),
     lastname VARCHAR(255),
     gender VARCHAR(10),
@@ -21,8 +20,7 @@ CREATE TABLE trainer (
 );
 
 CREATE TABLE trainee (
-    id VARCHAR(36) PRIMARY KEY,
-    user_id VARCHAR(36),
+    user_id VARCHAR(36) PRIMARY KEY,
     firstname VARCHAR(255),
     lastname VARCHAR(255),
     gender VARCHAR(10),
