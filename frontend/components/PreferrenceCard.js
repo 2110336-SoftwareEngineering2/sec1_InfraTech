@@ -1,19 +1,17 @@
 import { CheckCircleFilled } from '@ant-design/icons';
-import { useState } from 'react';
 import Image from 'next/image';
 
-const PreferrenceCard = ({ url, description, alt }) => {
-  const [click, setClick] = useState(false);
+const PreferrenceCard = ({ flag, click, url, description, alt }) => {
   return (
     <div
-      className={`w-60 h-60 relative flex flex-col justify-center items-between rounded-md pt-2 border-2 bg-white ${
-        click ? ' border-blue' : 'border-black'
+      className={`w-60 h-60 relative flex flex-col justify-center items-between rounded-md pt-2 border-2 m-5 bg-white ${
+        flag ? ' border-blue' : 'border-gray-300'
       }`}
       onClick={() => {
-        setClick(!click);
+        click();
       }}
     >
-      {click && (
+      {flag && (
         <CheckCircleFilled className="absolute text-blue text-base top-3 right-3 z-10" />
       )}
       <div className="w-full h-48 relative rounded-md z-0 overflow-hidden">
@@ -26,3 +24,4 @@ const PreferrenceCard = ({ url, description, alt }) => {
   );
 };
 export default PreferrenceCard;
+
