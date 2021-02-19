@@ -9,8 +9,8 @@ import {
 import { User } from '../../entities/user.entity';
 import { Preference } from './preference.entity';
 
-@Entity({ name: 'trainer_profile' })
-export class TrainerProfile {
+@Entity({ name: 'trainer' })
+export class Trainer {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 

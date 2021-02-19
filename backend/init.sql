@@ -7,7 +7,7 @@ CREATE TABLE user (
     salt VARCHAR(255)
 );
 
-CREATE TABLE trainer_profile (
+CREATE TABLE trainer (
     id VARCHAR(36) PRIMARY KEY,
     user_id VARCHAR(36),
     firstname VARCHAR(255),
@@ -17,7 +17,7 @@ CREATE TABLE trainer_profile (
     birthdate DATETIME,
     cid VARCHAR(13),
     profile_image_url VARCHAR(255),
-    CONSTRAINT FK_trainer_profile_user_id FOREIGN KEY (user_id) REFERENCES user_auth(id) ON DELETE CASCADE
+    CONSTRAINT FK_trainer_user_id FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
 );
 
 CREATE TABLE trainee_profile (
@@ -29,7 +29,7 @@ CREATE TABLE trainee_profile (
     phone_number VARCHAR(15),
     birthdate DATETIME,
     profile_image_url VARCHAR(255),
-    CONSTRAINT FK_trainee_profile_user_id FOREIGN KEY (user_id) REFERENCES user_auth(id) ON DELETE CASCADE
+    CONSTRAINT FK_trainee_profile_user_id FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
 );
 
 CREATE TABLE preference (
@@ -46,7 +46,7 @@ CREATE TABLE trainer_preference (
     trainer_id VARCHAR(36),
     preference_id VARCHAR(36),
     CONSTRAINT PK_user_preference PRIMARY KEY (trainer_id, preference_id),
-    CONSTRAINT FK_user_trainer_preference_trainer_id FOREIGN KEY (trainer_id) REFERENCES trainer_profile(id) ON DELETE CASCADE,
+    CONSTRAINT FK_user_trainer_preference_trainer_id FOREIGN KEY (trainer_id) REFERENCES trainer(id) ON DELETE CASCADE,
     CONSTRAINT FK_user_trainer_preference_preference_id FOREIGN KEY (preference_id) REFERENCES preference(id) ON DELETE CASCADE
 );
 
