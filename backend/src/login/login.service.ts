@@ -82,7 +82,7 @@ export class LoginService {
         type = traineeProfile ? "trainee" : "trainer";
       }
   
-      return this.generateToken(userAuth.email);
+      return this.generateToken(userAuth.email, type);
     } catch (error) {
       throw new NotFoundException();
     }
