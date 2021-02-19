@@ -23,7 +23,10 @@ const CreateAccountForm = ({ getState, setState, size, current, next }) => {
         onFinish={onContinue}
       >
         <Form.Item name="email" hasFeedback rules={
-          [{type: 'email', message: 'Email format is incorrect'}, {required: true, message: 'Please provide an email.'}]
+          [
+            {type: 'email', message: 'Email format is incorrect'}, 
+            {required: true, message: 'Please provide an email.'}
+          ]
         }>
           <Input type="email" placeholder="Email" />
         </Form.Item>
@@ -35,12 +38,15 @@ const CreateAccountForm = ({ getState, setState, size, current, next }) => {
         </Form.Item>
 
         <Form.Item name="confirm" hasFeedback dependencies={['password']} rules={
-          [{required: true, message: 'Please confirm your password.'}, ({ getFieldValue}) => ({
-            validator(_, value) {
-              if (!value || getFieldValue('password') === value) return Promise.resolve();
-              return Promise.reject('Password does not match.')
-            }
-          })]
+          [
+            {required: true, message: 'Please confirm your password.'}, 
+            ({getFieldValue}) => ({
+              validator(_, value) {
+                if (!value || getFieldValue('password') === value) return Promise.resolve();
+                return Promise.reject('Password does not match.')
+              }
+            })
+          ]
         }>
           <Input.Password placeholder="Confirm Password" />
         </Form.Item>
