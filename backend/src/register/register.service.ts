@@ -33,21 +33,22 @@ export class RegisterService {
   async register(registerFormDto: RegisterFormDto): Promise<User> {
     const { userType, preferences } = registerFormDto;
 
-    const user = await this.userRepository.createUsingRegisterForm(
-      registerFormDto,
-    );
-
     const selectedPreferences = await this.preferenceRepository.find({
       where: { id: In(preferences) },
     });
+
+    const user = await this.userRepository.createUsingRegisterForm(
+      registerFormDto,
+      selectedPreferences,
+    );
 
     const queryRunner = this.connection.createQueryRunner();
     await queryRunner.connect();
     await queryRunner.startTransaction();
 
     try {
-      const result = await queryRunner.manager.insert(User, user);
-      const userId = result.identifiers[0].id;
+      const result = await queryRunner.manager.save(User, user);
+      const userId = result.id;
 
       const ProfileEntity = userType === UserType.Trainer ? Trainer : Trainee;
       const profile =
@@ -55,17 +56,18 @@ export class RegisterService {
           ? this.trainerRepository.createUsingRegisterForm(
               userId,
               registerFormDto,
-              selectedPreferences,
             )
           : this.traineeRepository.createUsingRegisterForm(
               userId,
               registerFormDto,
-              selectedPreferences,
             );
 
       await queryRunner.manager.save(ProfileEntity, profile);
 
       await queryRunner.commitTransaction();
+
+      // TODO: return view entity (User but exclude preferences)
+      return result;
     } catch (error) {
       await queryRunner.rollbackTransaction();
 
@@ -75,8 +77,5 @@ export class RegisterService {
         throw new InternalServerErrorException();
       }
     }
-
-    // TODO: return view entity (User join with Profile)
-    return user;
   }
 }
