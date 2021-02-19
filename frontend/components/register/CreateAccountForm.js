@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Form, Input } from 'antd';
+import Image from 'next/image';
 import { rule } from 'postcss';
 
 const CreateAccountForm = ({ getState, setState, size, current, next }) => {
@@ -12,12 +13,17 @@ const CreateAccountForm = ({ getState, setState, size, current, next }) => {
     next();
   };
   return (
-    <div>
+    <div className="flex justify-between">
+      <div className="hidden md:block mt-0 lg:mt-8">
+        <Image src="/register.svg" width={240} height={300} />
+      </div>
+      <div className="mx-8 md:mx-12">
       <div>
         Step {current} of {size}
       </div>
-      <div>Create Account</div>
+      <div className="text-3xl sm:text-4xl font-bold">Create Account</div>
       <Form
+        className="mt-6"
         form={form}
         initialValues={getState('create-account', {})}
         onFinish={onContinue}
@@ -57,6 +63,7 @@ const CreateAccountForm = ({ getState, setState, size, current, next }) => {
           </Button>
         </Form.Item>
       </Form>
+      </div>
     </div>
   );
 };
