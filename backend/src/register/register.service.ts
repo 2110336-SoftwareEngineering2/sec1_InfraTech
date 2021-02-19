@@ -22,7 +22,7 @@ export class RegisterService {
     @InjectRepository(User)
     private userRepository: UserRepository,
     @InjectRepository(Trainer)
-    private trainerProfileRepository: TrainerRepository,
+    private trainerRepository: TrainerRepository,
     @InjectRepository(TraineeProfile)
     private traineeProfileRepository: TraineeProfileRepository,
     @InjectRepository(Preference)
@@ -53,7 +53,7 @@ export class RegisterService {
         userType === UserType.Trainer ? Trainer : TraineeProfile;
       const profile =
         userType === UserType.Trainer
-          ? this.trainerProfileRepository.createUsingRegisterForm(
+          ? this.trainerRepository.createUsingRegisterForm(
               userId,
               registerFormDto,
               selectedPreferences,
