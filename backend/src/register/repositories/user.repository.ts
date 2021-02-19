@@ -1,16 +1,16 @@
 import { EntityRepository, Repository } from 'typeorm';
-import { UserAuth } from '../../entities/user-auth.entity';
+import { User } from '../../entities/user.entity';
 import { RegisterFormDto } from '../dtos/register-form-dto';
 import * as bcrypt from 'bcryptjs';
 
-@EntityRepository(UserAuth)
-export class UserAuthRepository extends Repository<UserAuth> {
+@EntityRepository(User)
+export class UserRepository extends Repository<User> {
   async createUsingRegisterForm(
     registerFormDto: RegisterFormDto,
-  ): Promise<UserAuth> {
+  ): Promise<User> {
     const { email, password } = registerFormDto;
-    const userAuth = this.create();
-    userAuth.email = email;
+    const user = this.create();
+    user.email = email;
     // TODO: refactor duplicate hash logic
     // #region hash password
     const saltRounds = 10;
@@ -29,13 +29,13 @@ export class UserAuthRepository extends Repository<UserAuth> {
             return;
           }
 
-          userAuth.password = hash;
-          userAuth.salt = salt;
+          user.password = hash;
+          user.salt = salt;
           resolve();
         });
       });
     });
     //#endregion
-    return userAuth;
+    return user;
   }
 }

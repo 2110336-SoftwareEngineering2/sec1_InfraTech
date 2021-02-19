@@ -1,7 +1,7 @@
 import { Entity, Column, JoinColumn, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity({ name: 'user_auth' })
-export class UserAuth {
+@Entity({ name: 'user' })
+export class User {
   @PrimaryGeneratedColumn('uuid')
   @JoinColumn()
   id: string;
