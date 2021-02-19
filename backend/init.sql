@@ -1,6 +1,6 @@
 USE letx;
 
-CREATE TABLE user_auth (
+CREATE TABLE user (
     id VARCHAR(36) PRIMARY KEY,
     email VARCHAR(255) UNIQUE,
     password VARCHAR(255),
@@ -33,7 +33,7 @@ CREATE TABLE trainee_profile (
 );
 
 CREATE TABLE preference (
-	id VARCHAR(36) PRIMARY KEY,
+    id VARCHAR(36) PRIMARY KEY,
     name VARCHAR(255),
     svg_url VARCHAR(255)
 );
@@ -43,16 +43,16 @@ INSERT INTO preference (id, name, svg_url) VALUES (UUID(), "Flexibility", "http:
 INSERT INTO preference (id, name, svg_url) VALUES (UUID(), "Strength", "http://www.svg.com/strength");
 
 CREATE TABLE trainer_preference (
-	trainer_id VARCHAR(36),
-	preference_id VARCHAR(36),
+    trainer_id VARCHAR(36),
+    preference_id VARCHAR(36),
     CONSTRAINT PK_user_preference PRIMARY KEY (trainer_id, preference_id),
     CONSTRAINT FK_user_trainer_preference_trainer_id FOREIGN KEY (trainer_id) REFERENCES trainer_profile(id) ON DELETE CASCADE,
     CONSTRAINT FK_user_trainer_preference_preference_id FOREIGN KEY (preference_id) REFERENCES preference(id) ON DELETE CASCADE
 );
 
 CREATE TABLE trainee_preference (
-	trainee_id VARCHAR(36),
-	preference_id VARCHAR(36),
+    trainee_id VARCHAR(36),
+    preference_id VARCHAR(36),
     CONSTRAINT PK_user_preference PRIMARY KEY (trainee_id, preference_id),
     CONSTRAINT FK_user_trainee_preference_trainee_id FOREIGN KEY (trainee_id) REFERENCES trainee_profile(id) ON DELETE CASCADE,
     CONSTRAINT FK_user_trainee_preference_preference_id FOREIGN KEY (preference_id) REFERENCES preference(id) ON DELETE CASCADE
