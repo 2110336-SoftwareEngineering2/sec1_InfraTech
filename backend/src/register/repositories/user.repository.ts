@@ -1,7 +1,7 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { User } from '../../entities/user.entity';
 import { RegisterFormDto } from '../dtos/register-form-dto';
-import { Preference } from '../../preferences/entities/preference.entity';
+import { Preference } from '../../preference/entities/preference.entity';
 import * as bcrypt from 'bcryptjs';
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
