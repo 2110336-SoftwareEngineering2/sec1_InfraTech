@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button, Form, Input } from 'antd';
-import { rule } from 'postcss';
 
 const CreateAccountForm = ({ getState, setState, size, current, next }) => {
   const [form] = Form.useForm();
