@@ -4,6 +4,7 @@ import { Form } from 'antd';
 import Image from 'next/image';
 import axios from 'axios';
 
+import { REDIRECT_CONDITION } from '../config/RedirectCondition.config';
 import useUser from '../lib/useUser';
 import LoginForm from '../components/LoginForm';
 import Footer from '../components/Footer';
@@ -13,7 +14,7 @@ const Login = () => {
   const [cookie, setCookie] = useCookies([process.env.NEXT_PUBLIC_COOKIE_NAME]);
   const { user, mutateUser } = useUser({
     redirectTo: '/',
-    redirectIfFound: true,
+    redirectWhen: REDIRECT_CONDITION.USER_FOUND,
   });
 
   // TODO: Connect to login API
@@ -26,7 +27,7 @@ const Login = () => {
       if (data?.token) {
         setCookie(process.env.NEXT_PUBLIC_COOKIE_NAME, data.token, {
           path: '/',
-          maxAge: 3600,
+          maxAge: 250000, // around three days
         });
         mutateUser();
       }

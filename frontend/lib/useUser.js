@@ -4,9 +4,11 @@ import useSWR from 'swr';
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
 
+import { REDIRECT_CONDITION } from '../config/RedirectCondition.config';
+
 export default function useUser({
-  redirectTo = false,
-  redirectIfFound = false,
+  redirectTo = null,
+  redirectWhen = REDIRECT_CONDITION.USER_NOT_FOUND,
 } = {}) {
   const [token] = useCookies([process.env.NEXT_PUBLIC_COOKIE_NAME]);
 
@@ -25,18 +27,15 @@ export default function useUser({
   );
 
   useEffect(() => {
-    // if no redirect needed, just return (example: already on /dashboard)
-    // if user data not yet there (fetch in progress, logged in or not) then don't do anything yet
-    // if (!redirectTo || !user) return;
-    if (
-      // If redirectTo is set, redirect if the user was not found.
-      (redirectTo && !redirectIfFound && !user) ||
-      // If redirectIfFound is also set, redirect if the user was found
-      (redirectIfFound && user)
-    ) {
+    const redirectAsUserFound =
+      user?.firstname && redirectWhen === REDIRECT_CONDITION.USER_FOUND;
+    const redirectAsUserNotFound =
+      !user?.firstname && redirectWhen === REDIRECT_CONDITION.USER_NOT_FOUND;
+
+    if (redirectTo && (redirectAsUserNotFound || redirectAsUserFound)) {
       Router.push(redirectTo);
     }
-  }, [user, redirectIfFound, redirectTo]);
+  }, [user, redirectWhen, redirectTo]);
 
   return { user, mutateUser };
 }
