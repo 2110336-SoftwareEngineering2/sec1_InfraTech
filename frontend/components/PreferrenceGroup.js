@@ -1,22 +1,13 @@
 import PreferrenceCard from './PreferrenceCard';
 import { useState } from 'react';
+import { Form } from 'antd';
 
-const PreferrenceGroup = () => {
-  const [prop1, setProp1] = useState(false);
-  const [prop2, setProp2] = useState(false);
-  const [prop3, setProp3] = useState(false);
-  const [prop4, setProp4] = useState(false);
-  const click1 = () => {
-    setProp1(!prop1);
-  };
-  const click2 = () => {
-    setProp2(!prop2);
-  };
-  const click3 = () => {
-    setProp3(!prop3);
-  };
-  const click4 = () => {
-    setProp4(!prop4);
+const PreferrenceGroup = ({ value = {} }) => {
+  const [flag, setFlag] = useState([false, false, false, false]);
+  const click = (num) => {
+    const newValue = [...flag];
+    newValue[num] = !flag[num];
+    setFlag(newValue);
   };
   return (
     <div className="h-3/4 flex flex-row justify-between bg-white">
@@ -24,28 +15,28 @@ const PreferrenceGroup = () => {
         <PreferrenceCard
           url="/a.jpg"
           description="success"
-          flag={prop1}
-          click={click1}
+          flag={flag[0]}
+          click={() => click(0)}
         />
         <PreferrenceCard
           url="/a.jpg"
           description="success"
-          flag={prop2}
-          click={click2}
+          flag={flag[1]}
+          click={() => click(1)}
         />
       </div>
       <div className="flex flex-col ">
         <PreferrenceCard
           url="/a.jpg"
           description="success"
-          flag={prop3}
-          click={click3}
+          flag={flag[2]}
+          click={() => click(2)}
         />
         <PreferrenceCard
           url="/a.jpg"
           description="success"
-          flag={prop4}
-          click={click4}
+          flag={flag[3]}
+          click={() => click(3)}
         />
       </div>
     </div>
