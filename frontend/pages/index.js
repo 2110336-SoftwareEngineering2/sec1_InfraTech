@@ -1,31 +1,15 @@
-import cookie from 'cookie';
+import useUser from '../lib/useUser';
 import AppLayout from '../components/AppLayout';
 
-const Landing = ({ userInfo }) => (
-  <AppLayout userInfo={userInfo}>
-    <div className="min-h-screen flex justify-center pt-40 font-bold text-4xl">
-      Content
-    </div>
-  </AppLayout>
-);
-
-export async function getServerSideProps({ req }) {
-  const data = cookie.parse(
-    req ? req.headers.cookie || '' : document.cookie,
+const Landing = () => {
+  const { user = {}, mutateUser } = useUser({ redirectTo: '/' });
+  return (
+    <AppLayout user={user} mutateUser={mutateUser}>
+      <div className="min-h-screen flex justify-center pt-40 font-bold text-4xl">
+        Content
+      </div>
+    </AppLayout>
   );
-
-  // TODO: fetch user info from server
-  const mockUserInfo = {
-    firstname: "Somluck",
-    lastname: "Kamsing",
-    profileImageUrl: "https://www.aceshowbiz.com/images/photo/john_cena.jpg",
-    userType: "trainer"
-  }
-  const userInfo = data?.user ? mockUserInfo : null
-  
-  return {
-    props: { userInfo },
-  };
 };
 
 export default Landing;
