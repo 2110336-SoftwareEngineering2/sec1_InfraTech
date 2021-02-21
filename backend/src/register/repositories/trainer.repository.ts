@@ -1,18 +1,17 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { RegisterFormDto } from '../dtos/register-form-dto';
-import { TraineeProfile } from '../entities/trainee-profile.entity';
-import { Preference } from '../entities/preference.entity';
+import { Trainer } from '../entities/trainer.entity';
 
-@EntityRepository(TraineeProfile)
-export class TraineeProfileRepository extends Repository<TraineeProfile> {
+@EntityRepository(Trainer)
+export class TrainerRepository extends Repository<Trainer> {
   createUsingRegisterForm(
     userId: string,
     registerFormDto: RegisterFormDto,
-    preferences: Preference[],
-  ): TraineeProfile {
+  ): Trainer {
     const {
       firstname,
       lastname,
+      cid,
       gender,
       birthdate,
       phoneNumber,
@@ -24,11 +23,11 @@ export class TraineeProfileRepository extends Repository<TraineeProfile> {
     profile.userId = userId;
     profile.firstname = firstname;
     profile.lastname = lastname;
+    profile.cid = cid;
     profile.gender = gender;
     profile.birthdate = birthdate;
     profile.phoneNumber = phoneNumber;
     profile.profileImageUrl = profileImageUrl;
-    profile.preferences = preferences;
 
     return profile;
   }
