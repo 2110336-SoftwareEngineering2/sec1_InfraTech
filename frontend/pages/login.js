@@ -13,7 +13,6 @@ const COOKIE_NAME = process.env.NEXT_PUBLIC_COOKIE_NAME || 'letx_token'
 const API_HOST = process.env.NEXT_PUBLIC_LETX_API_HOST || 'http://localhost:3001'
 
 const Login = () => {
-  const [form] = Form.useForm();
   const [cookie, setCookie] = useCookies([COOKIE_NAME]);
   const { user, mutateUser } = useUser({
     redirectTo: '/',
@@ -48,7 +47,7 @@ const Login = () => {
           </div>
           <div className="mx-8 md:mx-12 my-10 text-3xl sm:text-4xl font-bold">
             Welcome Back!
-            <LoginForm form={form} onSubmit={handleSubmit} />
+            <LoginForm onSubmit={handleSubmit} />
           </div>
         </div>
       </div>

@@ -1,13 +1,8 @@
 import { Form, Input, Button } from 'antd';
 
-const LoginForm = ({ form, onSubmit }) => {
+const LoginForm = ({ onSubmit }) => {
   return (
-    <Form
-      className="mt-6 w-60 md:w-80"
-      layout='vertical'
-      form={form}
-      onFinish={onSubmit}
-    >
+    <Form className="mt-6 w-60 md:w-80" layout="vertical" onFinish={onSubmit}>
       <Form.Item
         name="email"
         rules={[{ required: true, message: 'Please input your email' }]}
