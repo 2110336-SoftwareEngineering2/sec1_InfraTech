@@ -1,26 +1,39 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { Button, Form, Radio, Card, Row } from 'antd';
+import { Button, Form, Radio, Row } from 'antd';
 
-const { Meta } = Card;
+import SelectionCard from '../SelectionCard';
+
+const SelectRoleInput = ({ value , onChange }) => {
+  const onClick = role => {
+    if (onChange) {
+      onChange(role);
+    }
+  }
+  return (
+    <Row gutter={6}>
+      <SelectionCard flag={value=="trainer"} imageUrl="/trainer.svg" description="Trainer" onClick={() => onClick("trainer")}/>
+      <SelectionCard flag={value=="trainee"} imageUrl="/trainee.svg" description="Trainee" onClick={() => onChange("trainee")}/>
+    </Row>
+  );
+};
 
 // NOTE: draft version
 const SelectRoleForm = ({ getState, setState, size, current, prev, next }) => {
   const [form] = Form.useForm();
-  const [role, setRole] = useState(getState('select-role', { role: 'trainer' }).role)
 
   const onContinue = (values) => {
     // TODO: remove console.log
-    console.log(role);
-    setState('select-role', {role: role});
+    console.log(values);
+    setState('select-role', values);
     next();
   };
 
   const onBack = () => {
-    //const values = form.getFieldsValue();
+    const values = form.getFieldsValue();
     // TODO: remove console.log
-    //console.log(values);
-    setState('select-role', {role: role});
+    console.log(values);
+    setState('select-role', values);
     prev();
   };
   console.log(role)
@@ -36,14 +49,9 @@ const SelectRoleForm = ({ getState, setState, size, current, prev, next }) => {
         initialValues={getState('select-role', { role: 'trainer' })}
         onFinish={onContinue}
       >
-        <Row gutter={6}>
-          <Card onClick={() => setRole("trainer")} style={{ width: 240 }} className={role == "trainer" ? "p-3 m-5 rounded-lg border-blue":"p-3 m-5 rounded-lg border-gray"} cover={<Image src="/trainer.svg" width={240} height={180} />}>
-            <Meta title={<p className={role == "trainer" ? "text-blue" : null}>Trainer</p>} className="text-center"/>
-          </Card>
-          <Card onClick={() => setRole("trainee")} style={{ width: 240 }} className={role == "trainee" ? "p-3 m-5 rounded-lg border-blue":"p-3 m-5 rounded-lg border-gray"} cover={<Image src="/trainee.svg" width={240} height={180} />}>
-            <Meta title={<p className={role == "trainee" ? "text-blue" : null}>Trainee</p>} className="text-center"/>
-          </Card>
-        </Row>
+        <Form.Item name="role">
+          <SelectRoleInput/>
+        </Form.Item>
         <Form.Item className="text-center">
           <Button onClick={onBack} className="w-24 m-2">Back</Button>
           <Button type="primary" htmlType="submit" className="w-24 m-2">

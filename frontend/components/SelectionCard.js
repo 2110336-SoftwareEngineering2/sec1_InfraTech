@@ -1,7 +1,7 @@
 import { CheckCircleFilled } from '@ant-design/icons';
 import Image from 'next/image';
 
-const PreferrenceCard = ({ flag, onClick, imageUrl, description}) => {
+const SelectionCard = ({ flag, onClick, imageUrl, description}) => {
   return (
     <div
       className={`w-60 h-60 relative flex flex-col justify-center items-between rounded-md pt-2 border-2 m-5 bg-white ${
@@ -21,5 +21,5 @@ const PreferrenceCard = ({ flag, onClick, imageUrl, description}) => {
     </div>
   );
 };
-export default PreferrenceCard;
+export default SelectionCard;
 
