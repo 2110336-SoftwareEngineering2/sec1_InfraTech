@@ -38,13 +38,13 @@ const GuestHeader = () => (
 );
 
 const NonGuestHeader = ({ username, profileImageUrl, handleSignOut }) => {
-  const [cookies, setCookie, removeCookie] = useCookies(['user']);
-
-  console.log(profileImageUrl);
+  const [cookies, setCookie, removeCookie] = useCookies([
+    process.env.NEXT_PUBLIC_COOKIE_NAME,
+  ]);
 
   // TODO: Connect to logout API
   const onClick = () => {
-    removeCookie('user', { path: '/' });
+    removeCookie(process.env.NEXT_PUBLIC_COOKIE_NAME, { path: '/' });
     handleSignOut();
   };
 

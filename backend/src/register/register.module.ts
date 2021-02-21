@@ -2,16 +2,16 @@ import { Module } from '@nestjs/common';
 import { RegisterController } from './register.controller';
 import { RegisterService } from './register.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserAuthRepository } from './repositories/user-auth.repository';
-import { TrainerProfileRepository } from './repositories/trainer-profile.repository';
-import { TraineeProfileRepository } from './repositories/trainee-profile.repository';
-import { Preference } from '../entities/preference.entity';
+import { UserRepository } from './repositories/user.repository';
+import { TrainerRepository } from './repositories/trainer.repository';
+import { TraineeRepository } from './repositories/trainee.repository';
+import { Preference } from './entities/preference.entity';
 @Module({
   imports: [
     TypeOrmModule.forFeature([
-      UserAuthRepository,
-      TrainerProfileRepository,
-      TraineeProfileRepository,
+      UserRepository,
+      TrainerRepository,
+      TraineeRepository,
       Preference,
     ]),
   ],

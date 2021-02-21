@@ -7,66 +7,67 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Connection, In, Repository } from 'typeorm';
 
 import { RegisterFormDto } from './dtos/register-form-dto';
-import { UserAuth } from '../entities/user-auth.entity';
-import { TrainerProfile } from '../entities/trainer-profile.entity';
-import { TraineeProfile } from '../entities/trainee-profile.entity';
+import { User } from '../entities/user.entity';
+import { Trainer } from './entities/trainer.entity';
+import { Trainee } from './entities/trainee.entity';
 import { UserType } from './enums/user-type.enum';
-import { UserAuthRepository } from './repositories/user-auth.repository';
-import { TrainerProfileRepository } from './repositories/trainer-profile.repository';
-import { TraineeProfileRepository } from './repositories/trainee-profile.repository';
-import { Preference } from '../entities/preference.entity';
+import { UserRepository } from './repositories/user.repository';
+import { TrainerRepository } from './repositories/trainer.repository';
+import { TraineeRepository } from './repositories/trainee.repository';
+import { Preference } from './entities/preference.entity';
 
 @Injectable()
 export class RegisterService {
   constructor(
-    @InjectRepository(UserAuth)
-    private userAuthRepository: UserAuthRepository,
-    @InjectRepository(TrainerProfile)
-    private trainerProfileRepository: TrainerProfileRepository,
-    @InjectRepository(TraineeProfile)
-    private traineeProfileRepository: TraineeProfileRepository,
+    @InjectRepository(User)
+    private userRepository: UserRepository,
+    @InjectRepository(Trainer)
+    private trainerRepository: TrainerRepository,
+    @InjectRepository(Trainee)
+    private traineeRepository: TraineeRepository,
     @InjectRepository(Preference)
     private preferenceRepository: Repository<Preference>,
     private connection: Connection,
   ) {}
 
-  async register(registerFormDto: RegisterFormDto): Promise<UserAuth> {
+  async register(registerFormDto: RegisterFormDto): Promise<User> {
     const { userType, preferences } = registerFormDto;
-
-    const userAuth = await this.userAuthRepository.createUsingRegisterForm(
-      registerFormDto,
-    );
 
     const selectedPreferences = await this.preferenceRepository.find({
       where: { id: In(preferences) },
     });
+
+    const user = await this.userRepository.createUsingRegisterForm(
+      registerFormDto,
+      selectedPreferences,
+    );
 
     const queryRunner = this.connection.createQueryRunner();
     await queryRunner.connect();
     await queryRunner.startTransaction();
 
     try {
-      const result = await queryRunner.manager.insert(UserAuth, userAuth);
-      const userId = result.identifiers[0].id;
+      const result = await queryRunner.manager.save(User, user);
+      const userId = result.id;
 
-      const ProfileEntity =
-        userType === UserType.Trainer ? TrainerProfile : TraineeProfile;
+      const ProfileEntity = userType === UserType.Trainer ? Trainer : Trainee;
       const profile =
         userType === UserType.Trainer
-          ? this.trainerProfileRepository.createUsingRegisterForm(
+          ? this.trainerRepository.createUsingRegisterForm(
               userId,
               registerFormDto,
-              selectedPreferences,
             )
-          : this.traineeProfileRepository.createUsingRegisterForm(
+          : this.traineeRepository.createUsingRegisterForm(
               userId,
               registerFormDto,
-              selectedPreferences,
             );
 
       await queryRunner.manager.save(ProfileEntity, profile);
 
       await queryRunner.commitTransaction();
+
+      // TODO: return view entity (User but exclude preferences)
+      return result;
     } catch (error) {
       await queryRunner.rollbackTransaction();
 
@@ -76,8 +77,5 @@ export class RegisterService {
         throw new InternalServerErrorException();
       }
     }
-
-    // TODO: return view entity (UserAuth join with Profile)
-    return userAuth;
   }
 }

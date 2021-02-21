@@ -1,18 +1,61 @@
 import React from 'react';
-import { Button } from 'antd';
+import { Button, Checkbox, Form } from 'antd';
 
-// NOTE: draft version
-const SelectPreferencesForm = ({ size, current, prev, next }) => {
+const SelectPreferencesForm = ({
+  getState,
+  setState,
+  size,
+  current,
+  prev,
+  next,
+}) => {
+  const [form] = Form.useForm();
+
+  const onContinue = (values) => {
+    // TODO: remove console.log
+    console.log(values);
+    setState('select-preferences', values);
+    next();
+  };
+
+  const onBack = () => {
+    const values = form.getFieldsValue();
+    // TODO: remove console.log
+    console.log(values);
+    setState('select-preferences', values);
+    prev();
+  };
+
+  const preferenceOptions = [
+    { label: 'Cardiovascular', value: 'cardiovascular' },
+    { label: 'Balance', value: 'balance' },
+    { label: 'Flexibility', value: 'flexibility' },
+    { label: 'Strength', value: 'strength' },
+  ];
+
   return (
     <div>
       <div>
         Step {current} of {size}
       </div>
       <div>Select Preferences</div>
-      <Button onClick={prev}>Back</Button>
-      <Button type="primary" onClick={next}>
-        Continue
-      </Button>
+      <Form
+        form={form}
+        initialValues={getState('select-preferences', { preferences: [] })}
+        onFinish={onContinue}
+      >
+        <Form.Item name="preferences">
+          <Checkbox.Group options={preferenceOptions} />
+        </Form.Item>
+        <Form.Item>
+          <Button onClick={onBack}>Back</Button>
+        </Form.Item>
+        <Form.Item>
+          <Button type="primary" htmlType="submit">
+            Continue
+          </Button>
+        </Form.Item>
+      </Form>
     </div>
   );
 };

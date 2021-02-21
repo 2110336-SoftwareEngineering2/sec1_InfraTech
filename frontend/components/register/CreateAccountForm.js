@@ -1,35 +1,61 @@
 import React from 'react';
-import { Button, Input } from 'antd';
+import { Button, Form, Input } from 'antd';
 
-// NOTE: draft version
-const CreateAccountForm = ({ getState, handleChange, size, current, next }) => {
+const CreateAccountForm = ({ getState, setState, size, current, next }) => {
+  const [form] = Form.useForm();
+
+  const onContinue = (values) => {
+    // TODO: remove console.log
+    console.log(values);
+    setState('create-account', values);
+    next();
+  };
   return (
     <div>
       <div>
         Step {current} of {size}
       </div>
       <div>Create Account</div>
-      <Input
-        name="email"
-        placeholder="Email"
-        value={getState('email', '')}
-        onChange={handleChange}
-      />
-      <Input
-        name="password"
-        placeholder="Password"
-        value={getState('password', '')}
-        onChange={handleChange}
-      />
-      <Input
-        name="confirmPassword"
-        placeholder="Confirm Password"
-        value={getState('confirmPassword', '')}
-        onChange={handleChange}
-      />
-      <Button type="primary" onClick={next}>
-        Continue
-      </Button>
+      <Form
+        form={form}
+        initialValues={getState('create-account', {})}
+        onFinish={onContinue}
+      >
+        <Form.Item name="email" hasFeedback rules={
+          [
+            {type: 'email', message: 'Email format is incorrect'}, 
+            {required: true, message: 'Please provide an email.'}
+          ]
+        }>
+          <Input type="email" placeholder="Email" />
+        </Form.Item>
+
+        <Form.Item name="password" hasFeedback rules={
+          [{required: true, message: 'Please specify password.'}]
+        }>
+          <Input.Password placeholder="Password" />
+        </Form.Item>
+
+        <Form.Item name="confirm" hasFeedback dependencies={['password']} rules={
+          [
+            {required: true, message: 'Please confirm your password.'}, 
+            ({getFieldValue}) => ({
+              validator(_, value) {
+                if (!value || getFieldValue('password') === value) return Promise.resolve();
+                return Promise.reject('Password does not match.')
+              }
+            })
+          ]
+        }>
+          <Input.Password placeholder="Confirm Password" />
+        </Form.Item>
+
+        <Form.Item>
+          <Button type="primary" htmlType="submit">
+            Continue
+          </Button>
+        </Form.Item>
+      </Form>
     </div>
   );
 };
