@@ -14,7 +14,7 @@ import { UserType } from './enums/user-type.enum';
 import { UserRepository } from './repositories/user.repository';
 import { TrainerRepository } from './repositories/trainer.repository';
 import { TraineeRepository } from './repositories/trainee.repository';
-import { Preference } from './entities/preference.entity';
+import { Preference } from '../preference/entities/preference.entity';
 
 @Injectable()
 export class RegisterService {
