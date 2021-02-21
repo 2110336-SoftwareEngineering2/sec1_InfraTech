@@ -23,7 +23,7 @@ const Login = () => {
   // TODO: Connect to login API
   const handleSubmit = async ({ email, password }) => {
     try {
-      const { data } = await axios.post('/api/login', {
+      const { data } = await axios.post(`${API_HOST}/login`, {
         email,
         password,
       });
