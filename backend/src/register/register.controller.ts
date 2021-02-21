@@ -1,12 +1,11 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { RegisterFormDto } from './dtos/register-form-dto';
 import { RegisterService } from './register.service';
-import { User } from '../entities/user.entity';
+import { RegisterResultDto } from './dtos/register-result-dto';
 import {
   ApiConflictResponse,
   ApiCreatedResponse,
   ApiInternalServerErrorResponse,
-  ApiTags,
 } from '@nestjs/swagger';
 
 @Controller('register')
@@ -24,7 +23,9 @@ export class RegisterController {
   @ApiInternalServerErrorResponse({
     description: 'Internal server error.',
   })
-  async register(@Body() registerFormDto: RegisterFormDto): Promise<User> {
+  async register(
+    @Body() registerFormDto: RegisterFormDto,
+  ): Promise<RegisterResultDto> {
     return this.registerService.register(registerFormDto);
   }
 }
