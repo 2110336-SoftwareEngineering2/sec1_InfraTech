@@ -7,6 +7,7 @@ import { LoginService } from './login/login.service';
 import { LoginController } from './login/login.controller';
 import { LoginModule } from './login/login.module';
 import { ProfileModule } from './profile/profile.module';
+import { PreferenceModule } from './preference/preference.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -23,6 +24,7 @@ import { ProfileModule } from './profile/profile.module';
     RegisterModule,
     LoginModule,
     ProfileModule,
+    PreferenceModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -6,7 +6,7 @@ import {
   ManyToMany,
   JoinTable,
 } from 'typeorm';
-import { Preference } from './preference.entity';
+import { Preference } from '../preference/entities/preference.entity';
 
 @Entity({ name: 'user' })
 export class User {
