@@ -40,7 +40,7 @@ export class AuthUserGetter {
   }
 
   async loadProfile(repository: Repository<Trainee | Trainer>): Promise<TraineeProfileDto | TrainerProfileDto> {
-    let profile = await repository.findOne({
+    let profile = await repository.findOneOrFail({
       where: {
         userId: this.id
       }
