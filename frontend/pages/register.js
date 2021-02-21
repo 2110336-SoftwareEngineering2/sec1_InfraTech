@@ -13,7 +13,7 @@ const Register = () => {
   return (
     <>
       <div className="bg-gradient-blue-purple flex justify-center items-center">
-        <div className="bg-white p-10 rounded-lg flex justify-between">
+        <div className="bg-white p-10 rounded-lg flex justify-between m-12">
           <Steps>
             <Step component={CreateAccountForm} />
             <Step component={SelectRoleForm} />
