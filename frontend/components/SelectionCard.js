@@ -15,7 +15,10 @@ const SelectionCard = ({ flag, onClick, imageUrl, description}) => {
       <div className="w-full h-48 relative rounded-md z-0 overflow-hidden">
         <Image layout="fill" alt={description} src={imageUrl} />
       </div>
-      <div className=" w-full h-12 relative flex rounded-md items-center justify-center font-bold text-xl ">
+      <div 
+        className={`w-full h-12 relative flex rounded-md items-center justify-center font-bold text-xl ${
+          flag ? ' text-blue' : null
+        }`}>
         {description}
       </div>
     </div>
