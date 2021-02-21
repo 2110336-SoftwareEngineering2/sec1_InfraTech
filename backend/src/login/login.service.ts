@@ -12,8 +12,8 @@ import { LoginFormDto } from './dtos/login-form-dto';
 import * as bcrypt from 'bcryptjs'
 import { LoginTokenDto } from './dtos/login-token-dto';
 import * as jwt from 'jsonwebtoken';
-import { TrainerProfile } from 'src/entities/trainer-profile.entity';
-import { TraineeProfile } from 'src/entities/trainee-profile.entity';
+import { Trainer } from 'src/entities/trainer.entity';
+import { Trainee } from 'src/entities/trainee.entity';
 
 @Injectable()
 export class LoginService {
@@ -21,11 +21,11 @@ export class LoginService {
     @InjectRepository(User)
     private userRepository: Repository<User>,
 
-    @InjectRepository(TraineeProfile)
-    private traineeProfileRepository: Repository<TraineeProfile>,
+    @InjectRepository(Trainee)
+    private traineeRepository: Repository<Trainee>,
 
-    @InjectRepository(TrainerProfile)
-    private trainerProfileRepository: Repository<TrainerProfile>,
+    @InjectRepository(Trainer)
+    private trainerRepository: Repository<Trainer>,
   ) {}
 
   generateToken(email: string, type: string): LoginTokenDto {
@@ -71,7 +71,7 @@ export class LoginService {
       let type = loginFormDto.type;
 
       if (!type) {
-        let traineeProfile = await this.traineeProfileRepository.findOne({
+        let traineeProfile = await this.traineeRepository.findOne({
           where: {
             userId: user.id
           }
