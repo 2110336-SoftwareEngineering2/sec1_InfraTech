@@ -30,29 +30,6 @@ export class AuthUserGetter {
     this.email = email;
     this.type = type;
   }
-
-  resolveRepository(traineeRepository: Repository<Trainee>, trainerRepository: Repository<Trainer>): Repository<Trainee | Trainer> {
-    if (this.type == UserType.Trainer) {
-      return trainerRepository;
-    } else {
-      return traineeRepository;
-    }
-  }
-
-  async loadProfile(repository: Repository<Trainee | Trainer>): Promise<TraineeProfileDto | TrainerProfileDto> {
-    let profile = await repository.findOneOrFail({
-      where: {
-        userId: this.id
-      }
-    })
-
-    return {
-      id: this.id,
-      email: this.email,
-      type: this.type,
-      profile: profile,
-    }
-  }
 }
 
 export interface LetXRequest extends Request {
