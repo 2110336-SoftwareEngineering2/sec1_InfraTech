@@ -2,14 +2,15 @@ import { Injectable, NestMiddleware } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 
 export class AuthUserGetter {
-  
+
 }
 
-@Injectable()
-export class AuthMiddleware implements NestMiddleware {
-  use(req: Request, res: Response, next: NextFunction) {
-    
-    console.log('Request...');
-    next();
-  }
+export interface LetXRequest extends Request {
+  user: AuthUserGetter
+}
+
+export function AuthMiddleware(req: LetXRequest, res: Response, next: NextFunction) {
+  // TODO: Check exp
+  console.log('Request...');
+  next();
 }
