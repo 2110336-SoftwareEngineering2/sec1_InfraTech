@@ -9,9 +9,10 @@ import useUser from '../lib/useUser';
 import LoginForm from '../components/LoginForm';
 import Footer from '../components/Footer';
 
+const COOKIE_NAME = process.env.NEXT_PUBLIC_COOKIE_NAME || 'letx_token'
 const Login = () => {
   const [form] = Form.useForm();
-  const [cookie, setCookie] = useCookies([process.env.NEXT_PUBLIC_COOKIE_NAME]);
+  const [cookie, setCookie] = useCookies([COOKIE_NAME]);
   const { user, mutateUser } = useUser({
     redirectTo: '/',
     redirectWhen: REDIRECT_CONDITION.USER_FOUND,
@@ -25,9 +26,9 @@ const Login = () => {
         password,
       });
       if (data?.token) {
-        setCookie(process.env.NEXT_PUBLIC_COOKIE_NAME, data.token, {
+        setCookie(COOKIE_NAME, data.token, {
           path: '/',
-          maxAge: 250000, // around three days
+          maxAge: 1000000, // around three days
         });
         mutateUser();
       }

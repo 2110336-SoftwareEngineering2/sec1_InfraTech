@@ -6,6 +6,8 @@ import Image from 'next/image';
 import { Layout, Button } from 'antd';
 import { UserOutlined, MenuOutlined } from '@ant-design/icons';
 
+const COOKIE_NAME = process.env.NEXT_PUBLIC_COOKIE_NAME || 'letx_token';
+
 const { Header: AntdHeader } = Layout;
 
 const Header = ({ clickMenu, username, profileImageUrl, handleSignOut }) => (
@@ -38,13 +40,11 @@ const GuestHeader = () => (
 );
 
 const NonGuestHeader = ({ username, profileImageUrl, handleSignOut }) => {
-  const [cookies, setCookie, removeCookie] = useCookies([
-    process.env.NEXT_PUBLIC_COOKIE_NAME,
-  ]);
+  const [cookies, setCookie, removeCookie] = useCookies([COOKIE_NAME]);
 
   // TODO: Connect to logout API
   const onClick = () => {
-    removeCookie(process.env.NEXT_PUBLIC_COOKIE_NAME, { path: '/' });
+    removeCookie(COOKIE_NAME, { path: '/' });
     handleSignOut();
   };
 

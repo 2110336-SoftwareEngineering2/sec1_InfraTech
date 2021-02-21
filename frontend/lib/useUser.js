@@ -6,20 +6,21 @@ import { useCookies } from 'react-cookie';
 
 import { REDIRECT_CONDITION } from '../config/RedirectCondition.config';
 
+const COOKIE_NAME = process.env.NEXT_PUBLIC_COOKIE_NAME || 'letx_token';
 export default function useUser({
   redirectTo = null,
   redirectWhen = REDIRECT_CONDITION.USER_NOT_FOUND,
 } = {}) {
-  const [token] = useCookies([process.env.NEXT_PUBLIC_COOKIE_NAME]);
+  const [token] = useCookies([COOKIE_NAME]);
 
   const { data: user, mutate: mutateUser } = useSWR(
     ['/api/user', token],
     async (url, token) => {
+      if (!token[COOKIE_NAME]) return;
+
       const res = await axios.get(url, {
         headers: {
-          Authorization: `Bearer ${
-            token[process.env.NEXT_PUBLIC_COOKIE_NAME] || ''
-          }`,
+          Authorization: `Bearer ${token[COOKIE_NAME] || ''}`,
         },
       });
       return res.data;
