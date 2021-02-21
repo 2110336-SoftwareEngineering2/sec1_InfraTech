@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import Image from 'next/image';
-import { Button, Form, Radio, Row } from 'antd';
+import React from 'react';
+import { Button, Form, Row } from 'antd';
 
 import SelectionCard from '../SelectionCard';
 
@@ -36,7 +35,6 @@ const SelectRoleForm = ({ getState, setState, size, current, prev, next }) => {
     setState('select-role', values);
     prev();
   };
-  console.log(role)
 
   return (
     <div>
