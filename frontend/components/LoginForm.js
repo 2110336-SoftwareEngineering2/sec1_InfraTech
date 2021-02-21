@@ -1,7 +1,6 @@
 import { Form, Input, Button } from 'antd';
 
-const LoginForm = ({ onSubmit }) => {
-  return (
+const LoginForm = ({ onSubmit }) => (
     <Form className="mt-6 w-60 md:w-80" layout="vertical" onFinish={onSubmit}>
       <Form.Item
         name="email"
@@ -30,6 +29,6 @@ const LoginForm = ({ onSubmit }) => {
       </Form.Item>
     </Form>
   );
-};
+
 
 export default LoginForm;

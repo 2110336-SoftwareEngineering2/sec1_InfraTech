@@ -1,7 +1,7 @@
 import React from 'react';
 import { useCookies } from 'react-cookie';
-import { Form } from 'antd';
 import Image from 'next/image';
+import { Modal } from 'antd'
 import axios from 'axios';
 
 import { REDIRECT_CONDITION } from '../config/RedirectCondition.config';
@@ -35,6 +35,10 @@ const Login = () => {
       }
     } catch (error) {
       console.error('An unexpected error happened:', error);
+      Modal.error({
+        title: 'Login Failed',
+        content: 'Email/Password is incorrect.',
+      });
     }
   };
 
