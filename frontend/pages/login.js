@@ -10,6 +10,8 @@ import LoginForm from '../components/LoginForm';
 import Footer from '../components/Footer';
 
 const COOKIE_NAME = process.env.NEXT_PUBLIC_COOKIE_NAME || 'letx_token'
+const API_HOST = process.env.NEXT_PUBLIC_LETX_API_HOST || 'http://localhost:3001'
+
 const Login = () => {
   const [form] = Form.useForm();
   const [cookie, setCookie] = useCookies([COOKIE_NAME]);
