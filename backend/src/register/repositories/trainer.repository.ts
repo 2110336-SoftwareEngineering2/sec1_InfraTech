@@ -1,6 +1,6 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { RegisterFormDto } from '../dtos/register-form-dto';
-import { Trainer } from '../entities/trainer.entity';
+import { Trainer } from '../../entities/trainer.entity';
 
 @EntityRepository(Trainer)
 export class TrainerRepository extends Repository<Trainer> {

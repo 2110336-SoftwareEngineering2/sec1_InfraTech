@@ -1,9 +1,11 @@
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+import { AuthMiddleware } from './middlewares/auth.middleware';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.use(AuthMiddleware)
 
   const config = new DocumentBuilder()
     .setTitle('LetX')

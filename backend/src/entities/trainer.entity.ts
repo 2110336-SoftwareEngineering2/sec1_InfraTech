@@ -1,5 +1,5 @@
 import { Entity, Column, OneToOne, PrimaryColumn } from 'typeorm';
-import { User } from '../../entities/user.entity';
+import { User } from './user.entity';
 @Entity({ name: 'trainer' })
 export class Trainer {
   @PrimaryColumn({ name: 'user_id' })

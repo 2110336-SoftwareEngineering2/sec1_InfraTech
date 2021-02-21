@@ -6,6 +6,7 @@ import { RegisterModule } from './register/register.module';
 import { LoginService } from './login/login.service';
 import { LoginController } from './login/login.controller';
 import { LoginModule } from './login/login.module';
+import { ProfileModule } from './profile/profile.module';
 import { PreferenceModule } from './preference/preference.module';
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { PreferenceModule } from './preference/preference.module';
     }),
     RegisterModule,
     LoginModule,
+    ProfileModule,
     PreferenceModule,
   ],
   controllers: [AppController],
