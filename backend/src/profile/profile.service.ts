@@ -52,11 +52,6 @@ export class ProfileService {
   }
 
   async getProfileFromRequest(request: LetXRequest): Promise<TrainerProfileDto | TraineeProfileDto> {
-    try {
       return await this.loadProfile(request.user);
-    } catch (error) {
-      console.error(error);
-      throw new UnauthorizedException();
-    }
   }
 }
