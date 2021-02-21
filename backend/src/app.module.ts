@@ -6,6 +6,7 @@ import { RegisterModule } from './register/register.module';
 import { LoginService } from './login/login.service';
 import { LoginController } from './login/login.controller';
 import { LoginModule } from './login/login.module';
+import { ProfileModule } from './profile/profile.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -21,6 +22,7 @@ import { LoginModule } from './login/login.module';
     }),
     RegisterModule,
     LoginModule,
+    ProfileModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -14,6 +14,7 @@ import { LoginTokenDto } from './dtos/login-token-dto';
 import * as jwt from 'jsonwebtoken';
 import { Trainer } from 'src/entities/trainer.entity';
 import { Trainee } from 'src/entities/trainee.entity';
+import { UserType } from 'src/register/enums/user-type.enum';
 
 @Injectable()
 export class LoginService {
@@ -28,11 +29,11 @@ export class LoginService {
     private trainerRepository: Repository<Trainer>,
   ) {}
 
-  generateToken(email: string, type: string): LoginTokenDto {
+  generateToken(id: string, email: string, type: string): LoginTokenDto {
     const LIFETIME = 1000000; // In seconds
 
     const token = jwt.sign({
-      sub: email,
+      sub: id,
       email: email,
       type: type,
       iat: Math.floor(Date.now() / 1000),
@@ -77,10 +78,10 @@ export class LoginService {
           }
         });
 
-        type = traineeProfile ? "trainee" : "trainer";
+        type = traineeProfile ? UserType.Trainee : UserType.Trainer;
       }
   
-      return this.generateToken(user.email, type);
+      return this.generateToken(user.id, user.email, type);
     } catch (error) {
       throw new NotFoundException();
     }
