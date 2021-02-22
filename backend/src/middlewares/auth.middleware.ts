@@ -1,10 +1,7 @@
-import { Injectable, NestMiddleware } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
-import * as jwt from 'jsonwebtoken'
-import { Repository } from 'typeorm';
+import * as jwt from 'jsonwebtoken';
 import { Trainer } from 'src/entities/trainer.entity';
 import { Trainee } from 'src/entities/trainee.entity';
-import { UserType } from 'src/register/enums/user-type.enum';
 import * as config from 'config';
 
 const authConfig = config.get('auth');
@@ -36,20 +33,23 @@ export class AuthUserGetter {
 }
 
 export interface LetXRequest extends Request {
-  user: AuthUserGetter
+  user: AuthUserGetter;
 }
 
-export function AuthMiddleware(req: LetXRequest, res: Response, next: NextFunction) {
+export function AuthMiddleware(
+  req: LetXRequest,
+  res: Response,
+  next: NextFunction,
+) {
   // TODO: Check exp
-  let token = req.header("Authorization");
+  let token = req.header('Authorization');
   if (token) {
     try {
-      token = token.split(" ")[1];
+      token = token.split(' ')[1];
       const data: any = jwt.verify(token, authConfig.jwtSecret);
-      console.log(data);
 
       req.user = new AuthUserGetter(data.sub, data.email, data.type);
-    } catch(error) {
+    } catch (error) {
       // JsonWebTokenError: invalid token
     }
   }

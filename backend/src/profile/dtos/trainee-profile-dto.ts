@@ -1,4 +1,4 @@
-import { Trainee } from "src/entities/trainee.entity";
+import { Trainee } from 'src/entities/trainee.entity';
 
 export interface TraineeProfileDto {
   id: string;

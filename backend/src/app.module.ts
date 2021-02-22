@@ -3,8 +3,6 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { RegisterModule } from './register/register.module';
-import { LoginService } from './login/login.service';
-import { LoginController } from './login/login.controller';
 import { LoginModule } from './login/login.module';
 import { ProfileModule } from './profile/profile.module';
 import { PreferenceModule } from './preference/preference.module';

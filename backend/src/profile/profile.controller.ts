@@ -1,6 +1,10 @@
-import { Body, Controller, Post, Req, Get, UseGuards } from '@nestjs/common';
+import { Controller, Req, Get, UseGuards } from '@nestjs/common';
 import { ProfileService } from './profile.service';
-import { LetXRequest, TrainerProfileDto, TraineeProfileDto } from 'src/middlewares/auth.middleware';
+import {
+  LetXRequest,
+  TrainerProfileDto,
+  TraineeProfileDto,
+} from 'src/middlewares/auth.middleware';
 import { AuthGuard } from '../guards/auth.guard';
 
 @Controller('profile')
@@ -9,7 +13,9 @@ export class ProfileController {
 
   @Get()
   @UseGuards(AuthGuard)
-  async me(@Req() request: LetXRequest): Promise<TrainerProfileDto | TraineeProfileDto> {
+  async me(
+    @Req() request: LetXRequest,
+  ): Promise<TrainerProfileDto | TraineeProfileDto> {
     return this.profileService.getProfileFromRequest(request);
   }
 }
