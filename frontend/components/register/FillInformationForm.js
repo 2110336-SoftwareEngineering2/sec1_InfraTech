@@ -1,6 +1,9 @@
 import React from 'react';
-import { Button, DatePicker, Form, Input, InputNumber, Row, Select } from 'antd';
+import { Button, DatePicker, Form, Input, InputNumber, Row, Select, Upload } from 'antd';
 import Image from 'next/image';
+import { UploadOutlined } from '@ant-design/icons';
+import fire from './../../config/firebase';
+import CustomUpload from '../CustomUpload';
 
 const validateCitizenID = (id) => {
   // ref: https://snasui.com/wordpress/identification/
@@ -56,9 +59,8 @@ const FillInformationForm = ({ getState, setState, size, current, prev }) => {
       >
         <div className="flex justify-between">
           <div className="hidden md:block mt-0 lg:mt-10 mx-8">
-            <Image src="/information.svg" width={200} height={200} />
-            <Form.Item className="text-center mt-6">
-              <Button className="w-24">Change</Button>
+            <Form.Item name="img" className="text-center mt-6">
+              <CustomUpload />
             </Form.Item>
           </div>
           <div className="mt-12 ml-12 w-96">
