@@ -4,13 +4,11 @@ import Image from 'next/image';
 import { Modal } from 'antd'
 import axios from 'axios';
 
+import { COOKIE_NAME, API_HOST } from '../config/config'
 import { REDIRECT_CONDITION } from '../config/RedirectCondition.config';
 import useUser from '../lib/useUser';
 import LoginForm from '../components/LoginForm';
 import Footer from '../components/Footer';
-
-const COOKIE_NAME = process.env.NEXT_PUBLIC_COOKIE_NAME || 'letx_token'
-const API_HOST = process.env.NEXT_PUBLIC_LETX_API_HOST || 'http://localhost:3001'
 
 const Login = () => {
   const [cookie, setCookie] = useCookies([COOKIE_NAME]);
@@ -19,7 +17,6 @@ const Login = () => {
     redirectWhen: REDIRECT_CONDITION.USER_FOUND,
   });
 
-  // TODO: Connect to login API
   const handleSubmit = async ({ email, password }) => {
     try {
       const { data } = await axios.post(`${API_HOST}/login`, {
@@ -29,7 +26,7 @@ const Login = () => {
       if (data?.token) {
         setCookie(COOKIE_NAME, data.token, {
           path: '/',
-          maxAge: 1000000, // around three days
+          maxAge: 1000000,
         });
         mutateUser();
       }
