@@ -2,19 +2,48 @@ import fire from '../config/firebase';
 import { Upload } from 'antd';
 import React, { Component, useState } from 'react';
 
-const CustomUpload = () => {
+const CustomUpload = ({ value, onChange }) => {
+  const getBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+  };
+  const triggerChange = (changedValue) => {
+    if (onChange) {
+      onChange({
+        file,
+        imageUrl,
+        ...value,
+        ...changedValue,
+      });
+    }
+  };
+
   const [loading, setLoading] = useState(false);
-  const [imageUrl, setImageUrl] = useState('');
+  const [imageUrl, setImageUrl] = useState(value?.imageUrl || '');
+  const [file, setFile] = useState(value?.file || null);
+  const [fileList, setFileList] = useState([]);
   const handleChange = (info) => {
+    console.log(info);
+    setFile(info.file);
     if (info.file.status === 'uploading') {
       setLoading(true);
       return;
     }
     if (info.file.status === 'done') {
-      getBase64(info.file.originFileObj, (imageUrl) => {
+      getBase64(info.file.originFileObj).then((imageUrl) => {
         setLoading(false);
         setImageUrl(imageUrl);
+        setFileList([info.file]);
+        triggerChange({
+          file: file,
+          imageUrl: imageUrl,
+        });
       });
+      console.log(imageUrl);
     }
   };
 
@@ -32,23 +61,6 @@ const CustomUpload = () => {
     return isImage && isLt5M;
   };
 
-  const customUpload = async ({ onError, onSuccess, file }) => {
-    const storage = fire.storage();
-    const metadata = {
-      contentType: 'image/jpeg',
-    };
-    console.log(file);
-    const storageRef = await storage.ref();
-    const imageName = Date.now().toString() + '_' + file.name; //a unique name for the image
-    const imgFile = storageRef.child(`profileImage/${imageName}`);
-    try {
-      const image = await imgFile.put(file, metadata);
-      onSuccess(null, image);
-    } catch (e) {
-      onError(e);
-    }
-  };
-
   return (
     <div>
       <Upload
@@ -57,20 +69,30 @@ const CustomUpload = () => {
         className="avatar-uploader"
         beforeUpload={beforeUpload}
         onChange={handleChange}
-        customRequest={customUpload}
+        fileList={fileList}
       >
-        {!imageUrl && <div className="ant-upload-text">Upload</div>}
-
-        {/* {imageUrl ? (
-          <img src={imageUrl} alt="avatar" />
-        ) : (
-          <div>
-            <div className="ant-upload-text">Upload</div>
-          </div>
-        )} */}
+        <div>
+          <div className="ant-upload-text">Upload</div>
+        </div>
       </Upload>
     </div>
   );
 };
 
 export default CustomUpload;
+
+// const customUpload = async ({ onError, onSuccess, file }) => {
+//     const storage = fire.storage();
+//     const metadata = {
+//       contentType: 'image/jpeg',
+//     };
+//     const storageRef = await storage.ref();
+//     const imageName = Date.now().toString() + '_' + file.name; //a unique name for the image
+//     const imgFile = storageRef.child(`profileImage/${imageName}`);
+//     try {
+//       const image = await imgFile.put(file, metadata);
+//       onSuccess(null, image);
+//     } catch (e) {
+//       onError(e);
+//     }
+//   };

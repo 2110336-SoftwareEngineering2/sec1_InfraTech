@@ -48,7 +48,7 @@ const FillInformationForm = ({ getState, setState, size, current, prev }) => {
       >
         <div className="flex justify-between">
           <div className="hidden md:block mt-0 lg:mt-10 mx-8">
-            <Form.Item className="text-center mt-6">
+            <Form.Item name="img" className="text-center mt-6">
               <CustomUpload />
             </Form.Item>
           </div>
