@@ -46,6 +46,7 @@ export class ProfileService {
     return {
       ...profile,
       email: user.email,
+      type: authUser.type as UserType,
       preferences: user.preferences,
     };
   }
