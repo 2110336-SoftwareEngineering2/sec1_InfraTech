@@ -15,6 +15,9 @@ import * as jwt from 'jsonwebtoken';
 import { Trainer } from 'src/entities/trainer.entity';
 import { Trainee } from 'src/entities/trainee.entity';
 import { UserType } from 'src/register/enums/user-type.enum';
+import * as config from 'config';
+
+const authConfig = config.get('auth');
 
 @Injectable()
 export class LoginService {
@@ -38,7 +41,7 @@ export class LoginService {
       type: type,
       iat: Math.floor(Date.now() / 1000),
       exp: Math.floor(Date.now() / 1000) + LIFETIME,
-    }, 'secret');
+    }, authConfig.jwtSecret);
 
     return {
       email, token
