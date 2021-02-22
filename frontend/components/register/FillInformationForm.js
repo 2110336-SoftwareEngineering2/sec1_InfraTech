@@ -2,6 +2,25 @@ import React from 'react';
 import { Button, DatePicker, Form, Input, InputNumber, Row, Select } from 'antd';
 import Image from 'next/image';
 
+const validateCitizenID = (id) => {
+  // ref: https://snasui.com/wordpress/identification/
+
+  if (!id || id === "") return Promise.resolve();
+  if (!/^\d{13}$/.test(id)) return Promise.reject('Citizen ID must has only 13 digits.')
+
+  // find sum of adjusted first 12 digits
+  let sum = 0;
+  for(let i=0; i<12; i++) {
+    sum += parseInt(id.charAt(i), 10) * (13-i);
+  }
+    
+  // evaluate check digit
+  if (((11 - (sum % 11)) % 10).toString() === id.charAt(12)) {
+    return Promise.resolve();
+  }
+  return Promise.reject('Check digit of citizen ID is incorrect.');
+}
+
 // NOTE: draft version
 const FillInformationForm = ({ getState, setState, size, current, prev }) => {
   const [form] = Form.useForm();
@@ -23,6 +42,7 @@ const FillInformationForm = ({ getState, setState, size, current, prev }) => {
     setState('information', values);
     prev();
   };
+  
   return (
     <div>
       <div>
@@ -76,24 +96,7 @@ const FillInformationForm = ({ getState, setState, size, current, prev }) => {
             <Form.Item name="citizenId" hasFeedback rules={
               [
                 {required: true, message: 'Citizen ID must be specified.'},
-                {validator: (_, value) => {
-                  // ref: https://snasui.com/wordpress/identification/
-
-                  if (!value || value === "") return Promise.resolve();
-                  if (!/^\d{13}$/.test(value)) return Promise.reject('Citizen ID must has only 13 digits.')
-
-                  // find sum of adjusted first 12 digits
-                  let sum = 0;
-                  for(let i=0; i<12; i++) {
-                    sum += parseInt(value.charAt(i), 10) * (13-i);
-                  }
-                    
-                  // evaluate check digit
-                  if (((11 - (sum % 11)) % 10).toString() === value.charAt(12)) {
-                    return Promise.resolve();
-                  }
-                  return Promise.reject('Check digit of citizen ID is incorrect.');
-                }},
+                {validator: (_, value) => validateCitizenID(value)},
               ]
             }>
               <Input placeholder="Citizen ID" />
