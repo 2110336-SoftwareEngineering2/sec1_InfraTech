@@ -1,6 +1,7 @@
 import fire from '../config/firebase';
-import { Upload, message } from 'antd';
+import { Upload, message, Button } from 'antd';
 import React, { Component, useState } from 'react';
+import Image from 'next/image';
 
 const CustomUpload = ({ value, onChange }) => {
   const getBase64 = (file) => {
@@ -62,17 +63,18 @@ const CustomUpload = ({ value, onChange }) => {
   };
 
   return (
-    <div>
+    <div className="relative flex-col">
+      {
+        imageUrl ? <Image src={imageUrl} width={240} height={240} /> : null
+      }
       <Upload
         name="avatar"
-        listType="picture-card"
         beforeUpload={beforeUpload}
         onChange={handleChange}
         fileList={fileList}
+        showUploadList={false}
       >
-        <div>
-          <div>Upload</div>
-        </div>
+        <Button>Change</Button>
       </Upload>
     </div>
   );
