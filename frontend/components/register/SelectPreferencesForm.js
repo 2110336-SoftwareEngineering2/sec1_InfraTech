@@ -18,46 +18,18 @@ const SelectPreferencesInput = ({ value = [], onChange }) => {
     }
   }
 
-  let displayPerferences = []
-  for(let index=0; index<preferenceOptions.length; index+=2){
-    if(index+1<preferenceOptions.length){
-      displayPerferences.push(
-        <Row key={index}>
-          <Col span={12} >
-            <SelectionCard 
-              checked={value.includes(preferenceOptions[index].value)} 
-              imageUrl={preferenceOptions[index].imageUrl} 
-              description={preferenceOptions[index].description} 
-              onClick={() => onClick(index)} />
-          </Col>
-          <Col span={12} >
-            <SelectionCard 
-              checked={value.includes(preferenceOptions[index+1].value)} 
-              imageUrl={preferenceOptions[index+1].imageUrl} 
-              description={preferenceOptions[index+1].description} 
-              onClick={() => onClick(index+1)} />
-          </Col>
-        </Row>
-      )
-    }
-    else {
-      displayPerferences.push(
-        <Row>
-          <Col span={12} >
-            <SelectionCard 
-              checked={value.includes(preferenceOptions[index].value)} 
-              imageUrl={preferenceOptions[index].imageUrl} 
-              description={preferenceOptions[index].description} 
-              onClick={() => onClick(index)} />
-          </Col>
-        </Row>
-      )
-    }
-  }
-
   return (  
-    <div>
-      {displayPerferences}
+    <div className="w-full flex flex-wrap justify-around item-center">
+    {
+      preferenceOptions.map((option, index) => (
+        <SelectionCard 
+          checked={value.includes(option.value)} 
+          imageUrl={option.imageUrl} 
+          description={option.description} 
+          onClick={() => onClick(index)} 
+          key={option.value}/>
+      ))
+    }
     </div>
   );
 };
@@ -95,15 +67,17 @@ const SelectPreferencesForm = ({
   ];
 
   return (
-    <div>
+    <div className="w-full">
       <div>
         Step {current} of {size}
       </div>
-      <div className="text-3xl sm:text-4xl font-bold">Select Preferences</div>
+      <div className="text-3xl sm:text-4xl font-bold">Select Your Workout Preferences</div>
       <Form
         form={form}
         initialValues={getState('select-preferences', { preferences: [] })}
         onFinish={onContinue}
+        size="large"
+        className="border-black"
       >
         <Form.Item name="preferences">
           <SelectPreferencesInput/>
