@@ -28,19 +28,25 @@ export class ProfileService {
   }
 
   async loadProfile(
-    user: AuthUserGetter,
+    authUser: AuthUserGetter,
   ): Promise<TraineeProfileDto | TrainerProfileDto> {
-    const profile = await this.resolveRepository(user.type).findOneOrFail({
+    const user = await this.userRepository.findOneOrFail({
+      where: {
+        id: authUser.id,
+      },
+      relations: ['preferences'],
+    });
+
+    const profile = await this.resolveRepository(authUser.type).findOneOrFail({
       where: {
         userId: user.id,
       },
     });
 
     return {
-      id: user.id,
+      ...profile,
       email: user.email,
-      type: user.type,
-      profile: profile,
+      preferences: user.preferences,
     };
   }
 
