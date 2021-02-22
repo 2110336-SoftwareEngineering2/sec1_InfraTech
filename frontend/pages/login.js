@@ -9,9 +9,12 @@ import useUser from '../lib/useUser';
 import LoginForm from '../components/LoginForm';
 import Footer from '../components/Footer';
 
+const COOKIE_NAME = process.env.NEXT_PUBLIC_COOKIE_NAME || 'letx_token'
+const API_HOST = process.env.NEXT_PUBLIC_LETX_API_HOST || 'http://localhost:3001'
+
 const Login = () => {
   const [form] = Form.useForm();
-  const [cookie, setCookie] = useCookies([process.env.NEXT_PUBLIC_COOKIE_NAME]);
+  const [cookie, setCookie] = useCookies([COOKIE_NAME]);
   const { user, mutateUser } = useUser({
     redirectTo: '/',
     redirectWhen: REDIRECT_CONDITION.USER_FOUND,
@@ -20,14 +23,14 @@ const Login = () => {
   // TODO: Connect to login API
   const handleSubmit = async ({ email, password }) => {
     try {
-      const { data } = await axios.post('/api/login', {
+      const { data } = await axios.post(`${API_HOST}/login`, {
         email,
         password,
       });
       if (data?.token) {
-        setCookie(process.env.NEXT_PUBLIC_COOKIE_NAME, data.token, {
+        setCookie(COOKIE_NAME, data.token, {
           path: '/',
-          maxAge: 250000, // around three days
+          maxAge: 1000000, // around three days
         });
         mutateUser();
       }

@@ -5,7 +5,7 @@ export default function handler(req, res) {
         firstname: 'Somluck',
         profileImageUrl:
           'https://www.aceshowbiz.com/images/photo/john_cena.jpg',
-        userType: 'trainer',
+        type: 'TRAINER',
       });
     } else {
       res.status(200);
