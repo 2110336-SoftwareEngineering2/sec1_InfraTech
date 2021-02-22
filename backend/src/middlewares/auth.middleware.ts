@@ -5,6 +5,9 @@ import { Repository } from 'typeorm';
 import { Trainer } from 'src/entities/trainer.entity';
 import { Trainee } from 'src/entities/trainee.entity';
 import { UserType } from 'src/register/enums/user-type.enum';
+import * as config from 'config';
+
+const authConfig = config.get('auth');
 
 export interface TraineeProfileDto {
   id: string;
@@ -41,7 +44,7 @@ export function AuthMiddleware(req: LetXRequest, res: Response, next: NextFuncti
   let token = req.header("Authorization");
   if (token) {
     token = token.split(" ")[1];
-    const data: any = jwt.verify(token, "secret");
+    const data: any = jwt.verify(token, authConfig.jwtSecret);
     console.log(data);
 
     req.user = new AuthUserGetter(data.sub, data.email, data.type);
