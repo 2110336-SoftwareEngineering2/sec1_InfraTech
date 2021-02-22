@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Form, Row } from 'antd';
 
 import SelectionCard from '../SelectionCard';
+import { USER_TYPE } from '../../config/UserType.config';
 
 const SelectRoleInput = ({ value , onChange }) => {
   const onClick = role => {
@@ -11,8 +12,8 @@ const SelectRoleInput = ({ value , onChange }) => {
   }
   return (
     <Row gutter={6}>
-      <SelectionCard checked={value=="trainer"} imageUrl="/trainer.svg" description="Trainer" onClick={() => onClick("trainer")}/>
-      <SelectionCard checked={value=="trainee"} imageUrl="/trainee.svg" description="Trainee" onClick={() => onClick("trainee")}/>
+      <SelectionCard checked={value==USER_TYPE.TRAINER} imageUrl="/trainer.svg" description="Trainer" onClick={() => onClick(USER_TYPE.TRAINER)}/>
+      <SelectionCard checked={value==USER_TYPE.TRAINEE} imageUrl="/trainee.svg" description="Trainee" onClick={() => onClick(USER_TYPE.TRAINEE)}/>
     </Row>
   );
 };
@@ -44,7 +45,7 @@ const SelectRoleForm = ({ getState, setState, size, current, prev, next }) => {
       <div className="text-3xl sm:text-4xl font-bold">Select Role</div>
       <Form
         form={form}
-        initialValues={getState('select-role', { role: 'trainer' })}
+        initialValues={getState('select-role', { role: USER_TYPE.TRAINER })}
         onFinish={onContinue}
       >
         <Form.Item name="role">
