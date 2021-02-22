@@ -11,7 +11,7 @@ const SelectRoleInput = ({ value , onChange }) => {
     }
   }
   return (
-    <Row gutter={6}>
+    <Row className="flex justify-around w-full">
       <SelectionCard checked={value==USER_TYPE.TRAINER} imageUrl="/trainer.svg" description="Trainer" onClick={() => onClick(USER_TYPE.TRAINER)}/>
       <SelectionCard checked={value==USER_TYPE.TRAINEE} imageUrl="/trainee.svg" description="Trainee" onClick={() => onClick(USER_TYPE.TRAINEE)}/>
     </Row>
@@ -38,15 +38,16 @@ const SelectRoleForm = ({ getState, setState, size, current, prev, next }) => {
   };
 
   return (
-    <div>
+    <div className="w-full">
       <div>
         Step {current} of {size}
       </div>
-      <div className="text-3xl sm:text-4xl font-bold">Select Role</div>
+      <div className="text-3xl sm:text-4xl font-bold">Select Your Role</div>
       <Form
         form={form}
         initialValues={getState('select-role', { role: USER_TYPE.TRAINER })}
         onFinish={onContinue}
+        size="large"
       >
         <Form.Item name="role">
           <SelectRoleInput/>

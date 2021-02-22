@@ -4,7 +4,7 @@ import Image from 'next/image';
 const SelectionCard = ({ checked, onClick, imageUrl, description}) => {
   return (
     <div
-      className={`w-60 h-60 relative flex flex-col justify-center items-between rounded-md pt-2 border-2 m-5 bg-white ${
+      className={`w-80 h-80 relative flex flex-col justify-center items-between rounded-md pt-2 border-2 m-5 bg-white ${
         checked ? ' border-blue' : 'border-gray-300'
       }`}
       onClick={onClick}

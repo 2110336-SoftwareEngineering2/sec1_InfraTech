@@ -14,7 +14,7 @@ const CreateAccountForm = ({ getState, setState, size, current, next }) => {
   return (
     <div className="flex justify-between w-full">
       <Image src="/register.svg" width={300} height={400}/>
-      <div className="mt-4 w-3/5">
+      <div className="mt-6 w-3/5">
         <div>
           Step {current} of {size}
         </div>
@@ -23,8 +23,10 @@ const CreateAccountForm = ({ getState, setState, size, current, next }) => {
           form={form}
           initialValues={getState('create-account', {})}
           onFinish={onContinue}
+          size='large'
+          className="mt-10"
         >
-          <Form.Item className="mt-10" name="email" hasFeedback rules={
+          <Form.Item name="email" hasFeedback rules={
             [
               {type: 'email', message: 'Email format is incorrect'}, 
               {required: true, message: 'Please provide an email.'}
@@ -33,13 +35,13 @@ const CreateAccountForm = ({ getState, setState, size, current, next }) => {
             <Input type="email" placeholder="Email" />
           </Form.Item>
 
-          <Form.Item className="mt-10" name="password" hasFeedback rules={
+          <Form.Item name="password" hasFeedback rules={
             [{required: true, message: 'Please specify password.'}]
           }>
             <Input.Password placeholder="Password" />
           </Form.Item>
 
-          <Form.Item className="mt-10" name="confirm" hasFeedback dependencies={['password']} rules={
+          <Form.Item name="confirm" hasFeedback dependencies={['password']} rules={
             [
               {required: true, message: 'Please confirm your password.'}, 
               ({getFieldValue}) => ({
@@ -53,7 +55,7 @@ const CreateAccountForm = ({ getState, setState, size, current, next }) => {
             <Input.Password placeholder="Confirm Password" />
           </Form.Item>
 
-          <Form.Item className="mt-10">
+          <Form.Item >
             <Button type="primary" htmlType="submit" className="w-24">
               Continue
             </Button>
