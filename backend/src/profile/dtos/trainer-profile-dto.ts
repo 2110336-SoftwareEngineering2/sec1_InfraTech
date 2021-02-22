@@ -1,4 +1,4 @@
-import { Trainer } from "src/entities/trainer.entity";
+import { Trainer } from 'src/entities/trainer.entity';
 
 export interface TrainerProfileDto {
   id: string;
