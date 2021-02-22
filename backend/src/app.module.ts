@@ -8,18 +8,22 @@ import { LoginController } from './login/login.controller';
 import { LoginModule } from './login/login.module';
 import { ProfileModule } from './profile/profile.module';
 import { PreferenceModule } from './preference/preference.module';
+import * as config from 'config';
+
+const dbConfig = config.get('db');
+
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       // TODO: use configs
       type: 'mysql',
-      host: 'mysqldb',
-      port: 3306,
-      username: 'root',
-      password: 'admin',
-      database: 'letx',
+      host: dbConfig.host,
+      port: dbConfig.port,
+      username: dbConfig.username,
+      password: dbConfig.password,
+      database: dbConfig.database,
       entities: ['dist/**/*.entity{.ts,.js}'],
-      synchronize: false,
+      synchronize: dbConfig.synchronize,
     }),
     RegisterModule,
     LoginModule,
