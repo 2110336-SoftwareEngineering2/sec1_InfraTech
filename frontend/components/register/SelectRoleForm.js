@@ -11,8 +11,8 @@ const SelectRoleInput = ({ value , onChange }) => {
   }
   return (
     <Row gutter={6}>
-      <SelectionCard flag={value=="trainer"} imageUrl="/trainer.svg" description="Trainer" onClick={() => onClick("trainer")}/>
-      <SelectionCard flag={value=="trainee"} imageUrl="/trainee.svg" description="Trainee" onClick={() => onChange("trainee")}/>
+      <SelectionCard checked={value=="trainer"} imageUrl="/trainer.svg" description="Trainer" onClick={() => onClick("trainer")}/>
+      <SelectionCard checked={value=="trainee"} imageUrl="/trainee.svg" description="Trainee" onClick={() => onClick("trainee")}/>
     </Row>
   );
 };

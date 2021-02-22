@@ -25,14 +25,14 @@ const SelectPreferencesInput = ({ value = [], onChange }) => {
         <Row key={index}>
           <Col span={12} >
             <SelectionCard 
-              flag={value.includes(preferenceOptions[index].value)} 
+              checked={value.includes(preferenceOptions[index].value)} 
               imageUrl={preferenceOptions[index].imageUrl} 
               description={preferenceOptions[index].description} 
               onClick={() => onClick(index)} />
           </Col>
           <Col span={12} >
             <SelectionCard 
-              flag={value.includes(preferenceOptions[index+1].value)} 
+              checked={value.includes(preferenceOptions[index+1].value)} 
               imageUrl={preferenceOptions[index+1].imageUrl} 
               description={preferenceOptions[index+1].description} 
               onClick={() => onClick(index+1)} />
@@ -45,7 +45,7 @@ const SelectPreferencesInput = ({ value = [], onChange }) => {
         <Row>
           <Col span={12} >
             <SelectionCard 
-              flag={value.includes(preferenceOptions[index].value)} 
+              checked={value.includes(preferenceOptions[index].value)} 
               imageUrl={preferenceOptions[index].imageUrl} 
               description={preferenceOptions[index].description} 
               onClick={() => onClick(index)} />
