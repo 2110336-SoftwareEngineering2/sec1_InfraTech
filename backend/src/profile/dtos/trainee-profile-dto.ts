@@ -1,8 +1,7 @@
 import { Trainee } from 'src/entities/trainee.entity';
+import { Preference } from '../../preference/entities/preference.entity';
 
-export interface TraineeProfileDto {
-  id: string;
+export interface TraineeProfileDto extends Trainee {
   email: string;
-  type: string;
-  profile: Trainee;
+  preferences: Preference[];
 }
