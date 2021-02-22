@@ -70,7 +70,7 @@ const FillInformationForm = ({ getState, setState, size, current, prev }) => {
                   {required: true, message: 'Please select birth date.'}
                 ]
               }>
-                <DatePicker style={{ width: '100%' }} placeholder="Date of birth" format="DD/MM/YYYY" />
+                <DatePicker className="w-full" placeholder="Date of birth" format="DD/MM/YYYY" />
               </Form.Item>
             </Row>
 
