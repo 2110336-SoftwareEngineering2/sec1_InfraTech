@@ -1,5 +1,5 @@
 import fire from '../config/firebase';
-import { Upload } from 'antd';
+import { Upload, message } from 'antd';
 import React, { Component, useState } from 'react';
 
 const CustomUpload = ({ value, onChange }) => {
@@ -50,13 +50,13 @@ const CustomUpload = ({ value, onChange }) => {
   const beforeUpload = (file) => {
     const isImage = file.type.indexOf('image/') === 0;
     if (!isImage) {
-      AntMessage.error('You can only upload image file!');
+      message.error('You can only upload image file!');
     }
 
     // You can remove this validation if you want
     const isLt5M = file.size / 1024 / 1024 < 5;
     if (!isLt5M) {
-      AntMessage.error('Image must smaller than 5MB!');
+      message.error('Image must smaller than 5MB!');
     }
     return isImage && isLt5M;
   };
@@ -66,13 +66,12 @@ const CustomUpload = ({ value, onChange }) => {
       <Upload
         name="avatar"
         listType="picture-card"
-        className="avatar-uploader"
         beforeUpload={beforeUpload}
         onChange={handleChange}
         fileList={fileList}
       >
         <div>
-          <div className="ant-upload-text">Upload</div>
+          <div>Upload</div>
         </div>
       </Upload>
     </div>
