@@ -5,13 +5,9 @@ import { User } from '../entities/user.entity';
 import { Trainer } from 'src/entities/trainer.entity';
 import { Trainee } from 'src/entities/trainee.entity';
 import { UserType } from 'src/register/enums/user-type.enum';
-import {
-  LetXRequest,
-  TrainerProfileDto,
-  TraineeProfileDto,
-  AuthUserGetter,
-} from 'src/middlewares/auth.middleware';
-
+import { LetXRequest, AuthUserGetter } from 'src/middlewares/auth.middleware';
+import { TrainerProfileDto } from './dtos/trainer-profile-dto';
+import { TraineeProfileDto } from './dtos/trainee-profile-dto';
 @Injectable()
 export class ProfileService {
   constructor(
