@@ -47,7 +47,6 @@ export function AuthMiddleware(
     try {
       token = token.split(' ')[1];
       const data: any = jwt.verify(token, authConfig.jwtSecret);
-      console.log(data);
 
       req.user = new AuthUserGetter(data.sub, data.email, data.type);
     } catch (error) {
