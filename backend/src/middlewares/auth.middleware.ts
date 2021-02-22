@@ -42,7 +42,7 @@ export function AuthMiddleware(req: LetXRequest, res: Response, next: NextFuncti
   if (token) {
     token = token.split(" ")[1];
     const data: any = jwt.verify(token, "secret");
-    console.log(data);
+    // console.log(data);
 
     req.user = new AuthUserGetter(data.sub, data.email, data.type);
   }
