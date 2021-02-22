@@ -7,7 +7,7 @@ export default {
     port: process.env.DEV_DB_PORT ?? 3306,
     username: process.env.DEV_DB_USERNAME ?? 'root',
     password: process.env.DEV_DB_PASSWORD ?? 'admin',
-    database: process.env.DEV_DB_DATABSE ?? 'letx',
+    database: process.env.DEV_DB_DATABASE ?? 'letx',
     synchronize: process.env.DEV_DB_SYNCHRONIZE ?? false,
   },
   auth: {

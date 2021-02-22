@@ -7,11 +7,10 @@ export default {
     port: process.env.PROD_DB_PORT,
     username: process.env.PROD_DB_USERNAME,
     password: process.env.PROD_DB_PASSWORD,
-    database: process.env.PROD_DB_DATABSE,
+    database: process.env.PROD_DB_DATABASE,
     synchronize: process.env.PROD_DB_SYNCHRONIZE,
   },
   auth: {
     jwtSecret: process.env.PROD_AUTH_JWT_SECRET,
   },
 };
-
