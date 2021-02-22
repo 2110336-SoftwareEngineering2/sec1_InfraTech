@@ -15,6 +15,7 @@ import { UserRepository } from './repositories/user.repository';
 import { TrainerRepository } from './repositories/trainer.repository';
 import { TraineeRepository } from './repositories/trainee.repository';
 import { Preference } from '../preference/entities/preference.entity';
+import { RegisterResultDto } from './dtos/register-result-dto';
 
 @Injectable()
 export class RegisterService {
@@ -30,7 +31,7 @@ export class RegisterService {
     private connection: Connection,
   ) {}
 
-  async register(registerFormDto: RegisterFormDto): Promise<User> {
+  async register(registerFormDto: RegisterFormDto): Promise<RegisterResultDto> {
     const { userType, preferences } = registerFormDto;
 
     const selectedPreferences = await this.preferenceRepository.find({
@@ -66,8 +67,12 @@ export class RegisterService {
 
       await queryRunner.commitTransaction();
 
-      // TODO: return view entity (User but exclude preferences)
-      return result;
+      return {
+        id: userId,
+        email: result.email,
+        password: result.password,
+        salt: result.salt,
+      };
     } catch (error) {
       await queryRunner.rollbackTransaction();
 
