@@ -1,24 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import * as jwt from 'jsonwebtoken';
-import { Trainer } from 'src/entities/trainer.entity';
-import { Trainee } from 'src/entities/trainee.entity';
 import * as config from 'config';
 
 const authConfig = config.get('auth');
-
-export interface TraineeProfileDto {
-  id: string;
-  email: string;
-  type: string;
-  profile: Trainee;
-}
-
-export interface TrainerProfileDto {
-  id: string;
-  email: string;
-  type: string;
-  profile: Trainer;
-}
 
 export class AuthUserGetter {
   public id: string;
