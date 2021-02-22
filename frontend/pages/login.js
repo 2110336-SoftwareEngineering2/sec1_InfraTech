@@ -35,6 +35,7 @@ const Login = () => {
       Modal.error({
         title: 'Login Failed',
         content: 'Email/Password is incorrect.',
+        centered: true
       });
     }
   };
