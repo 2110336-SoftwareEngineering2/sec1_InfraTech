@@ -10,7 +10,7 @@ export class ProfileController {
 
   @Get()
   @UseGuards(AuthGuard)
-  async me(
+  async getProfile(
     @Req() request: LetXRequest,
   ): Promise<TrainerProfileDto | TraineeProfileDto> {
     return this.profileService.getProfileFromRequest(request);
