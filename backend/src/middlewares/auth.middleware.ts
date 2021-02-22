@@ -40,11 +40,15 @@ export function AuthMiddleware(req: LetXRequest, res: Response, next: NextFuncti
   // TODO: Check exp
   let token = req.header("Authorization");
   if (token) {
-    token = token.split(" ")[1];
-    const data: any = jwt.verify(token, "secret");
-    // console.log(data);
+    try {
+      token = token.split(" ")[1];
+      const data: any = jwt.verify(token, "secret");
+      console.log(data);
 
-    req.user = new AuthUserGetter(data.sub, data.email, data.type);
+      req.user = new AuthUserGetter(data.sub, data.email, data.type);
+    } catch(error) {
+      // JsonWebTokenError: invalid token
+    }
   }
 
   next();
