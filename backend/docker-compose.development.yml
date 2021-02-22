@@ -19,7 +19,7 @@ services:
     working_dir: /letx-backend
     command: yarn start:dev
     ports:
-      - 3000:3000
+      - 3001:3000
     volumes:
       - ./:/letx-backend
     depends_on:
