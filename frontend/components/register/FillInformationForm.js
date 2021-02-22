@@ -66,7 +66,6 @@ const FillInformationForm = ({ getState, setState, size, current, prev }) => {
 
               <Form.Item name="dateOfBirth" className="w-60" hasFeedback rules={
                 [
-                  {type: 'date', message: 'Date format is incorrect.'},
                   {required: true, message: 'Please select birth date.'}
                 ]
               }>
