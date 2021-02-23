@@ -44,10 +44,10 @@ const SelectPreferencesForm = ({
           <SelectPreferencesInput />
         </Form.Item>
         <Form.Item className="text-center">
-          <Button onClick={onBack} className="w-24 mr-4">
+          <Button onClick={onBack} className="w-32 mr-6">
             Back
           </Button>
-          <Button type="primary" htmlType="submit" className="w-24 ml-4">
+          <Button type="primary" htmlType="submit" className="w-32">
             Continue
           </Button>
         </Form.Item>

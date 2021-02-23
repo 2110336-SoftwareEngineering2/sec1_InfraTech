@@ -67,7 +67,7 @@ const CreateAccountForm = ({ getState, setState, size, current, next }) => {
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit" className="w-24">
+            <Button type="primary" htmlType="submit" className="w-32">
               Continue
             </Button>
           </Form.Item>

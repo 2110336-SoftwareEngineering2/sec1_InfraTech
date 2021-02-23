@@ -146,11 +146,11 @@ const FillInformationForm = ({ getState, setState, size, current, prev }) => {
           </div>
         </div>
 
-          <Button onClick={onBack} className="w-24 mr-4">
         <Form.Item className="text-center">
+          <Button onClick={onBack} className="w-32 mr-6">
             Back
           </Button>
-          <Button type="primary" htmlType="submit" className="w-24 ml-4">
+          <Button type="primary" htmlType="submit" className="w-32">
             Submit
           </Button>
         </Form.Item>
