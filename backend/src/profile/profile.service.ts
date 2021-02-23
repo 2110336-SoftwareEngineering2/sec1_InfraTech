@@ -92,11 +92,11 @@ export class ProfileService {
       relations: ['user'],
     });
 
-    if ('email' in updateTrainerProfileDto) {
+    if (updateTrainerProfileDto.hasOwnProperty('email')) {
       user.email = updateTrainerProfileDto.email;
     }
 
-    if ('preferences' in updateTrainerProfileDto) {
+    if (updateTrainerProfileDto.hasOwnProperty('preferences')) {
       const selectedPreferences = await this.preferenceRepository.find({
         where: { id: In(updateTrainerProfileDto.preferences) },
       });
