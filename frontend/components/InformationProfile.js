@@ -1,6 +1,6 @@
 import React from 'react';
-import { Button, DatePicker, Form, Input, Row, Select } from 'antd';
-// import CustomUpload from '../CustomUpload';
+import { Button } from 'antd';
+import CustomUpload from './CustomUpload';
 
 const InformationProfile = ({ email, profile, setIsEditing }) => {
   
@@ -16,11 +16,9 @@ const InformationProfile = ({ email, profile, setIsEditing }) => {
   }
 
   return(
-    <div className="flex justify-between w-4/5">
-      <div className="mt-10 mr-12 w-2/5">
-        {/* <Form.Item name="profileImageUrl" className="text-center">
-        <CustomUpload />
-        </Form.Item> */}
+    <div className="flex">
+      <div className="mt-10 mr-24 text-center">
+        <CustomUpload disable={true} />
       </div>
       <div className="mt-12 w-3/5">
         <div className="text-2xl font-bold">{profile.firstname + ' ' + profile.lastname}</div>

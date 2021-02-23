@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { LoadingOutlined } from '@ant-design/icons';
 import { getBase64 } from '../lib/utils';
 
-const CustomUpload = ({ value, onChange, setFile }) => {
+const CustomUpload = ({ value, onChange, setFile, disable = false }) => {
   const triggerChange = imageUrl => {
     if (onChange) {
       onChange(imageUrl);
@@ -57,15 +57,19 @@ const CustomUpload = ({ value, onChange, setFile }) => {
           <LoadingOutlined className="absolute top-1/2 left-1/2 -mt-2 -ml-2" />
         )}
       </div>
-      <Upload
-        name="avatar"
-        beforeUpload={beforeUpload}
-        onChange={handleChange}
-        fileList={fileList}
-        showUploadList={false}
-      >
-        <Button className="w-24 mt-4">Change</Button>
-      </Upload>
+      {
+        !disable &&
+        <Upload
+          name="avatar"
+          beforeUpload={beforeUpload}
+          onChange={handleChange}
+          fileList={fileList}
+          showUploadList={false}
+        >
+          <Button className="w-24 mt-4">Change</Button>
+        </Upload>
+      }
+
     </div>
   );
 };
