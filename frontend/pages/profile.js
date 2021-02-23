@@ -3,10 +3,12 @@ import useUser from '../lib/useUser';
 import AppLayout from '../components/AppLayout';
 import EditProfile from '../components/EditProfile';
 import InformationProfile from '../components/InformationProfile';
+import moment from 'moment'
 
 const Profile = () => {
   const { user = {}, mutateUser } = useUser();
   const [isEditing, setIsEditing] = useState(false);
+  const d = moment("08/08/2000")
   const mock = {
       id: "23433bertgerb33g4ry",
       email: "test@gmail.com",
@@ -17,7 +19,7 @@ const Profile = () => {
           lastname: "Youngku",
           cid: "1234567891011",
           gender: "male",
-          birthdate: "08/08/2000",
+          birthdate: d,
           phoneNumber: "123412341",
           profileImageUrl: "/login.svg"
       }

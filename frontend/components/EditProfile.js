@@ -25,8 +25,8 @@ const EditProfile = ({ profile, setIsEditing }) => {
   
   const [form] = Form.useForm();
   
-  const onSave = () => {
-
+  const onSave = (value) => {
+    console.log(value.birthdate);
   }
   
   const onCancel = () => {
@@ -36,7 +36,7 @@ const EditProfile = ({ profile, setIsEditing }) => {
   return(
     <Form
       form={form}
-      //initialValues={profile}
+      initialValues={profile}
       onFinish={onSave}
       size="large"
     >
@@ -48,13 +48,13 @@ const EditProfile = ({ profile, setIsEditing }) => {
         </div>
         <div className="mt-12 w-3/5">
           <div className="text-lg">First Name</div>
-          <Form.Item name="firstName" hasFeedback rules={
+          <Form.Item name="firstname" hasFeedback rules={
             [{required: true, message: 'Please provide first name.'}]
           }>
             <Input placeholder="First Name" />
           </Form.Item>
           <div className="text-lg">Last Name</div>
-          <Form.Item name="lastName" hasFeedback rules={
+          <Form.Item name="lastname" hasFeedback rules={
             [{required: true, message: 'Please provide last name.'}]
           }>
             <Input placeholder="Last Name" />
