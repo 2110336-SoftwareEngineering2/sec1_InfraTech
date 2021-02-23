@@ -9,4 +9,4 @@ cd backend
 yarn updev
 ```
 
-Then use API_HOST=http://localhost:3000
+Then use API_HOST=http://localhost:3001
