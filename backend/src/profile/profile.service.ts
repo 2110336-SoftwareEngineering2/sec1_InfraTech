@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, In, Connection } from 'typeorm';
 import { User } from '../entities/user.entity';
 import { Trainer } from 'src/entities/trainer.entity';
 import { Trainee } from 'src/entities/trainee.entity';
@@ -8,6 +8,11 @@ import { UserType } from 'src/register/enums/user-type.enum';
 import { LetXRequest, AuthUserGetter } from 'src/middlewares/auth.middleware';
 import { TrainerProfileDto } from './dtos/trainer-profile-dto';
 import { TraineeProfileDto } from './dtos/trainee-profile-dto';
+<<<<<<< HEAD
+=======
+import { UpdateTrainerProfileDto } from './dtos/update-trainer-profile-dto';
+import { Preference } from '../preference/entities/preference.entity';
+>>>>>>> ✨ add update trainer profile service
 import { omit } from 'lodash';
 @Injectable()
 export class ProfileService {
@@ -18,6 +23,9 @@ export class ProfileService {
     private traineeRepository: Repository<Trainee>,
     @InjectRepository(Trainer)
     private trainerRepository: Repository<Trainer>,
+    @InjectRepository(Preference)
+    private preferenceRepository: Repository<Preference>,
+    private connection: Connection,
   ) {}
 
   resolveRepository(type: string): Repository<Trainee | Trainer> {
@@ -56,5 +64,63 @@ export class ProfileService {
     request: LetXRequest,
   ): Promise<TrainerProfileDto | TraineeProfileDto> {
     return await this.loadProfile(request.user);
+  }
+
+  async updateTrainerProfile(
+    request: LetXRequest,
+    updateTrainerProfileDto: UpdateTrainerProfileDto,
+  ): Promise<TrainerProfileDto> {
+    const user = await this.userRepository.findOneOrFail({
+      where: { id: request.user.id },
+      relations: ['preferences'],
+    });
+
+    const trainer = await this.trainerRepository.findOneOrFail({
+      where: {
+        user: {
+          id: user.id,
+        },
+      },
+    });
+
+    if ('email' in updateTrainerProfileDto) {
+      user.email = updateTrainerProfileDto.email;
+    }
+
+    if ('preferences' in updateTrainerProfileDto) {
+      const selectedPreferences = await this.preferenceRepository.find({
+        where: { id: In(updateTrainerProfileDto.preferences) },
+      });
+      user.preferences = selectedPreferences;
+    }
+
+    for (const key of Object.keys(
+      omit(updateTrainerProfileDto, ['email', 'preferences']),
+    )) {
+      trainer[key] = updateTrainerProfileDto[key];
+    }
+
+    const queryRunner = this.connection.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+
+    try {
+      await queryRunner.manager.save(User, user);
+      await queryRunner.manager.save(Trainer, trainer);
+
+      await queryRunner.commitTransaction();
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+
+      console.error(error);
+      throw new InternalServerErrorException();
+    }
+
+    return {
+      ...trainer,
+      email: user.email,
+      type: request.user.type as UserType,
+      preferences: user.preferences,
+    };
   }
 }
