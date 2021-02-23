@@ -8,12 +8,9 @@ import { UserType } from 'src/register/enums/user-type.enum';
 import { LetXRequest, AuthUserGetter } from 'src/middlewares/auth.middleware';
 import { TrainerProfileDto } from './dtos/trainer-profile-dto';
 import { TraineeProfileDto } from './dtos/trainee-profile-dto';
-<<<<<<< HEAD
-=======
 import { UpdateTrainerProfileDto } from './dtos/update-trainer-profile-dto';
 import { UpdateTraineeProfileDto } from './dtos/update-trainee-profile-dto';
 import { Preference } from '../preference/entities/preference.entity';
->>>>>>> ✨ add update trainer profile service
 import { omit } from 'lodash';
 
 @Injectable()
