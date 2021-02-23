@@ -9,6 +9,7 @@ import { RoleGuard } from '../guards/role.guard';
 import { UpdateTrainerProfileDto } from './dtos/update-trainer-profile-dto';
 import { UpdateTraineeProfileDto } from './dtos/update-trainee-profile-dto';
 import { Role } from '../decorators/role.decorator';
+import { ApiBody, ApiExtraModels, getSchemaPath } from '@nestjs/swagger';
 @Controller('profile')
 export class ProfileController {
   constructor(private profileService: ProfileService) {}
@@ -21,29 +22,25 @@ export class ProfileController {
     return this.profileService.getProfileFromRequest(request);
   }
 
-  @Patch('trainer')
-  @Role(UserType.Trainer)
-  @UseGuards(AuthGuard, RoleGuard)
-  async updateTrainerProfile(
+  @Patch()
+  @UseGuards(AuthGuard)
+  @ApiExtraModels(UpdateTrainerProfileDto, UpdateTraineeProfileDto)
+  @ApiBody({
+    schema: {
+      oneOf: [
+        { $ref: getSchemaPath(UpdateTrainerProfileDto) },
+        { $ref: getSchemaPath(UpdateTraineeProfileDto) },
+      ],
+    },
+  })
+  async updateProfile(
     @Req() request: LetXRequest,
-    @Body() updateTrainerProfileDto: UpdateTrainerProfileDto,
+    @Body()
+    updateProfileDto: UpdateTrainerProfileDto | UpdateTraineeProfileDto,
   ): Promise<TrainerProfileDto> {
     return this.profileService.updateProfileFromRequest(
       request,
-      updateTrainerProfileDto,
-    );
-  }
-
-  @Patch('trainee')
-  @Role(UserType.Trainee)
-  @UseGuards(AuthGuard, RoleGuard)
-  async updateTraineeProfile(
-    @Req() request: LetXRequest,
-    @Body() updateTraineeProfileDto: UpdateTraineeProfileDto,
-  ): Promise<TrainerProfileDto> {
-    return this.profileService.updateProfileFromRequest(
-      request,
-      updateTraineeProfileDto,
+      updateProfileDto,
     );
   }
 }
