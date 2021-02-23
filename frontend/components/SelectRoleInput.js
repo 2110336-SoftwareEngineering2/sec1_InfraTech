@@ -9,19 +9,27 @@ const SelectRoleInput = ({ value, onChange }) => {
     }
   };
   return (
-    <Row className="flex justify-around w-full">
-      <SelectionCard
-        checked={value == USER_TYPE.TRAINER}
-        imageUrl="/trainer.svg"
-        description="Trainer"
-        onClick={() => onClick(USER_TYPE.TRAINER)}
-      />
-      <SelectionCard
-        checked={value == USER_TYPE.TRAINEE}
-        imageUrl="/trainee.svg"
-        description="Trainee"
-        onClick={() => onClick(USER_TYPE.TRAINEE)}
-      />
+    <Row className="flex justify-center w-full">
+      <div className="mx-6 mb-4">
+        <SelectionCard
+          checked={value == USER_TYPE.TRAINER}
+          imageUrl="/trainer.svg"
+          description="Trainer"
+          onClick={() => onClick(USER_TYPE.TRAINER)}
+          width={250}
+          height={250}
+        />
+      </div>
+      <div className="mx-6 mb-4">
+        <SelectionCard
+          checked={value == USER_TYPE.TRAINEE}
+          imageUrl="/trainee.svg"
+          description="Trainee"
+          onClick={() => onClick(USER_TYPE.TRAINEE)}
+          width={250}
+          height={250}
+        />
+      </div>
     </Row>
   );
 };
