@@ -35,7 +35,7 @@ export class ProfileController {
   }
 
   @Patch('trainee')
-  @Role(UserType.Trainer)
+  @Role(UserType.Trainee)
   @UseGuards(AuthGuard, RoleGuard)
   async updateTraineeProfile(
     @Req() request: LetXRequest,
