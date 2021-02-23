@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Router from 'next/router';
 import {
   Button,
   DatePicker,
@@ -56,6 +57,7 @@ const FillInformationForm = ({ getState, setState, size, current, prev }) => {
     try {
       const { data } = await axios.post(`${API_HOST}/register`, profile);
       console.log(data);
+      Router.push('/login')
     } catch (error) {
       console.error('An unexpected error happened:', error);
       Modal.error({
