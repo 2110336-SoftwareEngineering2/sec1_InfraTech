@@ -59,8 +59,8 @@ const CustomUpload = ({ value, onChange }) => {
       <div className="relative ">
         <Image
           src={imageUrl || '/avatar.svg'}
-          width={240}
-          height={240}
+          width={200}
+          height={200}
           layout="fixed"
           className="rounded-full align-middle"
         />
