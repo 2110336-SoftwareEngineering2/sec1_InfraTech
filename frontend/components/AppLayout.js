@@ -13,7 +13,10 @@ const AppLayout = ({ user, mutateUser, children }) => {
 
   return (
     <Layout>
-      <Sider collapsed={collapsed} userType={user?.userType ?? USER_TYPE.GUEST} />
+      <Sider
+        collapsed={collapsed}
+        userType={user?.userType ?? USER_TYPE.GUEST}
+      />
       <Layout>
         <Header
           username={user?.firstname}

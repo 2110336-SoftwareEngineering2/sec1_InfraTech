@@ -12,11 +12,11 @@ const Sider = ({ collapsed, userType }) => {
 
   useEffect(() => {
     if (collapsed) {
-      setTimeout(() => setShowLogoText(!collapsed), 30)
+      setTimeout(() => setShowLogoText(!collapsed), 30);
     } else {
-      setTimeout(() => setShowLogoText(!collapsed), 145)
+      setTimeout(() => setShowLogoText(!collapsed), 145);
     }
-  }, [collapsed])
+  }, [collapsed]);
 
   return (
     <AntdSider
@@ -38,11 +38,7 @@ const Sider = ({ collapsed, userType }) => {
           {showLogoText && "Let's Exercise!"}
         </span>
       </div>
-      <Menu
-        theme="dark"
-        mode="inline"
-        defaultSelectedKeys={['0']}
-      >
+      <Menu theme="dark" mode="inline" defaultSelectedKeys={['0']}>
         {MENU_ITEMS[userType].map(({ text, icon }, index) => (
           <Menu.Item key={index} icon={icon} title={text}>
             {!isBroken && text}

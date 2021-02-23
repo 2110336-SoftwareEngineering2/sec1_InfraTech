@@ -13,7 +13,7 @@ const CreateAccountForm = ({ getState, setState, size, current, next }) => {
   };
   return (
     <div className="flex justify-between w-full">
-      <Image src="/register.svg" width={300} height={400}/>
+      <Image src="/register.svg" width={300} height={400} />
       <div className="mt-6 w-3/5">
         <div>
           Step {current} of {size}
@@ -23,39 +23,47 @@ const CreateAccountForm = ({ getState, setState, size, current, next }) => {
           form={form}
           initialValues={getState('create-account', {})}
           onFinish={onContinue}
-          size='large'
+          size="large"
           className="mt-10"
         >
-          <Form.Item name="email" hasFeedback rules={
-            [
-              {type: 'email', message: 'Email format is incorrect'}, 
-              {required: true, message: 'Please provide an email.'}
-            ]
-          }>
+          <Form.Item
+            name="email"
+            hasFeedback
+            rules={[
+              { type: 'email', message: 'Email format is incorrect' },
+              { required: true, message: 'Please provide an email.' },
+            ]}
+          >
             <Input type="email" placeholder="Email" />
           </Form.Item>
 
-          <Form.Item name="password" hasFeedback rules={
-            [{required: true, message: 'Please specify password.'}]
-          }>
+          <Form.Item
+            name="password"
+            hasFeedback
+            rules={[{ required: true, message: 'Please specify password.' }]}
+          >
             <Input.Password placeholder="Password" />
           </Form.Item>
 
-          <Form.Item name="confirm" hasFeedback dependencies={['password']} rules={
-            [
-              {required: true, message: 'Please confirm your password.'}, 
-              ({getFieldValue}) => ({
+          <Form.Item
+            name="confirm"
+            hasFeedback
+            dependencies={['password']}
+            rules={[
+              { required: true, message: 'Please confirm your password.' },
+              ({ getFieldValue }) => ({
                 validator(_, value) {
-                  if (!value || getFieldValue('password') === value) return Promise.resolve();
-                  return Promise.reject('Password does not match.')
-                }
-              })
-            ]
-          }>
+                  if (!value || getFieldValue('password') === value)
+                    return Promise.resolve();
+                  return Promise.reject('Password does not match.');
+                },
+              }),
+            ]}
+          >
             <Input.Password placeholder="Confirm Password" />
           </Form.Item>
 
-          <Form.Item >
+          <Form.Item>
             <Button type="primary" htmlType="submit" className="w-24">
               Continue
             </Button>

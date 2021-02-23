@@ -36,10 +36,12 @@ const SelectRoleForm = ({ getState, setState, size, current, prev, next }) => {
         size="large"
       >
         <Form.Item name="role">
-          <SelectRoleInput/>
+          <SelectRoleInput />
         </Form.Item>
         <Form.Item className="text-center">
-          <Button onClick={onBack} className="w-24 mr-4">Back</Button>
+          <Button onClick={onBack} className="w-24 mr-4">
+            Back
+          </Button>
           <Button type="primary" htmlType="submit" className="w-24 ml-4">
             Continue
           </Button>

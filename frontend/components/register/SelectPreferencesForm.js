@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Checkbox, Form, Row, Col } from 'antd';
-import SelectPreferencesInput from '../SelectPreferencesInput'
+import SelectPreferencesInput from '../SelectPreferencesInput';
 
 const SelectPreferencesForm = ({
   getState,
@@ -32,7 +32,9 @@ const SelectPreferencesForm = ({
       <div>
         Step {current} of {size}
       </div>
-      <div className="text-3xl sm:text-4xl font-bold">Select Your Workout Preferences</div>
+      <div className="text-3xl sm:text-4xl font-bold">
+        Select Your Workout Preferences
+      </div>
       <Form
         form={form}
         initialValues={getState('select-preferences', { preferences: [] })}
@@ -41,10 +43,12 @@ const SelectPreferencesForm = ({
         className="border-black"
       >
         <Form.Item name="preferences">
-          <SelectPreferencesInput/>
+          <SelectPreferencesInput />
         </Form.Item>
         <Form.Item className="text-center">
-          <Button onClick={onBack} className="w-24 mr-4">Back</Button>
+          <Button onClick={onBack} className="w-24 mr-4">
+            Back
+          </Button>
           <Button type="primary" htmlType="submit" className="w-24 ml-4">
             Continue
           </Button>
