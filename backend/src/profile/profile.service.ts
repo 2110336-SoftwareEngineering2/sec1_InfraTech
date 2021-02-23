@@ -78,7 +78,7 @@ export class ProfileService {
     return await this.loadProfile(request.user);
   }
 
-  async updateProfileFromRequest(
+  async updateProfile(
     request: LetXRequest,
     updateTrainerProfileDto: UpdateTrainerProfileDto | UpdateTraineeProfileDto,
   ): Promise<TrainerProfileDto> {
