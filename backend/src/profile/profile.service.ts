@@ -5,13 +5,9 @@ import { User } from '../entities/user.entity';
 import { Trainer } from 'src/entities/trainer.entity';
 import { Trainee } from 'src/entities/trainee.entity';
 import { UserType } from 'src/register/enums/user-type.enum';
-import {
-  LetXRequest,
-  TrainerProfileDto,
-  TraineeProfileDto,
-  AuthUserGetter,
-} from 'src/middlewares/auth.middleware';
-
+import { LetXRequest, AuthUserGetter } from 'src/middlewares/auth.middleware';
+import { TrainerProfileDto } from './dtos/trainer-profile-dto';
+import { TraineeProfileDto } from './dtos/trainee-profile-dto';
 @Injectable()
 export class ProfileService {
   constructor(
@@ -32,19 +28,26 @@ export class ProfileService {
   }
 
   async loadProfile(
-    user: AuthUserGetter,
+    authUser: AuthUserGetter,
   ): Promise<TraineeProfileDto | TrainerProfileDto> {
-    const profile = await this.resolveRepository(user.type).findOneOrFail({
+    const user = await this.userRepository.findOneOrFail({
+      where: {
+        id: authUser.id,
+      },
+      relations: ['preferences'],
+    });
+
+    const profile = await this.resolveRepository(authUser.type).findOneOrFail({
       where: {
         userId: user.id,
       },
     });
 
     return {
-      id: user.id,
+      ...profile,
       email: user.email,
-      type: user.type,
-      profile: profile,
+      type: authUser.type as UserType,
+      preferences: user.preferences,
     };
   }
 
