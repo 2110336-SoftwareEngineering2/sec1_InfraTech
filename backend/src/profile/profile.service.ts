@@ -15,6 +15,7 @@ import { UpdateTraineeProfileDto } from './dtos/update-trainee-profile-dto';
 import { Preference } from '../preference/entities/preference.entity';
 >>>>>>> ✨ add update trainer profile service
 import { omit } from 'lodash';
+
 @Injectable()
 export class ProfileService {
   constructor(

@@ -4,12 +4,10 @@ import { LetXRequest } from 'src/middlewares/auth.middleware';
 import { AuthGuard } from '../guards/auth.guard';
 import { TrainerProfileDto } from './dtos/trainer-profile-dto';
 import { TraineeProfileDto } from './dtos/trainee-profile-dto';
-import { UserType } from '../register/enums/user-type.enum';
-import { RoleGuard } from '../guards/role.guard';
 import { UpdateTrainerProfileDto } from './dtos/update-trainer-profile-dto';
 import { UpdateTraineeProfileDto } from './dtos/update-trainee-profile-dto';
-import { Role } from '../decorators/role.decorator';
 import { ApiBody, ApiExtraModels, getSchemaPath } from '@nestjs/swagger';
+
 @Controller('profile')
 export class ProfileController {
   constructor(private profileService: ProfileService) {}
