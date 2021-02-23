@@ -8,7 +8,7 @@ const App = ({ Component, pageProps }) => {
     <CookiesProvider>
       <Head>
         <title>Let's exercise!</title>
-        <link rel='icon' href='/logo.svg'/>
+        <link rel="icon" href="/logo.svg" />
       </Head>
       <Component {...pageProps} />
     </CookiesProvider>

@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { Layout, Button } from 'antd';
 import { UserOutlined, MenuOutlined } from '@ant-design/icons';
 
-import { COOKIE_NAME } from '../config/config'
+import { COOKIE_NAME } from '../config/config';
 
 const { Header: AntdHeader } = Layout;
 

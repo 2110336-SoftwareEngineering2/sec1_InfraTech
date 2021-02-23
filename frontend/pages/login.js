@@ -1,10 +1,10 @@
 import React from 'react';
 import { useCookies } from 'react-cookie';
 import Image from 'next/image';
-import { Modal } from 'antd'
+import { Modal } from 'antd';
 import axios from 'axios';
 
-import { COOKIE_NAME, API_HOST } from '../config/config'
+import { COOKIE_NAME, API_HOST } from '../config/config';
 import { REDIRECT_CONDITION } from '../config/RedirectCondition.config';
 import useUser from '../lib/useUser';
 import LoginForm from '../components/LoginForm';
@@ -35,7 +35,7 @@ const Login = () => {
       Modal.error({
         title: 'Login Failed',
         content: 'Email/Password is incorrect.',
-        centered: true
+        centered: true,
       });
     }
   };
