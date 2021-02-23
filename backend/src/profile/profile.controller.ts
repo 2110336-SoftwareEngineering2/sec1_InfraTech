@@ -36,9 +36,6 @@ export class ProfileController {
     @Body()
     updateProfileDto: UpdateTrainerProfileDto | UpdateTraineeProfileDto,
   ): Promise<TrainerProfileDto> {
-    return this.profileService.updateProfileFromRequest(
-      request,
-      updateProfileDto,
-    );
+    return this.profileService.updateProfile(request, updateProfileDto);
   }
 }
