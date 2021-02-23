@@ -12,19 +12,26 @@ const CreateAccountForm = ({ getState, setState, size, current, next }) => {
     next();
   };
   return (
-    <div className="flex justify-between w-full">
-      <Image src="/register.svg" width={300} height={400} />
-      <div className="mt-6 w-3/5">
-        <div>
-          Step {current} of {size}
+    <div className="flex">
+      <div className="w-2/5 mr-4 hidden lg:block">
+        <Image
+          src="/register.svg"
+          width={350}
+          height={450}
+          layout="responsive"
+        />
+      </div>
+      <div className="w-full lg:w-3/5">
+        <div className="mb-6 lg:mb-8">
+          <div className="lg:text-lg">
+            Step {current} of {size}
+          </div>
+          <div className="font-bold text-3xl lg:text-4xl">Create Account</div>
         </div>
-        <div className="text-3xl sm:text-4xl font-bold">Create Account</div>
         <Form
           form={form}
           initialValues={getState('create-account', {})}
           onFinish={onContinue}
-          size="large"
-          className="mt-10"
         >
           <Form.Item
             name="email"
