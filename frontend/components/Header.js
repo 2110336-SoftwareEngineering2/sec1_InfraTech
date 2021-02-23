@@ -2,9 +2,10 @@ import React from 'react';
 import { useCookies } from 'react-cookie';
 import Link from 'next/link';
 import Image from 'next/image';
-
 import { Layout, Button } from 'antd';
 import { UserOutlined, MenuOutlined } from '@ant-design/icons';
+
+import { COOKIE_NAME } from '../config/config'
 
 const { Header: AntdHeader } = Layout;
 
@@ -38,13 +39,11 @@ const GuestHeader = () => (
 );
 
 const NonGuestHeader = ({ username, profileImageUrl, handleSignOut }) => {
-  const [cookies, setCookie, removeCookie] = useCookies([
-    process.env.NEXT_PUBLIC_COOKIE_NAME,
-  ]);
+  const [cookies, setCookie, removeCookie] = useCookies([COOKIE_NAME]);
 
   // TODO: Connect to logout API
   const onClick = () => {
-    removeCookie(process.env.NEXT_PUBLIC_COOKIE_NAME, { path: '/' });
+    removeCookie(COOKIE_NAME, { path: '/' });
     handleSignOut();
   };
 

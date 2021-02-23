@@ -16,6 +16,7 @@ import { TrainerRepository } from './repositories/trainer.repository';
 import { TraineeRepository } from './repositories/trainee.repository';
 import { Preference } from '../preference/entities/preference.entity';
 import { RegisterResultDto } from './dtos/register-result-dto';
+import { omit } from 'lodash';
 
 @Injectable()
 export class RegisterService {
@@ -48,18 +49,17 @@ export class RegisterService {
     await queryRunner.startTransaction();
 
     try {
-      const result = await queryRunner.manager.save(User, user);
-      const userId = result.id;
+      const createdUser = await queryRunner.manager.save(User, user);
 
       const ProfileEntity = userType === UserType.Trainer ? Trainer : Trainee;
       const profile =
         userType === UserType.Trainer
           ? this.trainerRepository.createUsingRegisterForm(
-              userId,
+              createdUser,
               registerFormDto,
             )
           : this.traineeRepository.createUsingRegisterForm(
-              userId,
+              createdUser,
               registerFormDto,
             );
 
@@ -67,12 +67,7 @@ export class RegisterService {
 
       await queryRunner.commitTransaction();
 
-      return {
-        id: userId,
-        email: result.email,
-        password: result.password,
-        salt: result.salt,
-      };
+      return omit(createdUser, ['preferences']);
     } catch (error) {
       await queryRunner.rollbackTransaction();
 

@@ -1,7 +1,6 @@
 import {
   Entity,
   Column,
-  JoinColumn,
   PrimaryGeneratedColumn,
   ManyToMany,
   JoinTable,
@@ -11,7 +10,6 @@ import { Preference } from '../preference/entities/preference.entity';
 @Entity({ name: 'user' })
 export class User {
   @PrimaryGeneratedColumn('uuid')
-  @JoinColumn()
   id: string;
 
   @Column({ unique: true })

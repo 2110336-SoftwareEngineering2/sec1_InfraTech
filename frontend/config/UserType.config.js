@@ -1,5 +1,5 @@
 export const USER_TYPE = {
-  TRAINER: 'trainer',
-  TRAINEE: 'trainee',
-  GUEST: 'guest',
+  TRAINER: 'TRAINER',
+  TRAINEE: 'TRAINEE',
+  GUEST: 'GUEST',
 };

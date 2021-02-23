@@ -1,24 +1,8 @@
-import { Injectable, NestMiddleware } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
-import * as jwt from 'jsonwebtoken'
-import { Repository } from 'typeorm';
-import { Trainer } from 'src/entities/trainer.entity';
-import { Trainee } from 'src/entities/trainee.entity';
-import { UserType } from 'src/register/enums/user-type.enum';
+import * as jwt from 'jsonwebtoken';
+import * as config from 'config';
 
-export interface TraineeProfileDto {
-  id: string;
-  email: string;
-  type: string;
-  profile: Trainee;
-}
-
-export interface TrainerProfileDto {
-  id: string;
-  email: string;
-  type: string;
-  profile: Trainer;
-}
+const authConfig = config.get('auth');
 
 export class AuthUserGetter {
   public id: string;
@@ -33,18 +17,25 @@ export class AuthUserGetter {
 }
 
 export interface LetXRequest extends Request {
-  user: AuthUserGetter
+  user: AuthUserGetter;
 }
 
-export function AuthMiddleware(req: LetXRequest, res: Response, next: NextFunction) {
+export function AuthMiddleware(
+  req: LetXRequest,
+  res: Response,
+  next: NextFunction,
+) {
   // TODO: Check exp
-  let token = req.header("Authorization");
+  let token = req.header('Authorization');
   if (token) {
-    token = token.split(" ")[1];
-    const data: any = jwt.verify(token, "secret");
-    console.log(data);
+    try {
+      token = token.split(' ')[1];
+      const data: any = jwt.verify(token, authConfig.jwtSecret);
 
-    req.user = new AuthUserGetter(data.sub, data.email, data.type);
+      req.user = new AuthUserGetter(data.sub, data.email, data.type);
+    } catch (error) {
+      // JsonWebTokenError: invalid token
+    }
   }
 
   next();

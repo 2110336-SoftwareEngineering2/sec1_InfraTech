@@ -6,9 +6,10 @@ import {
   MessageOutlined,
   HomeOutlined,
 } from '@ant-design/icons';
+import { USER_TYPE } from './UserType.config';
 
 export const MENU_ITEMS = {
-  guest: [
+  [USER_TYPE.GUEST]: [
     {
       text: 'Home',
       icon: <HomeOutlined />,
@@ -18,7 +19,7 @@ export const MENU_ITEMS = {
       icon: <SearchOutlined />,
     },
   ],
-  trainer: [
+  [USER_TYPE.TRAINER]: [
     {
       text: 'Home',
       icon: <HomeOutlined />,
@@ -44,7 +45,7 @@ export const MENU_ITEMS = {
       icon: <MessageOutlined />,
     },
   ],
-  trainee: [
+  [USER_TYPE.TRAINEE]: [
     {
       text: 'Home',
       icon: <HomeOutlined />,

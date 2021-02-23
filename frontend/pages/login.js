@@ -1,38 +1,42 @@
 import React from 'react';
 import { useCookies } from 'react-cookie';
-import { Form } from 'antd';
 import Image from 'next/image';
+import { Modal } from 'antd'
 import axios from 'axios';
 
+import { COOKIE_NAME, API_HOST } from '../config/config'
 import { REDIRECT_CONDITION } from '../config/RedirectCondition.config';
 import useUser from '../lib/useUser';
 import LoginForm from '../components/LoginForm';
 import Footer from '../components/Footer';
 
 const Login = () => {
-  const [form] = Form.useForm();
-  const [cookie, setCookie] = useCookies([process.env.NEXT_PUBLIC_COOKIE_NAME]);
+  const [cookie, setCookie] = useCookies([COOKIE_NAME]);
   const { user, mutateUser } = useUser({
     redirectTo: '/',
     redirectWhen: REDIRECT_CONDITION.USER_FOUND,
   });
 
-  // TODO: Connect to login API
   const handleSubmit = async ({ email, password }) => {
     try {
-      const { data } = await axios.post('/api/login', {
+      const { data } = await axios.post(`${API_HOST}/login`, {
         email,
         password,
       });
       if (data?.token) {
-        setCookie(process.env.NEXT_PUBLIC_COOKIE_NAME, data.token, {
+        setCookie(COOKIE_NAME, data.token, {
           path: '/',
-          maxAge: 250000, // around three days
+          maxAge: 1000000,
         });
         mutateUser();
       }
     } catch (error) {
       console.error('An unexpected error happened:', error);
+      Modal.error({
+        title: 'Login Failed',
+        content: 'Email/Password is incorrect.',
+        centered: true
+      });
     }
   };
 
@@ -45,7 +49,7 @@ const Login = () => {
           </div>
           <div className="mx-8 md:mx-12 my-10 text-3xl sm:text-4xl font-bold">
             Welcome Back!
-            <LoginForm form={form} onSubmit={handleSubmit} />
+            <LoginForm onSubmit={handleSubmit} />
           </div>
         </div>
       </div>

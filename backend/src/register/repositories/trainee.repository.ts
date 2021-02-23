@@ -1,11 +1,12 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { RegisterFormDto } from '../dtos/register-form-dto';
 import { Trainee } from '../../entities/trainee.entity';
+import { User } from '../../entities/user.entity';
 
 @EntityRepository(Trainee)
 export class TraineeRepository extends Repository<Trainee> {
   createUsingRegisterForm(
-    userId: string,
+    user: User,
     registerFormDto: RegisterFormDto,
   ): Trainee {
     const {
@@ -19,7 +20,7 @@ export class TraineeRepository extends Repository<Trainee> {
 
     const profile = this.create();
 
-    profile.userId = userId;
+    profile.user = user;
     profile.firstname = firstname;
     profile.lastname = lastname;
     profile.gender = gender;
