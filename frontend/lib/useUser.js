@@ -28,12 +28,7 @@ export default function useUser({
           'Access-Control-Allow-Origin': '*',
         },
       });
-      const { type = USER_TYPE.GUEST, profile = {} } = res.data;
-      return {
-        firstname: profile?.firstname ?? null,
-        profileImageUrl: profile?.profileImageUrl ?? null,
-        type: type.toUpperCase(),
-      };
+      return res?.data ?? {};
     },
   );
 
