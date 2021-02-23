@@ -39,7 +39,9 @@ export class ProfileService {
 
     const profile = await this.resolveRepository(authUser.type).findOneOrFail({
       where: {
-        userId: user.id,
+        user: {
+          id: user.id,
+        },
       },
     });
 
