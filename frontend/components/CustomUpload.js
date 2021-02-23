@@ -2,16 +2,9 @@ import { Upload, message, Button } from 'antd';
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { LoadingOutlined } from '@ant-design/icons';
+import { getBase64 } from '../lib/utils';
 
 const CustomUpload = ({ value, onChange }) => {
-  const getBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = (error) => reject(error);
-    });
-  };
   const triggerChange = (changedValue) => {
     if (onChange) {
       onChange({
