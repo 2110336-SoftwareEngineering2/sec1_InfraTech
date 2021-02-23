@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Form, Input } from 'antd';
 import Image from 'next/image';
+import StepHeader from './StepHeader';
 
 const CreateAccountForm = ({ getState, setState, size, current, next }) => {
   const [form] = Form.useForm();
@@ -22,12 +23,7 @@ const CreateAccountForm = ({ getState, setState, size, current, next }) => {
         />
       </div>
       <div className="w-full lg:w-3/5">
-        <div className="mb-6 lg:mb-8">
-          <div className="lg:text-lg">
-            Step {current} of {size}
-          </div>
-          <div className="font-bold text-3xl lg:text-4xl">Create Account</div>
-        </div>
+        <StepHeader current={current} size={size} title="Create Account" />
         <Form
           form={form}
           initialValues={getState('create-account', {})}
