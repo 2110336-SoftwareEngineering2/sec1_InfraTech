@@ -21,7 +21,10 @@ const Profile = () => {
           gender: "male",
           birthdate: d,
           phoneNumber: "123412341",
-          profileImageUrl: "/login.svg"
+          profileImageUrl: "/login.svg",
+          preferences: [
+            "cardiovascular", 'balance'
+          ]
       }
   }
   console.log(mock)
@@ -34,7 +37,7 @@ const Profile = () => {
           {
             isEditing ? 
             <EditProfile profile={mock.profile} setIsEditing={setIsEditing} /> : 
-            <InformationProfile email={mock.email} profile={mock.profile} setIsEditing={setIsEditing}/>
+            <InformationProfile profile={mock.profile} setIsEditing={setIsEditing}/>
           }
         </div>
       </div>

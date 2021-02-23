@@ -40,13 +40,13 @@ const EditProfile = ({ profile, setIsEditing }) => {
       onFinish={onSave}
       size="large"
     >
-      <div className="flex">
-        <div className="mt-10 mr-24">
+      <div className="flex mt-10">
+        <div className="mr-32">
           <Form.Item name="profileImageUrl" className="text-center">
             <CustomUpload />
           </Form.Item>
         </div>
-        <div className="mt-12 w-3/5">
+        <div className="w-3/5">
           <div className="text-lg">First Name</div>
           <Form.Item name="firstname" hasFeedback rules={
             [{required: true, message: 'Please provide first name.'}]
