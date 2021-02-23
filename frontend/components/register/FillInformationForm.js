@@ -58,13 +58,12 @@ const FillInformationForm = ({ getState, setState, size, current, prev }) => {
   };
 
   return (
-    <div className="w-full">
+    <>
       <StepHeader current={current} size={size} title="Fill Your information" />
       <Form
         form={form}
         initialValues={getState('information', {})}
         onFinish={onContinue}
-        size="large"
       >
         <div className="flex justify-between">
           <div className="mt-10 mr-12 w-2/5">
@@ -156,7 +155,7 @@ const FillInformationForm = ({ getState, setState, size, current, prev }) => {
           </Button>
         </Form.Item>
       </Form>
-    </div>
+    </>
   );
 };
 

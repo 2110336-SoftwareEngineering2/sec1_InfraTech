@@ -29,7 +29,7 @@ const SelectPreferencesForm = ({
   };
 
   return (
-    <div className="w-full">
+    <>
       <StepHeader
         current={current}
         size={size}
@@ -39,8 +39,6 @@ const SelectPreferencesForm = ({
         form={form}
         initialValues={getState('select-preferences', { preferences: [] })}
         onFinish={onContinue}
-        size="large"
-        className="border-black"
       >
         <Form.Item name="preferences">
           <SelectPreferencesInput />
@@ -54,7 +52,7 @@ const SelectPreferencesForm = ({
           </Button>
         </Form.Item>
       </Form>
-    </div>
+    </>
   );
 };
 
