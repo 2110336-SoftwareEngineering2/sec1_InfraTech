@@ -4,12 +4,9 @@ import useSWR from 'swr';
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
 
+import { COOKIE_NAME, API_HOST } from '../config/config';
 import { USER_TYPE } from '../config/UserType.config';
 import { REDIRECT_CONDITION } from '../config/RedirectCondition.config';
-
-const COOKIE_NAME = process.env.NEXT_PUBLIC_COOKIE_NAME || 'letx_token';
-const API_HOST =
-  process.env.NEXT_PUBLIC_LETX_API_HOST || 'http://localhost:3001';
 
 export default function useUser({
   redirectTo = null,

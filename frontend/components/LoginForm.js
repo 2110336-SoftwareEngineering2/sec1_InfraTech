@@ -1,26 +1,24 @@
 import { Form, Input, Button } from 'antd';
 
-const LoginForm = ({ form, onSubmit }) => {
-  return (
-    <Form
-      className="mt-6 w-60 md:w-80"
-      layout='vertical'
-      form={form}
-      onFinish={onSubmit}
-    >
+const LoginForm = ({ onSubmit }) => (
+    <Form className="mt-6 w-60 md:w-80" layout="vertical" onFinish={onSubmit}>
       <Form.Item
         name="email"
-        rules={[{ required: true, message: 'Please input your email' }]}
+        rules={[
+          {
+            type: 'email',
+            message: 'The input is not valid E-mail!',
+          },
+          { required: true, message: 'Please input your email' },
+        ]}
       >
-        <Input className="form-text-box" placeholder="Email" />
+        <Input placeholder="Email" />
       </Form.Item>
       <Form.Item
         name="password"
         rules={[{ required: true, message: 'Please input your password' }]}
       >
-        <Input
-          className="form-text-box password"
-          type="password"
+        <Input.Password
           placeholder="Password"
         />
       </Form.Item>
@@ -31,6 +29,6 @@ const LoginForm = ({ form, onSubmit }) => {
       </Form.Item>
     </Form>
   );
-};
+
 
 export default LoginForm;
