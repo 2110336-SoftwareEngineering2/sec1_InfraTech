@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, DatePicker, Form, Input, Row, Select } from 'antd';
-// import CustomUpload from '../CustomUpload';
+import CustomUpload from './CustomUpload';
 
 const validateCitizenID = (id) => {
   // ref: https://snasui.com/wordpress/identification/
@@ -40,11 +40,11 @@ const EditProfile = ({ profile, setIsEditing }) => {
       onFinish={onSave}
       size="large"
     >
-      <div className="flex justify-between w-4/5">
-        <div className="mt-10 mr-12 w-2/5">
-          {/* <Form.Item name="profileImageUrl" className="text-center">
+      <div className="flex">
+        <div className="mt-10 mr-24">
+          <Form.Item name="profileImageUrl" className="text-center">
             <CustomUpload />
-          </Form.Item> */}
+          </Form.Item>
         </div>
         <div className="mt-12 w-3/5">
           <div className="text-lg">First Name</div>

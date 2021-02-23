@@ -29,7 +29,7 @@ const Profile = () => {
   return (
     <AppLayout user={user} mutateUser={mutateUser}>
       <div className="min-h-screen flex justify-center">
-        <div className="bg-white w-full m-12 py-12 px-16 rounded-lg">
+        <div className="bg-white w-full m-12 py-12 px-24 rounded-lg">
           <div className="text-4xl sm:text-5xl font-bold">{isEditing ? "Edit Profile" : "Profile"}</div>
           {
             isEditing ? 
