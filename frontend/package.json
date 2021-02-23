@@ -12,6 +12,7 @@
     "antd": "^4.12.2",
     "autoprefixer": "^10.2.4",
     "axios": "^0.21.1",
+    "firebase": "^8.2.9",
     "next": "10.0.6",
     "postcss": "^8.2.4",
     "react": "17.0.1",

@@ -1,5 +1,8 @@
 import React from 'react';
-import { Button, Form, Radio } from 'antd';
+import { Button, Form, Row } from 'antd';
+
+import SelectRoleInput from '../SelectRoleInput';
+import { USER_TYPE } from '../../config/UserType.config';
 
 // NOTE: draft version
 const SelectRoleForm = ({ getState, setState, size, current, prev, next }) => {
@@ -21,27 +24,25 @@ const SelectRoleForm = ({ getState, setState, size, current, prev, next }) => {
   };
 
   return (
-    <div>
+    <div className="w-full">
       <div>
         Step {current} of {size}
       </div>
-      <div>Select Role</div>
+      <div className="text-3xl sm:text-4xl font-bold">Select Your Role</div>
       <Form
         form={form}
-        initialValues={getState('select-role', { role: 'trainer' })}
+        initialValues={getState('select-role', { role: USER_TYPE.TRAINER })}
         onFinish={onContinue}
+        size="large"
       >
         <Form.Item name="role">
-          <Radio.Group>
-            <Radio.Button value="trainer">Trainer</Radio.Button>
-            <Radio.Button value="trainee">Trainee</Radio.Button>
-          </Radio.Group>
+          <SelectRoleInput />
         </Form.Item>
-        <Form.Item>
-          <Button onClick={onBack}>Back</Button>
-        </Form.Item>
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
+        <Form.Item className="text-center">
+          <Button onClick={onBack} className="w-24 mr-4">
+            Back
+          </Button>
+          <Button type="primary" htmlType="submit" className="w-24 ml-4">
             Continue
           </Button>
         </Form.Item>

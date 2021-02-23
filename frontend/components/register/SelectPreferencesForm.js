@@ -1,5 +1,6 @@
-import React from 'react';
-import { Button, Checkbox, Form } from 'antd';
+import React, { useState } from 'react';
+import { Button, Checkbox, Form, Row, Col } from 'antd';
+import SelectPreferencesInput from '../SelectPreferencesInput';
 
 const SelectPreferencesForm = ({
   getState,
@@ -26,32 +27,29 @@ const SelectPreferencesForm = ({
     prev();
   };
 
-  const preferenceOptions = [
-    { label: 'Cardiovascular', value: 'cardiovascular' },
-    { label: 'Balance', value: 'balance' },
-    { label: 'Flexibility', value: 'flexibility' },
-    { label: 'Strength', value: 'strength' },
-  ];
-
   return (
-    <div>
+    <div className="w-full">
       <div>
         Step {current} of {size}
       </div>
-      <div>Select Preferences</div>
+      <div className="text-3xl sm:text-4xl font-bold">
+        Select Your Workout Preferences
+      </div>
       <Form
         form={form}
         initialValues={getState('select-preferences', { preferences: [] })}
         onFinish={onContinue}
+        size="large"
+        className="border-black"
       >
         <Form.Item name="preferences">
-          <Checkbox.Group options={preferenceOptions} />
+          <SelectPreferencesInput />
         </Form.Item>
-        <Form.Item>
-          <Button onClick={onBack}>Back</Button>
-        </Form.Item>
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
+        <Form.Item className="text-center">
+          <Button onClick={onBack} className="w-24 mr-4">
+            Back
+          </Button>
+          <Button type="primary" htmlType="submit" className="w-24 ml-4">
             Continue
           </Button>
         </Form.Item>
