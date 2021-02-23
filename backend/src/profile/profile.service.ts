@@ -38,11 +38,8 @@ export class ProfileService {
     });
 
     const profile = await this.resolveRepository(authUser.type).findOneOrFail({
-      where: {
-        user: {
-          id: user.id,
-        },
-      },
+      where: { user },
+      relations: ['user'],
     });
 
     return {
