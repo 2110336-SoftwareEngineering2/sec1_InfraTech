@@ -65,13 +65,13 @@ const FillInformationForm = ({ getState, setState, size, current, prev }) => {
         initialValues={getState('information', {})}
         onFinish={onContinue}
       >
-        <div className="flex justify-between">
-          <div className="mt-10 mr-12 w-2/5">
+        <div className="flex flex-col lg:flex-row">
+          <div className="w-full lg:w-2/5">
             <Form.Item name="img" className="text-center">
               <CustomUpload />
             </Form.Item>
           </div>
-          <div className="mt-12 w-3/5">
+          <div className="w-full lg:w-3/5">
             <Form.Item
               name="firstName"
               hasFeedback
@@ -105,7 +105,7 @@ const FillInformationForm = ({ getState, setState, size, current, prev }) => {
 
               <Form.Item
                 name="dateOfBirth"
-                className="w-3/5"
+                className="w-2/3"
                 hasFeedback
                 rules={[
                   { required: true, message: 'Please select birth date.' },
@@ -146,8 +146,8 @@ const FillInformationForm = ({ getState, setState, size, current, prev }) => {
           </div>
         </div>
 
-        <Form.Item className="text-center mt-10">
           <Button onClick={onBack} className="w-24 mr-4">
+        <Form.Item className="text-center">
             Back
           </Button>
           <Button type="primary" htmlType="submit" className="w-24 ml-4">
