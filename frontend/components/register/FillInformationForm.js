@@ -47,23 +47,24 @@ const FillInformationForm = ({ getState, setState, size, current, prev }) => {
   };
   
   return (
-    <div>
+    <div className="w-full">
       <div>
         Step {current} of {size}
       </div>
-      <div className="text-3xl sm:text-4xl font-bold">Fill information</div>
+      <div className="text-3xl sm:text-4xl font-bold">Fill Your information</div>
       <Form
         form={form}
         initialValues={getState('information', {})}
         onFinish={onContinue}
+        size="large"
       >
         <div className="flex justify-between">
-          <div className="hidden md:block mt-0 lg:mt-10 mx-8">
-            <Form.Item name="img" className="text-center mt-6">
+          <div className="mt-10 mr-12 w-2/5">
+            <Form.Item name="img" className="text-center">
               <CustomUpload />
             </Form.Item>
           </div>
-          <div className="mt-12 ml-12 w-96">
+          <div className="mt-12 w-3/5">
             <Form.Item name="firstName" hasFeedback rules={
               [{required: true, message: 'Please provide first name.'}]
             }>
@@ -77,7 +78,7 @@ const FillInformationForm = ({ getState, setState, size, current, prev }) => {
             </Form.Item>
             
             <Row justify="space-between">
-              <Form.Item name="gender" className="w-32" hasFeedback rules={
+              <Form.Item name="gender" className="w-1/3" hasFeedback rules={
                 [{required: true, message: 'Gender is not specified'}]
               }>
                 <Select placeholder="Gender">
@@ -86,7 +87,7 @@ const FillInformationForm = ({ getState, setState, size, current, prev }) => {
                 </Select>
               </Form.Item>
 
-              <Form.Item name="dateOfBirth" className="w-60" hasFeedback rules={
+              <Form.Item name="dateOfBirth" className="w-3/5" hasFeedback rules={
                 [
                   {required: true, message: 'Please select birth date.'}
                 ]

@@ -2,6 +2,7 @@ import fire from '../config/firebase';
 import { Upload, message, Button } from 'antd';
 import React, { Component, useState } from 'react';
 import Image from 'next/image';
+import { LoadingOutlined } from '@ant-design/icons';
 
 const CustomUpload = ({ value, onChange }) => {
   const getBase64 = (file) => {
@@ -31,6 +32,7 @@ const CustomUpload = ({ value, onChange }) => {
     console.log(info);
     setFile(info.file);
     if (info.file.status === 'uploading') {
+      setImageUrl('')
       setLoading(true);
       return;
     }
@@ -63,10 +65,13 @@ const CustomUpload = ({ value, onChange }) => {
   };
 
   return (
-    <div className="relative flex-col">
-      {
-        imageUrl ? <Image src={imageUrl} width={240} height={240} /> : null
-      }
+    <div className="relative flex-col item-center">
+      <div className="relative ">
+        <Image src={imageUrl ? imageUrl : "/avatar.svg"} width={240} height={240} layout="fixed" className="rounded-full align-middle"/>
+        {
+          loading ? <LoadingOutlined className="absolute top-1/2 left-1/2 -mt-2 -ml-2"/> : null
+        }
+      </div>
       <Upload
         name="avatar"
         beforeUpload={beforeUpload}
@@ -74,7 +79,7 @@ const CustomUpload = ({ value, onChange }) => {
         fileList={fileList}
         showUploadList={false}
       >
-        <Button>Change</Button>
+        <Button className="w-24 mt-4">Change</Button>
       </Upload>
     </div>
   );
