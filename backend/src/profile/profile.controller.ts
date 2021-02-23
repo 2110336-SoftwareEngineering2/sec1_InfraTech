@@ -4,6 +4,7 @@ import { LetXRequest } from 'src/middlewares/auth.middleware';
 import { AuthGuard } from '../guards/auth.guard';
 import { TrainerProfileDto } from './dtos/trainer-profile-dto';
 import { TraineeProfileDto } from './dtos/trainee-profile-dto';
+
 @Controller('profile')
 export class ProfileController {
   constructor(private profileService: ProfileService) {}
