@@ -5,9 +5,10 @@ import { ProfileController } from './profile.controller';
 import { ProfileService } from './profile.service';
 import { Trainer } from 'src/entities/trainer.entity';
 import { Trainee } from 'src/entities/trainee.entity';
+import { Preference } from '../preference/entities/preference.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User, Trainer, Trainee])],
+  imports: [TypeOrmModule.forFeature([User, Trainer, Trainee, Preference])],
   controllers: [ProfileController],
   providers: [ProfileService],
 })
