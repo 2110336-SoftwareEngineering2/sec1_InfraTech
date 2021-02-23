@@ -8,6 +8,7 @@ import { UserType } from 'src/register/enums/user-type.enum';
 import { LetXRequest, AuthUserGetter } from 'src/middlewares/auth.middleware';
 import { TrainerProfileDto } from './dtos/trainer-profile-dto';
 import { TraineeProfileDto } from './dtos/trainee-profile-dto';
+import { omit } from 'lodash';
 @Injectable()
 export class ProfileService {
   constructor(
