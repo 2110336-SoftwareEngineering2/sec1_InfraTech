@@ -1,6 +1,6 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, In, Connection } from 'typeorm';
+import { Repository, In, Connection, EntityTarget } from 'typeorm';
 import { User } from '../entities/user.entity';
 import { Trainer } from 'src/entities/trainer.entity';
 import { Trainee } from 'src/entities/trainee.entity';
@@ -11,6 +11,7 @@ import { TraineeProfileDto } from './dtos/trainee-profile-dto';
 <<<<<<< HEAD
 =======
 import { UpdateTrainerProfileDto } from './dtos/update-trainer-profile-dto';
+import { UpdateTraineeProfileDto } from './dtos/update-trainee-profile-dto';
 import { Preference } from '../preference/entities/preference.entity';
 >>>>>>> ✨ add update trainer profile service
 import { omit } from 'lodash';
@@ -33,6 +34,16 @@ export class ProfileService {
       return this.trainerRepository;
     } else {
       return this.traineeRepository;
+    }
+  }
+
+  resolveEntityTarget(
+    type: string,
+  ): EntityTarget<Trainee> | EntityTarget<Trainee> {
+    if (type == UserType.Trainer) {
+      return Trainer;
+    } else {
+      return Trainee;
     }
   }
 
@@ -66,21 +77,21 @@ export class ProfileService {
     return await this.loadProfile(request.user);
   }
 
-  async updateTrainerProfile(
+  async updateProfileFromRequest(
     request: LetXRequest,
-    updateTrainerProfileDto: UpdateTrainerProfileDto,
+    updateTrainerProfileDto: UpdateTrainerProfileDto | UpdateTraineeProfileDto,
   ): Promise<TrainerProfileDto> {
     const user = await this.userRepository.findOneOrFail({
       where: { id: request.user.id },
       relations: ['preferences'],
     });
 
-    const trainer = await this.trainerRepository.findOneOrFail({
-      where: {
-        user: {
-          id: user.id,
-        },
-      },
+    const Profile = this.resolveEntityTarget(request.user.type);
+    const profile = await this.resolveRepository(
+      request.user.type,
+    ).findOneOrFail({
+      where: { user },
+      relations: ['user'],
     });
 
     if ('email' in updateTrainerProfileDto) {
@@ -97,7 +108,7 @@ export class ProfileService {
     for (const key of Object.keys(
       omit(updateTrainerProfileDto, ['email', 'preferences']),
     )) {
-      trainer[key] = updateTrainerProfileDto[key];
+      profile[key] = updateTrainerProfileDto[key];
     }
 
     const queryRunner = this.connection.createQueryRunner();
@@ -106,18 +117,18 @@ export class ProfileService {
 
     try {
       await queryRunner.manager.save(User, user);
-      await queryRunner.manager.save(Trainer, trainer);
+      await queryRunner.manager.save(Profile, profile);
 
       await queryRunner.commitTransaction();
     } catch (error) {
       await queryRunner.rollbackTransaction();
 
-      console.error(error);
       throw new InternalServerErrorException();
     }
 
     return {
-      ...trainer,
+      userId: user.id,
+      ...omit(profile, ['user']),
       email: user.email,
       type: request.user.type as UserType,
       preferences: user.preferences,
