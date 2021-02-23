@@ -1,16 +1,11 @@
 import SelectionCard from './SelectionCard'
+import { PREFERENCE_OPTIONS } from '../config/PreferenceOptions.config'
 
 const SelectPreferencesInput = ({ value = [], onChange }) => {
-    const preferenceOptions = [
-      { imageUrl: '/cardiovascular.svg', description: 'Cardiovascular', value: 'cardiovascular' },
-      { imageUrl: '/balance.svg', description: 'Balance', value: 'balance' },
-      { imageUrl: '/flexibility.svg', description: 'Flexibility', value: 'flexibility' },
-      { imageUrl: '/strength.svg', description: 'Strength', value: 'strength' },
-    ];
   
     const onClick = selectedIndex => {
       if(onChange){
-        onChange(preferenceOptions.filter((option, index) => {
+        onChange(PREFERENCE_OPTIONS.filter((option, index) => {
           return (index == selectedIndex && !value.includes(option.value)) || (index != selectedIndex && value.includes(option.value))
         }).map(option => option.value))
       }
@@ -19,7 +14,7 @@ const SelectPreferencesInput = ({ value = [], onChange }) => {
     return (  
       <div className="w-full flex flex-wrap justify-around item-center">
       {
-        preferenceOptions.map((option, index) => (
+        PREFERENCE_OPTIONS.map((option, index) => (
           <SelectionCard 
             checked={value.includes(option.value)} 
             imageUrl={option.imageUrl} 

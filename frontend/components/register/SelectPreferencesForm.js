@@ -27,13 +27,6 @@ const SelectPreferencesForm = ({
     prev();
   };
 
-  const preferenceOptions = [
-    { label: 'Cardiovascular', value: 'cardiovascular' },
-    { label: 'Balance', value: 'balance' },
-    { label: 'Flexibility', value: 'flexibility' },
-    { label: 'Strength', value: 'strength' },
-  ];
-
   return (
     <div className="w-full">
       <div>
