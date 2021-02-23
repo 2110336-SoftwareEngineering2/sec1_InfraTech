@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Form, Row } from 'antd';
 
+import StepHeader from './StepHeader';
 import SelectRoleInput from '../SelectRoleInput';
 import { USER_TYPE } from '../../config/UserType.config';
 
@@ -25,10 +26,7 @@ const SelectRoleForm = ({ getState, setState, size, current, prev, next }) => {
 
   return (
     <div className="w-full">
-      <div>
-        Step {current} of {size}
-      </div>
-      <div className="text-3xl sm:text-4xl font-bold">Select Your Role</div>
+      <StepHeader current={current} size={size} title="Select Your Role" />
       <Form
         form={form}
         initialValues={getState('select-role', { role: USER_TYPE.TRAINER })}

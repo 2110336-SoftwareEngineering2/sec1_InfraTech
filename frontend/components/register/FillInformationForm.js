@@ -13,6 +13,7 @@ import Image from 'next/image';
 import { UploadOutlined } from '@ant-design/icons';
 import fire from './../../config/firebase';
 import CustomUpload from '../CustomUpload';
+import StepHeader from './StepHeader';
 
 const validateCitizenID = (id) => {
   // ref: https://snasui.com/wordpress/identification/
@@ -58,12 +59,7 @@ const FillInformationForm = ({ getState, setState, size, current, prev }) => {
 
   return (
     <div className="w-full">
-      <div>
-        Step {current} of {size}
-      </div>
-      <div className="text-3xl sm:text-4xl font-bold">
-        Fill Your information
-      </div>
+      <StepHeader current={current} size={size} title="Fill Your information" />
       <Form
         form={form}
         initialValues={getState('information', {})}

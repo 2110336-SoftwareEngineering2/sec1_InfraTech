@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Checkbox, Form, Row, Col } from 'antd';
 import SelectPreferencesInput from '../SelectPreferencesInput';
+import StepHeader from './StepHeader';
 
 const SelectPreferencesForm = ({
   getState,
@@ -29,12 +30,11 @@ const SelectPreferencesForm = ({
 
   return (
     <div className="w-full">
-      <div>
-        Step {current} of {size}
-      </div>
-      <div className="text-3xl sm:text-4xl font-bold">
-        Select Your Workout Preferences
-      </div>
+      <StepHeader
+        current={current}
+        size={size}
+        title="Select Your Workout Preferences"
+      />
       <Form
         form={form}
         initialValues={getState('select-preferences', { preferences: [] })}
