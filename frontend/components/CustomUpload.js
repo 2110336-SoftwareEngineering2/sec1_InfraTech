@@ -4,26 +4,19 @@ import Image from 'next/image';
 import { LoadingOutlined } from '@ant-design/icons';
 import { getBase64 } from '../lib/utils';
 
-const CustomUpload = ({ value, onChange }) => {
-  const triggerChange = (changedValue) => {
+const CustomUpload = ({ value, onChange, setFile }) => {
+  const triggerChange = imageUrl => {
     if (onChange) {
-      onChange({
-        file,
-        imageUrl,
-        ...value,
-        ...changedValue,
-      });
+      onChange(imageUrl);
     }
   };
 
   const [loading, setLoading] = useState(false);
-  const [imageUrl, setImageUrl] = useState(value?.imageUrl || '');
-  const [file, setFile] = useState(value?.file || null);
+  const [imageUrl, setImageUrl] = useState(value || '');
   const [fileList, setFileList] = useState([]);
   const handleChange = (info) => {
     setFile(info.file);
     if (info.file.status === 'uploading') {
-      setImageUrl('');
       setLoading(true);
       return;
     }
@@ -33,7 +26,6 @@ const CustomUpload = ({ value, onChange }) => {
         setImageUrl(imageUrl);
         setFileList([info.file]);
         triggerChange({
-          file: file,
           imageUrl: imageUrl,
         });
       });

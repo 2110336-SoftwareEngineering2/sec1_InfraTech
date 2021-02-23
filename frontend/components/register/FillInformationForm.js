@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Button,
   DatePicker,
@@ -34,13 +34,30 @@ const validateCitizenID = (id) => {
   return Promise.reject('Check digit of citizen ID is incorrect.');
 };
 
+const customUpload = async (file) => {
+  const storage = fire.storage();
+  const metadata = {
+    contentType: 'image/jpeg',
+  };
+  const storageRef = await storage.ref();
+  const imageName = Date.now().toString() + '_' + file.name; //a unique name for the image
+  const imgFile = storageRef.child(`profileImage/${imageName}`);
+  try {
+    await imgFile.put(file, metadata).then(snapshot => snapshot.ref.getDownloadURL().then(imageUrl => console.log(imageUrl)));
+  } catch (e) {
+    message.error("Error, can not upload file");
+  }
+};
+
 // NOTE: draft version
 const FillInformationForm = ({ getState, setState, size, current, prev }) => {
   const [form] = Form.useForm();
+  const [file, setFile] = useState(null)
 
   const onContinue = (values) => {
     setState('information', values);
-
+    // console.log(file)
+    customUpload(file.originFileObj);
     // TODO: remove console.log
     console.log('create-account', getState('create-account'));
     console.log('select-role', getState('select-role'));
@@ -72,13 +89,13 @@ const FillInformationForm = ({ getState, setState, size, current, prev }) => {
       >
         <div className="flex justify-between">
           <div className="mt-10 mr-12 w-2/5">
-            <Form.Item name="img" className="text-center">
-              <CustomUpload />
+            <Form.Item name="profileImageUrl" className="text-center">
+              <CustomUpload setFile={setFile} />
             </Form.Item>
           </div>
           <div className="mt-12 w-3/5">
             <Form.Item
-              name="firstName"
+              name="firstname"
               hasFeedback
               rules={[
                 { required: true, message: 'Please provide first name.' },
@@ -88,7 +105,7 @@ const FillInformationForm = ({ getState, setState, size, current, prev }) => {
             </Form.Item>
 
             <Form.Item
-              name="lastName"
+              name="lastname"
               hasFeedback
               rules={[{ required: true, message: 'Please provide last name.' }]}
             >
@@ -109,7 +126,7 @@ const FillInformationForm = ({ getState, setState, size, current, prev }) => {
               </Form.Item>
 
               <Form.Item
-                name="dateOfBirth"
+                name="birthdate"
                 className="w-3/5"
                 hasFeedback
                 rules={[
@@ -125,7 +142,7 @@ const FillInformationForm = ({ getState, setState, size, current, prev }) => {
             </Row>
 
             <Form.Item
-              name="citizenId"
+              name="cid"
               hasFeedback
               rules={[
                 { required: true, message: 'Citizen ID must be specified.' },
@@ -165,3 +182,4 @@ const FillInformationForm = ({ getState, setState, size, current, prev }) => {
 };
 
 export default FillInformationForm;
+
