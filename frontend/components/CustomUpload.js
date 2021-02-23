@@ -23,7 +23,7 @@ const CustomUpload = ({ value, onChange }) => {
   const handleChange = (info) => {
     setFile(info.file);
     if (info.file.status === 'uploading') {
-      setImageUrl('')
+      setImageUrl('');
       setLoading(true);
       return;
     }
@@ -57,10 +57,16 @@ const CustomUpload = ({ value, onChange }) => {
   return (
     <div className="relative flex-col item-center">
       <div className="relative ">
-        <Image src={imageUrl ? imageUrl : "/avatar.svg"} width={240} height={240} layout="fixed" className="rounded-full align-middle"/>
-        {
-          loading ? <LoadingOutlined className="absolute top-1/2 left-1/2 -mt-2 -ml-2"/> : null
-        }
+        <Image
+          src={imageUrl || '/avatar.svg'}
+          width={240}
+          height={240}
+          layout="fixed"
+          className="rounded-full align-middle"
+        />
+        {loading && (
+          <LoadingOutlined className="absolute top-1/2 left-1/2 -mt-2 -ml-2" />
+        )}
       </div>
       <Upload
         name="avatar"
