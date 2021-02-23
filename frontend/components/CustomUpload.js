@@ -1,6 +1,5 @@
-import fire from '../config/firebase';
 import { Upload, message, Button } from 'antd';
-import React, { Component, useState } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { LoadingOutlined } from '@ant-design/icons';
 
