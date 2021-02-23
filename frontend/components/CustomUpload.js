@@ -28,7 +28,6 @@ const CustomUpload = ({ value, onChange }) => {
   const [file, setFile] = useState(value?.file || null);
   const [fileList, setFileList] = useState([]);
   const handleChange = (info) => {
-    console.log(info);
     setFile(info.file);
     if (info.file.status === 'uploading') {
       setImageUrl('')
@@ -45,7 +44,6 @@ const CustomUpload = ({ value, onChange }) => {
           imageUrl: imageUrl,
         });
       });
-      console.log(imageUrl);
     }
   };
 
@@ -85,19 +83,3 @@ const CustomUpload = ({ value, onChange }) => {
 };
 
 export default CustomUpload;
-
-// const customUpload = async ({ onError, onSuccess, file }) => {
-//     const storage = fire.storage();
-//     const metadata = {
-//       contentType: 'image/jpeg',
-//     };
-//     const storageRef = await storage.ref();
-//     const imageName = Date.now().toString() + '_' + file.name; //a unique name for the image
-//     const imgFile = storageRef.child(`profileImage/${imageName}`);
-//     try {
-//       const image = await imgFile.put(file, metadata);
-//       onSuccess(null, image);
-//     } catch (e) {
-//       onError(e);
-//     }
-//   };
