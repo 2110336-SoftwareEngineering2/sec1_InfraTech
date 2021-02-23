@@ -43,7 +43,8 @@ export class ProfileService {
     });
 
     return {
-      ...profile,
+      userId: user.id,
+      ...omit(profile, ['user']),
       email: user.email,
       type: authUser.type as UserType,
       preferences: user.preferences,
