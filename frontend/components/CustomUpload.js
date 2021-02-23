@@ -12,8 +12,8 @@ const CustomUpload = ({ value, onChange, setFile }) => {
   };
 
   const [loading, setLoading] = useState(false);
-  const [imageUrl, setImageUrl] = useState(value || '');
   const [fileList, setFileList] = useState([]);
+
   const handleChange = (info) => {
     setFile(info.file);
     if (info.file.status === 'uploading') {
@@ -23,11 +23,8 @@ const CustomUpload = ({ value, onChange, setFile }) => {
     if (info.file.status === 'done') {
       getBase64(info.file.originFileObj).then((imageUrl) => {
         setLoading(false);
-        setImageUrl(imageUrl);
         setFileList([info.file]);
-        triggerChange({
-          imageUrl: imageUrl,
-        });
+        triggerChange(imageUrl);
       });
     }
   };
@@ -50,7 +47,7 @@ const CustomUpload = ({ value, onChange, setFile }) => {
     <div className="relative flex-col item-center">
       <div className="relative ">
         <Image
-          src={imageUrl || '/avatar.svg'}
+          src={value || '/avatar.svg'}
           width={240}
           height={240}
           layout="fixed"

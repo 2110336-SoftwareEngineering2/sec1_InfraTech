@@ -8,11 +8,13 @@ import {
   Row,
   Select,
   Upload,
+  message
 } from 'antd';
 import Image from 'next/image';
 import { UploadOutlined } from '@ant-design/icons';
 import fire from './../../config/firebase';
 import CustomUpload from '../CustomUpload';
+import moment from 'moment'
 
 const validateCitizenID = (id) => {
   // ref: https://snasui.com/wordpress/identification/
@@ -34,16 +36,31 @@ const validateCitizenID = (id) => {
   return Promise.reject('Check digit of citizen ID is incorrect.');
 };
 
-const customUpload = async (file) => {
+const customUpload = async (file, getState) => {
+  const profile = { 
+    email: getState('create-account').email, 
+    password: getState('create-account').password, 
+    ...getState('select-role'), 
+    ...getState('select-preferences'),
+    ...getState('information'),
+    birthdate: moment(getState('information').birthdate).format('YYYY-MM-DD')
+  }
+  if (!file) {
+    console.log(profile);
+    return;
+  }
+ 
   const storage = fire.storage();
   const metadata = {
     contentType: 'image/jpeg',
   };
   const storageRef = await storage.ref();
-  const imageName = Date.now().toString() + '_' + file.name; //a unique name for the image
+  const imageName = Date.now().toString() + '_' + file.originFileObj.name; //a unique name for the image
   const imgFile = storageRef.child(`profileImage/${imageName}`);
   try {
-    await imgFile.put(file, metadata).then(snapshot => snapshot.ref.getDownloadURL().then(imageUrl => console.log(imageUrl)));
+    await imgFile.put(file.originFileObj, metadata).then(snapshot => snapshot.ref.getDownloadURL().then(imageUrl => {
+      console.log({...profile, profileImageUrl: imageUrl});
+    }));
   } catch (e) {
     message.error("Error, can not upload file");
   }
@@ -56,8 +73,8 @@ const FillInformationForm = ({ getState, setState, size, current, prev }) => {
 
   const onContinue = (values) => {
     setState('information', values);
-    // console.log(file)
-    customUpload(file.originFileObj);
+    console.log(values)
+    customUpload(file, getState);
     // TODO: remove console.log
     console.log('create-account', getState('create-account'));
     console.log('select-role', getState('select-role'));
