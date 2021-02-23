@@ -1,22 +1,22 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 export class UpdateTrainerProfileDto {
-  @ApiProperty()
+  @ApiProperty({ example: 'new_email@gmail.com' })
   email: string;
-  @ApiProperty()
+  @ApiProperty({ example: 'newfirstname' })
   firstname: string;
-  @ApiProperty()
+  @ApiProperty({ example: 'newlastname' })
   lastname: string;
-  @ApiProperty()
+  @ApiProperty({ example: '1111111111112' })
   cid: string;
-  @ApiProperty()
+  @ApiProperty({ example: 'FEMALE' })
   gender: string;
-  @ApiProperty()
+  @ApiProperty({ example: '2020-01-02' })
   birthdate: string;
-  @ApiProperty()
+  @ApiProperty({ example: '0888888889' })
   phoneNumber: string;
-  @ApiProperty()
+  @ApiProperty({ example: 'http://profileimgstore/newer' })
   profileImageUrl: string;
-  @ApiProperty()
+  @ApiProperty({ example: ['<uuid_of_preference3>', '<uuid_of_preference4>'] })
   preferences: string[];
 }
