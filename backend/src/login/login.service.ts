@@ -80,9 +80,7 @@ export class LoginService {
 
       if (!type) {
         const traineeProfile = await this.traineeRepository.findOne({
-          where: {
-            userId: user.id,
-          },
+          where: { user },
         });
 
         type = traineeProfile ? UserType.Trainee : UserType.Trainer;

@@ -1,10 +1,10 @@
-import { Entity, Column, OneToOne, PrimaryColumn } from 'typeorm';
+import { Entity, Column, OneToOne, PrimaryColumn, JoinColumn } from 'typeorm';
 import { User } from './user.entity';
 @Entity({ name: 'trainer' })
 export class Trainer {
-  @PrimaryColumn({ name: 'user_id' })
-  @OneToOne(() => User, (user) => user.id)
-  userId: string;
+  @OneToOne(() => User, (user) => user.id, { primary: true })
+  @JoinColumn({ name: 'user_id' })
+  user: User;
 
   @Column()
   firstname: string;
