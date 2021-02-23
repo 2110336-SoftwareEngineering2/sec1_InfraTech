@@ -8,26 +8,8 @@ import moment from 'moment'
 const Profile = () => {
   const { user = {}, mutateUser } = useUser();
   const [isEditing, setIsEditing] = useState(false);
-  const d = moment("08/08/2000")
-  const mock = {
-      id: "23433bertgerb33g4ry",
-      email: "test@gmail.com",
-      type: "TRAINER",
-      profile: {
-          userId: "asefernvo3tn4th",
-          firstname: "Jason",
-          lastname: "Youngku",
-          cid: "1234567891011",
-          gender: "male",
-          birthdate: d,
-          phoneNumber: "123412341",
-          profileImageUrl: "/login.svg",
-          preferences: [
-            "cardiovascular", 'balance'
-          ]
-      }
-  }
-  console.log(mock)
+
+  user.birthdate = moment(user.birthdate);
 
   return (
     <AppLayout user={user} mutateUser={mutateUser}>
@@ -36,8 +18,8 @@ const Profile = () => {
           <div className="text-4xl sm:text-5xl font-bold">{isEditing ? "Edit Profile" : "Profile"}</div>
           {
             isEditing ? 
-            <EditProfile profile={mock.profile} setIsEditing={setIsEditing} /> : 
-            <InformationProfile profile={mock.profile} setIsEditing={setIsEditing}/>
+            <EditProfile profile={user} setIsEditing={setIsEditing} /> : 
+            <InformationProfile profile={user} setIsEditing={setIsEditing}/>
           }
         </div>
       </div>

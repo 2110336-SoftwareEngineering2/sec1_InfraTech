@@ -1,6 +1,11 @@
 import React from 'react';
-import { Button, DatePicker, Form, Input, Row, Select } from 'antd';
+import { Button, DatePicker, Form, Input, Row, Select, Modal } from 'antd';
 import CustomUpload from './CustomUpload';
+import moment from 'moment';
+import axios from 'axios';
+import Router from 'next/router';
+
+import { API_HOST } from '../config/config';
 
 const validateCitizenID = (id) => {
   // ref: https://snasui.com/wordpress/identification/
@@ -24,9 +29,28 @@ const validateCitizenID = (id) => {
 const EditProfile = ({ profile, setIsEditing }) => {
   
   const [form] = Form.useForm();
+
+  const handleSubmit = async (values) => {
+    try {
+      const { data } = await axios.patch(`${API_HOST}/profile`, values);
+      console.log(data);
+      Router.push('/profile')
+    } catch (error) {
+      console.error('An unexpected error happened:', error);
+      Modal.error({
+        title: 'Information Not Save',
+        content: 'Please try again.',
+        centered: true,
+      });
+    }
+  };
   
-  const onSave = (value) => {
-    console.log(value.birthdate);
+  const onSave = (values) => {
+    values.birthdate = moment(values.birthdate).format('YYYY-MM-DD')
+    values.email = profile.email;
+    values.preferences = profile.preferences;
+    console.log(values)
+    handleSubmit(values);
   }
   
   const onCancel = () => {
