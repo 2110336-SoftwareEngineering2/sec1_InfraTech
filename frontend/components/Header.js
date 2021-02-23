@@ -62,7 +62,7 @@ const NonGuestHeader = ({ username, profileImageUrl, handleSignOut }) => {
       ) : (
         <UserOutlined className="text-lg mr-4 rounded-full bg-gray-200 h-10 w-10 inline-flex items-center justify-center cursor-pointer" />
       )}
-      <div className="font-bold ml-4 hidden sm:inline \">{username}</div>
+      <div className="font-bold ml-4 hidden sm:inline">{username}</div>
       <Link href="/">
         <Button className="ml-6" onClick={onClick} type="primary" danger>
           Sign out
