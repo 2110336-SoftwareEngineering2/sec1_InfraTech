@@ -4,38 +4,27 @@ import Image from 'next/image';
 import { LoadingOutlined } from '@ant-design/icons';
 import { getBase64 } from '../lib/utils';
 
-const CustomUpload = ({ value, onChange }) => {
-  const triggerChange = (changedValue) => {
+const CustomUpload = ({ value, onChange, setFile }) => {
+  const triggerChange = imageUrl => {
     if (onChange) {
-      onChange({
-        file,
-        imageUrl,
-        ...value,
-        ...changedValue,
-      });
+      onChange(imageUrl);
     }
   };
 
   const [loading, setLoading] = useState(false);
-  const [imageUrl, setImageUrl] = useState(value?.imageUrl || '');
-  const [file, setFile] = useState(value?.file || null);
   const [fileList, setFileList] = useState([]);
+
   const handleChange = (info) => {
     setFile(info.file);
     if (info.file.status === 'uploading') {
-      setImageUrl('');
       setLoading(true);
       return;
     }
     if (info.file.status === 'done') {
       getBase64(info.file.originFileObj).then((imageUrl) => {
         setLoading(false);
-        setImageUrl(imageUrl);
         setFileList([info.file]);
-        triggerChange({
-          file: file,
-          imageUrl: imageUrl,
-        });
+        triggerChange(imageUrl);
       });
     }
   };
@@ -58,7 +47,7 @@ const CustomUpload = ({ value, onChange }) => {
     <div className="relative flex-col item-center">
       <div className="relative ">
         <Image
-          src={imageUrl || '/avatar.svg'}
+          src={value || '/avatar.svg'}
           width={240}
           height={240}
           layout="fixed"

@@ -35,7 +35,7 @@ const SelectRoleForm = ({ getState, setState, size, current, prev, next }) => {
         onFinish={onContinue}
         size="large"
       >
-        <Form.Item name="role">
+        <Form.Item name="userType">
           <SelectRoleInput />
         </Form.Item>
         <Form.Item className="text-center">

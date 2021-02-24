@@ -32,9 +32,11 @@ const GuestHeader = () => (
     <Link href="/login">
       <Button className="ml-2">Sign in</Button>
     </Link>
-    <Button className="ml-2" type="primary">
-      Sign up
-    </Button>
+    <Link href="/register">
+      <Button className="ml-2" type="primary">
+        Sign up
+      </Button>
+    </Link>
   </div>
 );
 
