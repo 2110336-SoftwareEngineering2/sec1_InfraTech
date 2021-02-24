@@ -32,7 +32,7 @@ const SelectRoleForm = ({ getState, setState, size, current, prev, next }) => {
         initialValues={getState('select-role', { role: USER_TYPE.TRAINER })}
         onFinish={onContinue}
       >
-        <Form.Item name="role">
+        <Form.Item name="userType">
           <SelectRoleInput />
         </Form.Item>
         <Form.Item className="text-center">

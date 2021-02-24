@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import Router from 'next/router';
 import {
   Button,
   DatePicker,
@@ -8,12 +9,18 @@ import {
   Row,
   Select,
   Upload,
+  message,
+  Modal
 } from 'antd';
 import Image from 'next/image';
 import { UploadOutlined } from '@ant-design/icons';
 import fire from './../../config/firebase';
 import CustomUpload from '../CustomUpload';
 import StepHeader from './StepHeader';
+import moment from 'moment'
+import axios from 'axios';
+
+import { API_HOST } from '../../config/config';
 
 const validateCitizenID = (id) => {
   // ref: https://snasui.com/wordpress/identification/
@@ -35,13 +42,66 @@ const validateCitizenID = (id) => {
   return Promise.reject('Check digit of citizen ID is incorrect.');
 };
 
+
+
 // NOTE: draft version
 const FillInformationForm = ({ getState, setState, size, current, prev }) => {
   const [form] = Form.useForm();
+  const [file, setFile] = useState(null);
+  const [submit, setSubmit] = useState(false);
+
+  useEffect(() => {
+    if (submit) customUpload();
+  }, [submit]);
+
+  const handleSubmit = async (profile) => {
+    try {
+      const { data } = await axios.post(`${API_HOST}/register`, profile);
+      Router.push('/login')
+    } catch (error) {
+      console.error('An unexpected error happened:', error);
+      Modal.error({
+        title: 'Register Failed',
+        content: 'Please try again.',
+        centered: true,
+      });
+    }
+  };
+
+  const customUpload = async () => {
+    const profile = { 
+      email: getState('create-account').email, 
+      password: getState('create-account').password, 
+      ...getState('select-role'), 
+      ...getState('select-preferences'),
+      ...getState('information'),
+      birthdate: moment(getState('information').birthdate).format('YYYY-MM-DD')
+    }
+    if (!file) {
+      handleSubmit(profile);
+      return;
+    }
+   
+    const storage = fire.storage();
+    const metadata = {
+      contentType: 'image/jpeg',
+    };
+    const storageRef = await storage.ref();
+    const imageName = Date.now().toString() + '_' + file.originFileObj.name; //a unique name for the image
+    const imgFile = storageRef.child(`profileImage/${imageName}`);
+    try {
+      await imgFile.put(file.originFileObj, metadata).then(snapshot => snapshot.ref.getDownloadURL().then(imageUrl => {
+        handleSubmit({...profile, profileImageUrl: imageUrl});
+      }));
+    } catch (e) {
+      message.error("Error, can not upload file");
+    }
+  };
 
   const onContinue = (values) => {
     setState('information', values);
-
+    setSubmit(true);
+    
     // TODO: remove console.log
     console.log('create-account', getState('create-account'));
     console.log('select-role', getState('select-role'));
@@ -67,13 +127,13 @@ const FillInformationForm = ({ getState, setState, size, current, prev }) => {
       >
         <div className="flex flex-col lg:flex-row">
           <div className="w-full lg:w-2/5">
-            <Form.Item name="img" className="text-center">
-              <CustomUpload />
+            <Form.Item name="profileImageUrl" className="text-center">
+              <CustomUpload setFile={setFile} />
             </Form.Item>
           </div>
           <div className="w-full lg:w-3/5">
             <Form.Item
-              name="firstName"
+              name="firstname"
               hasFeedback
               rules={[
                 { required: true, message: 'Please provide first name.' },
@@ -83,7 +143,7 @@ const FillInformationForm = ({ getState, setState, size, current, prev }) => {
             </Form.Item>
 
             <Form.Item
-              name="lastName"
+              name="lastname"
               hasFeedback
               rules={[{ required: true, message: 'Please provide last name.' }]}
             >
@@ -104,7 +164,7 @@ const FillInformationForm = ({ getState, setState, size, current, prev }) => {
               </Form.Item>
 
               <Form.Item
-                name="dateOfBirth"
+                name="birthdate"
                 className="w-2/3"
                 hasFeedback
                 rules={[
@@ -120,7 +180,7 @@ const FillInformationForm = ({ getState, setState, size, current, prev }) => {
             </Row>
 
             <Form.Item
-              name="citizenId"
+              name="cid"
               hasFeedback
               rules={[
                 { required: true, message: 'Citizen ID must be specified.' },
@@ -160,3 +220,4 @@ const FillInformationForm = ({ getState, setState, size, current, prev }) => {
 };
 
 export default FillInformationForm;
+
