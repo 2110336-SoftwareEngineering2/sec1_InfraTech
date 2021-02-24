@@ -5,7 +5,6 @@ import axios from 'axios';
 import { useCookies } from 'react-cookie';
 
 import { COOKIE_NAME, API_HOST } from '../config/config';
-import { USER_TYPE } from '../config/UserType.config';
 import { REDIRECT_CONDITION } from '../config/RedirectCondition.config';
 
 export default function useUser({

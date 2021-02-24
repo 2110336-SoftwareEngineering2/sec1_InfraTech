@@ -5,15 +5,11 @@ import {
   DatePicker,
   Form,
   Input,
-  InputNumber,
   Row,
   Select,
-  Upload,
   message,
   Modal
 } from 'antd';
-import Image from 'next/image';
-import { UploadOutlined } from '@ant-design/icons';
 import fire from './../../config/firebase';
 import CustomUpload from '../CustomUpload';
 import StepHeader from './StepHeader';
@@ -43,9 +39,6 @@ const validateCitizenID = (id) => {
   return Promise.reject('Check digit of citizen ID is incorrect.');
 };
 
-
-
-// NOTE: draft version
 const FillInformationForm = ({ getState, setState, size, current, prev }) => {
   const [form] = Form.useForm();
   const [file, setFile] = useState(null);
@@ -113,8 +106,6 @@ const FillInformationForm = ({ getState, setState, size, current, prev }) => {
 
   const onBack = () => {
     const values = form.getFieldsValue();
-    // TODO: remove console.log
-    console.log(values);
     setState('information', values);
     prev();
   };
