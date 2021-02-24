@@ -31,9 +31,9 @@ export default function useUser({
 
   useEffect(() => {
     const redirectAsUserFound =
-      user?.firstname && redirectWhen === REDIRECT_CONDITION.USER_FOUND;
+      token.letx_token && redirectWhen === REDIRECT_CONDITION.USER_FOUND;
     const redirectAsUserNotFound =
-      !user?.firstname && redirectWhen === REDIRECT_CONDITION.USER_NOT_FOUND;
+      !token.letx_token && redirectWhen === REDIRECT_CONDITION.USER_NOT_FOUND;
 
     if (redirectTo && (redirectAsUserNotFound || redirectAsUserFound)) {
       Router.push(redirectTo);

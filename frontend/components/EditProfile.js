@@ -1,11 +1,13 @@
-import React from 'react';
-import { Button, DatePicker, Form, Input, Row, Select, Modal } from 'antd';
+import React, { useState } from 'react';
+import { Button, DatePicker, Form, Input, Row, Select, Modal, message } from 'antd';
 import CustomUpload from './CustomUpload';
 import moment from 'moment';
 import axios from 'axios';
 import Router from 'next/router';
+import { useCookies } from 'react-cookie';
+import fire from '../config/firebase';
 
-import { API_HOST } from '../config/config';
+import { COOKIE_NAME, API_HOST } from '../config/config';
 
 const validateCitizenID = (id) => {
   // ref: https://snasui.com/wordpress/identification/
@@ -15,10 +17,10 @@ const validateCitizenID = (id) => {
 
   // find sum of adjusted first 12 digits
   let sum = 0;
-  for(let i=0; i<12; i++) {
-    sum += parseInt(id.charAt(i), 10) * (13-i);
+  for (let i = 0; i < 12; i++) {
+    sum += parseInt(id.charAt(i), 10) * (13 - i);
   }
-    
+
   // evaluate check digit
   if (((11 - (sum % 11)) % 10).toString() === id.charAt(12)) {
     return Promise.resolve();
@@ -27,14 +29,37 @@ const validateCitizenID = (id) => {
 }
 
 const EditProfile = ({ profile, setIsEditing }) => {
-  
   const [form] = Form.useForm();
+  const [token] = useCookies([COOKIE_NAME]);
+  const [file, setFile] = useState(null);
+
+  const customUpload = async (values) => {
+    const storage = fire.storage();
+    const metadata = {
+      contentType: 'image/jpeg',
+    };
+    const storageRef = await storage.ref();
+    const imageName = Date.now().toString() + '_' + file.originFileObj.name; //a unique name for the image
+    const imgFile = storageRef.child(`profileImage/${imageName}`);
+    try {
+      await imgFile.put(file.originFileObj, metadata).then(snapshot => snapshot.ref.getDownloadURL().then(imageUrl => {
+        handleSubmit({ ...values, profileImageUrl: imageUrl });
+      }));
+    } catch (e) {
+      message.error("Error, can not upload file");
+    }
+  };
 
   const handleSubmit = async (values) => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token[COOKIE_NAME] || ''}`,
+        'Access-Control-Allow-Origin': '*',
+      },
+    }
     try {
-      const { data } = await axios.patch(`${API_HOST}/profile`, values);
-      console.log(data);
-      Router.push('/profile')
+      const { data } = await axios.patch(`${API_HOST}/profile`, values, config);
+      Router.reload('/profile');
     } catch (error) {
       console.error('An unexpected error happened:', error);
       Modal.error({
@@ -44,20 +69,23 @@ const EditProfile = ({ profile, setIsEditing }) => {
       });
     }
   };
-  
+
   const onSave = (values) => {
     values.birthdate = moment(values.birthdate).format('YYYY-MM-DD')
     values.email = profile.email;
     values.preferences = profile.preferences;
-    console.log(values)
-    handleSubmit(values);
+    if (!file) {
+      handleSubmit(values);
+      return;
+    }
+    customUpload(values);
   }
-  
+
   const onCancel = () => {
     setIsEditing(false);
   }
-  
-  return(
+
+  return (
     <Form
       form={form}
       initialValues={profile}
@@ -67,25 +95,25 @@ const EditProfile = ({ profile, setIsEditing }) => {
       <div className="flex mt-10">
         <div className="mr-32">
           <Form.Item name="profileImageUrl" className="text-center">
-            <CustomUpload />
+            <CustomUpload setFile={setFile} />
           </Form.Item>
         </div>
         <div className="w-3/5">
           <div className="text-lg">First Name</div>
           <Form.Item name="firstname" hasFeedback rules={
-            [{required: true, message: 'Please provide first name.'}]
+            [{ required: true, message: 'Please provide first name.' }]
           }>
             <Input placeholder="First Name" />
           </Form.Item>
           <div className="text-lg">Last Name</div>
           <Form.Item name="lastname" hasFeedback rules={
-            [{required: true, message: 'Please provide last name.'}]
+            [{ required: true, message: 'Please provide last name.' }]
           }>
             <Input placeholder="Last Name" />
           </Form.Item>
           <div className="text-lg">Gender</div>
           <Form.Item name="gender" className="w-1/3" hasFeedback rules={
-            [{required: true, message: 'Gender is not specified'}]
+            [{ required: true, message: 'Gender is not specified' }]
           }>
             <Select placeholder="Gender">
               <Select.Option value="male">Male</Select.Option>
@@ -95,7 +123,7 @@ const EditProfile = ({ profile, setIsEditing }) => {
           <div className="text-lg">Date of Birth</div>
           <Form.Item name="birthdate" className="w-3/5" hasFeedback rules={
             [
-              {required: true, message: 'Please select birth date.'}
+              { required: true, message: 'Please select birth date.' }
             ]
           }>
             <DatePicker className="w-full" placeholder="Date of birth" format="DD/MM/YYYY" />
@@ -103,8 +131,8 @@ const EditProfile = ({ profile, setIsEditing }) => {
           <div className="text-lg">Citizen ID</div>
           <Form.Item name="cid" hasFeedback rules={
             [
-              {required: true, message: 'Citizen ID must be specified.'},
-              {validator: (_, value) => validateCitizenID(value)},
+              { required: true, message: 'Citizen ID must be specified.' },
+              { validator: (_, value) => validateCitizenID(value) },
             ]
           }>
             <Input placeholder="Citizen ID" />
@@ -112,8 +140,8 @@ const EditProfile = ({ profile, setIsEditing }) => {
           <div className="text-lg">Phone Number</div>
           <Form.Item name="phoneNumber" hasFeedback rules={
             [
-              {pattern: /^\d{9,10}$/, message: 'Phone number format is incorrect (9 - 10 digits).'},
-              {required: true, message: 'Please provide phone number.'}
+              { pattern: /^\d{9,10}$/, message: 'Phone number format is incorrect (9 - 10 digits).' },
+              { required: true, message: 'Please provide phone number.' }
             ]
           }>
             <Input placeholder="Phone number" />

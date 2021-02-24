@@ -6,8 +6,9 @@ import InformationProfile from '../components/InformationProfile';
 import moment from 'moment'
 
 const Profile = () => {
-  const { user = {}, mutateUser } = useUser();
+  const { user = {}, mutateUser } = useUser({ redirectTo: '/' });
   const [isEditing, setIsEditing] = useState(false);
+
   user.birthdate = moment(user.birthdate);
 
   return (
