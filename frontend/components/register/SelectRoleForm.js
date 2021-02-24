@@ -29,7 +29,7 @@ const SelectRoleForm = ({ getState, setState, size, current, prev, next }) => {
       <StepHeader current={current} size={size} title="Select Your Role" />
       <Form
         form={form}
-        initialValues={getState('select-role', { role: USER_TYPE.TRAINER })}
+        initialValues={getState('select-role', { userType: USER_TYPE.TRAINER })}
         onFinish={onContinue}
       >
         <Form.Item name="userType">

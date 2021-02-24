@@ -21,6 +21,7 @@ import moment from 'moment'
 import axios from 'axios';
 
 import { API_HOST } from '../../config/config';
+import { USER_TYPE } from '../../config/UserType.config';
 
 const validateCitizenID = (id) => {
   // ref: https://snasui.com/wordpress/identification/
@@ -69,19 +70,20 @@ const FillInformationForm = ({ getState, setState, size, current, prev }) => {
   };
 
   const customUpload = async () => {
-    const profile = { 
-      email: getState('create-account').email, 
-      password: getState('create-account').password, 
-      ...getState('select-role'), 
+    const profile = {
+      email: getState('create-account').email,
+      password: getState('create-account').password,
+      ...getState('select-role'),
       ...getState('select-preferences'),
       ...getState('information'),
       birthdate: moment(getState('information').birthdate).format('YYYY-MM-DD')
     }
+
     if (!file) {
       handleSubmit(profile);
       return;
     }
-   
+
     const storage = fire.storage();
     const metadata = {
       contentType: 'image/jpeg',
@@ -91,7 +93,7 @@ const FillInformationForm = ({ getState, setState, size, current, prev }) => {
     const imgFile = storageRef.child(`profileImage/${imageName}`);
     try {
       await imgFile.put(file.originFileObj, metadata).then(snapshot => snapshot.ref.getDownloadURL().then(imageUrl => {
-        handleSubmit({...profile, profileImageUrl: imageUrl});
+        handleSubmit({ ...profile, profileImageUrl: imageUrl });
       }));
     } catch (e) {
       message.error("Error, can not upload file");
@@ -101,7 +103,7 @@ const FillInformationForm = ({ getState, setState, size, current, prev }) => {
   const onContinue = (values) => {
     setState('information', values);
     setSubmit(true);
-    
+
     // TODO: remove console.log
     console.log('create-account', getState('create-account'));
     console.log('select-role', getState('select-role'));
@@ -179,16 +181,19 @@ const FillInformationForm = ({ getState, setState, size, current, prev }) => {
               </Form.Item>
             </Row>
 
-            <Form.Item
-              name="cid"
-              hasFeedback
-              rules={[
-                { required: true, message: 'Citizen ID must be specified.' },
-                { validator: (_, value) => validateCitizenID(value) },
-              ]}
-            >
-              <Input placeholder="Citizen ID" />
-            </Form.Item>
+            {
+              getState('select-role').userType === USER_TYPE.TRAINER &&
+              <Form.Item
+                name="cid"
+                hasFeedback
+                rules={[
+                  { required: true, message: 'Citizen ID must be specified.' },
+                  { validator: (_, value) => validateCitizenID(value) },
+                ]}
+              >
+                <Input placeholder="Citizen ID" />
+              </Form.Item>
+            }
 
             <Form.Item
               name="phoneNumber"
