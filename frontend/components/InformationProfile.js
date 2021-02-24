@@ -3,7 +3,6 @@ import { Button } from 'antd';
 import CustomUpload from './CustomUpload';
 
 const InformationProfile = ({ profile, setIsEditing }) => {
-  
   const calculateAge = birthdate => {
     const date = new Date(birthdate)
     var ageDifMs = Date.now() - date.getTime();
@@ -15,12 +14,12 @@ const InformationProfile = ({ profile, setIsEditing }) => {
     setIsEditing(true)
   }
 
-  const expert = profile.preferences.map(preference => preference.charAt(0).toUpperCase() + preference.slice(1)).join(', ')
+  const expert = profile.preferences ? profile.preferences.map(preference => preference.charAt(0).toUpperCase() + preference.slice(1)).join(', ') : "";
 
-  return(
+  return (
     <div className="flex mt-10">
       <div className="mr-32 text-center">
-        <CustomUpload disable={true} />
+        <CustomUpload value={profile.profileImageUrl} disable={true} />
       </div>
       <div className="w-3/5">
         <div className="text-2xl font-bold">{profile.firstname + ' ' + profile.lastname}</div>

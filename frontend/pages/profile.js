@@ -8,7 +8,6 @@ import moment from 'moment'
 const Profile = () => {
   const { user = {}, mutateUser } = useUser();
   const [isEditing, setIsEditing] = useState(false);
-
   user.birthdate = moment(user.birthdate);
 
   return (
@@ -17,9 +16,9 @@ const Profile = () => {
         <div className="bg-white w-full m-12 py-12 px-24 rounded-lg">
           <div className="text-4xl sm:text-5xl font-bold">{isEditing ? "Edit Profile" : "Profile"}</div>
           {
-            isEditing ? 
-            <EditProfile profile={user} setIsEditing={setIsEditing} /> : 
-            <InformationProfile profile={user} setIsEditing={setIsEditing}/>
+            isEditing ?
+              <EditProfile profile={user} setIsEditing={setIsEditing} /> :
+              <InformationProfile profile={user} setIsEditing={setIsEditing} />
           }
         </div>
       </div>
