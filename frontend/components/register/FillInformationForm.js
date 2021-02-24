@@ -56,7 +56,6 @@ const FillInformationForm = ({ getState, setState, size, current, prev }) => {
   const handleSubmit = async (profile) => {
     try {
       const { data } = await axios.post(`${API_HOST}/register`, profile);
-      console.log(data);
       Router.push('/login')
     } catch (error) {
       console.error('An unexpected error happened:', error);
