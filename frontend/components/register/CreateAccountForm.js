@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Form, Input } from 'antd';
 import Image from 'next/image';
+import StepHeader from './StepHeader';
 
 const CreateAccountForm = ({ getState, setState, size, current, next }) => {
   const [form] = Form.useForm();
@@ -12,19 +13,21 @@ const CreateAccountForm = ({ getState, setState, size, current, next }) => {
     next();
   };
   return (
-    <div className="flex justify-between w-full">
-      <Image src="/register.svg" width={300} height={400} />
-      <div className="mt-6 w-3/5">
-        <div>
-          Step {current} of {size}
-        </div>
-        <div className="text-3xl sm:text-4xl font-bold">Create Account</div>
+    <div className="flex">
+      <div className="w-2/5 mr-4 hidden lg:block">
+        <Image
+          src="/register.svg"
+          width={350}
+          height={450}
+          layout="responsive"
+        />
+      </div>
+      <div className="w-full lg:w-3/5">
+        <StepHeader current={current} size={size} title="Create Account" />
         <Form
           form={form}
           initialValues={getState('create-account', {})}
           onFinish={onContinue}
-          size="large"
-          className="mt-10"
         >
           <Form.Item
             name="email"
@@ -64,7 +67,7 @@ const CreateAccountForm = ({ getState, setState, size, current, next }) => {
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit" className="w-24">
+            <Button type="primary" htmlType="submit" className="w-32">
               Continue
             </Button>
           </Form.Item>

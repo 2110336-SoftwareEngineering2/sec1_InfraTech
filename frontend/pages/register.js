@@ -12,8 +12,8 @@ import Footer from '../components/Footer';
 const Register = () => {
   return (
     <>
-      <div className="bg-gradient-blue-purple flex justify-center items-center">
-        <div className="bg-white w-1/2 p-12 rounded-lg flex justify-between m-12">
+      <div className="bg-gradient-blue-purple lg:py-10">
+        <div className="bg-white mx-auto w-full min-h-screen p-4 sm:p-6 md:p-8 xl:p-10 lg:w-800 lg:h-full lg:min-h-full">
           <Steps>
             <Step component={CreateAccountForm} />
             <Step component={SelectRoleForm} />

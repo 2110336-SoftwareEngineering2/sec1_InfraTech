@@ -16,6 +16,7 @@ import Image from 'next/image';
 import { UploadOutlined } from '@ant-design/icons';
 import fire from './../../config/firebase';
 import CustomUpload from '../CustomUpload';
+import StepHeader from './StepHeader';
 import moment from 'moment'
 import axios from 'axios';
 
@@ -117,26 +118,20 @@ const FillInformationForm = ({ getState, setState, size, current, prev }) => {
   };
 
   return (
-    <div className="w-full">
-      <div>
-        Step {current} of {size}
-      </div>
-      <div className="text-3xl sm:text-4xl font-bold">
-        Fill Your information
-      </div>
+    <>
+      <StepHeader current={current} size={size} title="Fill Your information" />
       <Form
         form={form}
         initialValues={getState('information', {})}
         onFinish={onContinue}
-        size="large"
       >
-        <div className="flex justify-between">
-          <div className="mt-10 mr-12 w-2/5">
+        <div className="flex flex-col lg:flex-row">
+          <div className="w-full lg:w-2/5">
             <Form.Item name="profileImageUrl" className="text-center">
               <CustomUpload setFile={setFile} />
             </Form.Item>
           </div>
-          <div className="mt-12 w-3/5">
+          <div className="w-full lg:w-3/5">
             <Form.Item
               name="firstname"
               hasFeedback
@@ -170,7 +165,7 @@ const FillInformationForm = ({ getState, setState, size, current, prev }) => {
 
               <Form.Item
                 name="birthdate"
-                className="w-3/5"
+                className="w-2/3"
                 hasFeedback
                 rules={[
                   { required: true, message: 'Please select birth date.' },
@@ -211,16 +206,16 @@ const FillInformationForm = ({ getState, setState, size, current, prev }) => {
           </div>
         </div>
 
-        <Form.Item className="text-center mt-10">
-          <Button onClick={onBack} className="w-24 mr-4">
+        <Form.Item className="text-center">
+          <Button onClick={onBack} className="w-32 mr-6">
             Back
           </Button>
-          <Button type="primary" htmlType="submit" className="w-24 ml-4">
+          <Button type="primary" htmlType="submit" className="w-32">
             Submit
           </Button>
         </Form.Item>
       </Form>
-    </div>
+    </>
   );
 };
 

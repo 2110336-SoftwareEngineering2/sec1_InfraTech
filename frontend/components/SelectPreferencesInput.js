@@ -16,15 +16,19 @@ const SelectPreferencesInput = ({ value = [], onChange }) => {
   };
 
   return (
-    <div className="w-full flex flex-wrap justify-around item-center">
+    <div className="w-full flex flex-wrap justify-center">
       {PREFERENCE_OPTIONS.map((option, index) => (
-        <SelectionCard
-          checked={value.includes(option.value)}
-          imageUrl={option.imageUrl}
-          description={option.description}
-          onClick={() => onClick(index)}
-          key={option.value}
-        />
+        <div className="mx-6 mb-4 sm:mb-12">
+          <SelectionCard
+            checked={value.includes(option.value)}
+            imageUrl={option.imageUrl}
+            description={option.description}
+            onClick={() => onClick(index)}
+            key={option.value}
+            width={250}
+            height={250}
+          />
+        </div>
       ))}
     </div>
   );
