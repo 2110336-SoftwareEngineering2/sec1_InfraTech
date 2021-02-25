@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, DatePicker, Form, Input, Row, Select, Modal, message } from 'antd';
+import { Button, DatePicker, Form, Input, Select, Modal, message } from 'antd';
 import CustomUpload from './CustomUpload';
 import moment from 'moment';
 import axios from 'axios';
@@ -7,6 +7,7 @@ import Router from 'next/router';
 import { useCookies } from 'react-cookie';
 import fire from '../config/firebase';
 
+import { USER_TYPE } from '../config/UserType.config';
 import { COOKIE_NAME, API_HOST } from '../config/config';
 
 const validateCitizenID = (id) => {
@@ -128,15 +129,20 @@ const EditProfile = ({ profile, setIsEditing }) => {
           }>
             <DatePicker className="w-full" placeholder="Date of birth" format="DD/MM/YYYY" />
           </Form.Item>
-          <div className="text-lg">Citizen ID</div>
-          <Form.Item name="cid" hasFeedback rules={
-            [
-              { required: true, message: 'Citizen ID must be specified.' },
-              { validator: (_, value) => validateCitizenID(value) },
-            ]
-          }>
-            <Input placeholder="Citizen ID" />
-          </Form.Item>
+          {
+            profile.type === USER_TYPE.TRAINER && <div className="text-lg">Citizen ID</div>
+          }
+          {
+            profile.type === USER_TYPE.TRAINER &&
+            <Form.Item name="cid" hasFeedback rules={
+              [
+                { required: true, message: 'Citizen ID must be specified.' },
+                { validator: (_, value) => validateCitizenID(value) },
+              ]
+            }>
+              <Input placeholder="Citizen ID" />
+            </Form.Item>
+          }
           <div className="text-lg">Phone Number</div>
           <Form.Item name="phoneNumber" hasFeedback rules={
             [

@@ -1,25 +1,20 @@
 import React from 'react';
-import { Button, Form, Row } from 'antd';
+import { Button, Form } from 'antd';
 
 import StepHeader from './StepHeader';
 import SelectRoleInput from '../SelectRoleInput';
 import { USER_TYPE } from '../../config/UserType.config';
 
-// NOTE: draft version
 const SelectRoleForm = ({ getState, setState, size, current, prev, next }) => {
   const [form] = Form.useForm();
 
   const onContinue = (values) => {
-    // TODO: remove console.log
-    console.log(values);
     setState('select-role', values);
     next();
   };
 
   const onBack = () => {
     const values = form.getFieldsValue();
-    // TODO: remove console.log
-    console.log(values);
     setState('select-role', values);
     prev();
   };
@@ -29,7 +24,7 @@ const SelectRoleForm = ({ getState, setState, size, current, prev, next }) => {
       <StepHeader current={current} size={size} title="Select Your Role" />
       <Form
         form={form}
-        initialValues={getState('select-role', { role: USER_TYPE.TRAINER })}
+        initialValues={getState('select-role', { userType: USER_TYPE.TRAINER })}
         onFinish={onContinue}
       >
         <Form.Item name="userType">

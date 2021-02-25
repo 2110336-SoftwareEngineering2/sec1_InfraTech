@@ -7,8 +7,6 @@ const CreateAccountForm = ({ getState, setState, size, current, next }) => {
   const [form] = Form.useForm();
 
   const onContinue = (values) => {
-    // TODO: remove console.log
-    console.log(values);
     setState('create-account', values);
     next();
   };

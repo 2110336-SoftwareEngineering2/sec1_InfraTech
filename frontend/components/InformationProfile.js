@@ -14,7 +14,7 @@ const InformationProfile = ({ profile, setIsEditing }) => {
     setIsEditing(true)
   }
 
-  const expert = profile.preferences ? profile.preferences.map(preference => preference.charAt(0).toUpperCase() + preference.slice(1)).join(', ') : "";
+  const expert = profile.preferences ? profile.preferences.map(preference => preference.name).join(', ') : "";
 
   return (
     <div className="flex mt-10">
