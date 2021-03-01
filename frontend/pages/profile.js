@@ -5,6 +5,7 @@ import useUser from '../lib/useUser';
 import AppLayout from '../components/AppLayout';
 import EditProfile from '../components/EditProfile';
 import InformationProfile from '../components/InformationProfile';
+import TrainerCourseList from '../components/course/TrainerCourseList';
 
 const Profile = () => {
   const { user = {}, mutateUser } = useUser({ redirectTo: '/login' });
@@ -24,6 +25,11 @@ const Profile = () => {
           ) : (
             <InformationProfile profile={user} setIsEditing={setIsEditing} />
           )}
+          <hr className="my-16" />
+          <div className="text-4xl font-bold mb-10">
+            My Courses
+          </div>
+          <TrainerCourseList />
         </div>
       </div>
     </AppLayout>
