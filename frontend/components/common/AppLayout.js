@@ -4,7 +4,7 @@ import { Layout } from 'antd';
 import Header from './Header';
 import Sider from './Sider';
 import Footer from './Footer';
-import { USER_TYPE } from '../config/UserType.config';
+import { USER_TYPE } from '../../config/UserType.config';
 
 const { Content } = Layout;
 

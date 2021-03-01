@@ -7,7 +7,7 @@ import {
   FillInformationForm,
 } from '../components/register';
 
-import Footer from '../components/Footer';
+import { Footer } from '../components/common';
 
 const Register = () => {
   return (

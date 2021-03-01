@@ -8,7 +8,7 @@ import { COOKIE_NAME, API_HOST } from '../config/config';
 import { REDIRECT_CONDITION } from '../config/RedirectCondition.config';
 import useUser from '../lib/useUser';
 import LoginForm from '../components/LoginForm';
-import Footer from '../components/Footer';
+import { Footer } from '../components/common';
 
 const Login = () => {
   const [cookie, setCookie] = useCookies([COOKIE_NAME]);
