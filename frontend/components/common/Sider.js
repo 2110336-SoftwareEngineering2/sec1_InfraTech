@@ -7,7 +7,8 @@ import { MENU_ITEMS } from '../../config/Sider.config';
 
 const { Sider: AntdSider } = Layout;
 
-const Sider = ({ collapsed, userType }) => {
+const Sider = ({ collapsed, userType, selectedMenu = '0' }) => {
+  const [selectedKey, setSelectedKey] = useState(selectedMenu);
   const [isBroken, setIsBroken] = useState(collapsed);
   const [showLogoText, setShowLogoText] = useState(!collapsed);
 
@@ -42,7 +43,7 @@ const Sider = ({ collapsed, userType }) => {
       <Menu
         theme="dark"
         mode="inline"
-        defaultSelectedKeys={['0']}
+        selectedKeys={[selectedKey]}
         onClick={({ item }) => Router.push(item?.props?.href)}
       >
         {MENU_ITEMS[userType].map(({ text, icon, href = '/' }, index) => (

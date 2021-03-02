@@ -14,7 +14,7 @@ const Profile = () => {
   user.birthdate = moment(user.birthdate);
 
   return (
-    <AppLayout user={user} mutateUser={mutateUser}>
+    <AppLayout user={user} mutateUser={mutateUser} selectedMenu="2">
       <div className="min-h-screen flex justify-center">
         <div className="bg-white w-full mx-8 mt-8 py-12 px-24">
           <div className="text-4xl font-bold">
