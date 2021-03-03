@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Layout, Menu } from 'antd';
 
-import { MENU_ITEMS } from '../config/Sider.config';
+import { MENU_ITEMS } from '../../config/Sider.config';
 
 const { Sider: AntdSider } = Layout;
 

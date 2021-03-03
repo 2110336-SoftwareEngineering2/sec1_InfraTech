@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import moment from 'moment';
+
 import useUser from '../lib/useUser';
-import AppLayout from '../components/AppLayout';
+import { AppLayout } from '../components/common';
 import EditProfile from '../components/EditProfile';
 import InformationProfile from '../components/InformationProfile';
-import moment from 'moment'
+import TrainerCourseList from '../components/course/TrainerCourseList';
 
 const Profile = () => {
   const { user = {}, mutateUser } = useUser({ redirectTo: '/login' });
@@ -14,13 +16,18 @@ const Profile = () => {
   return (
     <AppLayout user={user} mutateUser={mutateUser}>
       <div className="min-h-screen flex justify-center">
-        <div className="bg-white w-full m-12 py-12 px-24 rounded-lg">
-          <div className="text-4xl sm:text-5xl font-bold">{isEditing ? "Edit Profile" : "Profile"}</div>
-          {
-            isEditing ?
-              <EditProfile profile={user} setIsEditing={setIsEditing} /> :
-              <InformationProfile profile={user} setIsEditing={setIsEditing} />
-          }
+        <div className="bg-white w-full mx-8 mt-8 py-12 px-24">
+          <div className="text-4xl font-bold">
+            {isEditing ? 'Edit Profile' : 'Profile'}
+          </div>
+          {isEditing ? (
+            <EditProfile profile={user} setIsEditing={setIsEditing} />
+          ) : (
+            <InformationProfile profile={user} setIsEditing={setIsEditing} />
+          )}
+          <hr className="my-16" />
+          <div className="text-4xl font-bold mb-10">My Courses</div>
+          <TrainerCourseList />
         </div>
       </div>
     </AppLayout>

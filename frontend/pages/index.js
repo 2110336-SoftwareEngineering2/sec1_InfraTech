@@ -1,5 +1,5 @@
 import useUser from '../lib/useUser';
-import AppLayout from '../components/AppLayout';
+import { AppLayout } from '../components/common';
 
 const Landing = () => {
   const { user = {}, mutateUser } = useUser({ redirectTo: '/' });
