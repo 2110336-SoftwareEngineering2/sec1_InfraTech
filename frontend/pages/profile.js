@@ -18,9 +18,7 @@ const Profile = () => {
 
   return (
     <AppLayout user={user} mutateUser={mutateUser} selectedMenu="2">
-      {!user ? (
-        <Loading />
-      ) : (
+      {user ? (
         <div className="min-h-screen flex justify-center">
           <div className="bg-white w-full mx-8 mt-8 py-12 px-24">
             <div className="text-4xl font-bold">
@@ -36,6 +34,8 @@ const Profile = () => {
             <TrainerCourseList />
           </div>
         </div>
+      ) : (
+        <Loading />
       )}
     </AppLayout>
   );
