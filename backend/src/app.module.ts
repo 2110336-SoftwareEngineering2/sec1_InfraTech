@@ -6,6 +6,7 @@ import { RegisterModule } from './register/register.module';
 import { LoginModule } from './login/login.module';
 import { ProfileModule } from './profile/profile.module';
 import { PreferenceModule } from './preference/preference.module';
+import { TrainerModule } from './trainer/trainer.module';
 import * as config from 'config';
 
 const dbConfig = config.get('db');
@@ -27,6 +28,7 @@ const dbConfig = config.get('db');
     LoginModule,
     ProfileModule,
     PreferenceModule,
+    TrainerModule,
   ],
   controllers: [AppController],
   providers: [AppService],
