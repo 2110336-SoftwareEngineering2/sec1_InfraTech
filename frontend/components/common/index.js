@@ -1,6 +1,4 @@
-import AppLayout from './AppLayout';
-import Header from './Header';
-import Sider from './Sider';
-import Footer from './Footer';
-
-export { AppLayout, Header, Sider, Footer };
+export { default as AppLayout } from './AppLayout';
+export { default as Header } from './Header';
+export { default as Sider } from './Sider';
+export { default as Footer } from './Footer';

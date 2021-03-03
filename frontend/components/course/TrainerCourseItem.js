@@ -21,11 +21,8 @@ const TrainerCourseItem = ({ course }) => (
     <div className="text-lg">{course.description}</div>
     <List.Item
       actions={[
-        <IconText
-          icon={<RadarChartOutlined />}
-          text={`${course.specialize}`}
-        />,
-        <IconText icon={<DashboardOutlined />} text={`${course.level}`} />,
+        <IconText icon={<RadarChartOutlined />} text={course.specialize} />,
+        <IconText icon={<DashboardOutlined />} text={course.level} />,
         <IconText
           icon={<ClockCircleOutlined />}
           text={`${course.period} days`}

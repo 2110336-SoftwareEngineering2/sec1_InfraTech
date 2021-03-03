@@ -1,11 +1,4 @@
-import CreateAccountForm from './CreateAccountForm';
-import SelectRoleForm from './SelectRoleForm';
-import SelectPreferencesForm from './SelectPreferencesForm';
-import FillInformationForm from './FillInformationForm';
-
-export {
-  CreateAccountForm,
-  SelectRoleForm,
-  SelectPreferencesForm,
-  FillInformationForm,
-};
+export { default as CreateAccountForm } from './CreateAccountForm';
+export { default as SelectRoleForm } from './SelectRoleForm';
+export { default as SelectPreferencesForm } from './SelectPreferencesForm';
+export { default as FillInformationForm } from './FillInformationForm';
