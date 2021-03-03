@@ -35,10 +35,10 @@ CREATE TABLE preference (
     name VARCHAR(255),
     svg_url VARCHAR(255)
 );
-INSERT INTO preference (id, name, svg_url) VALUES (UUID(), "Cardiovascular", "http://www.svg.com/cardiovascular");
-INSERT INTO preference (id, name, svg_url) VALUES (UUID(), "Balance", "http://www.svg.com/balance");
-INSERT INTO preference (id, name, svg_url) VALUES (UUID(), "Flexibility", "http://www.svg.com/flexibility");
-INSERT INTO preference (id, name, svg_url) VALUES (UUID(), "Strength", "http://www.svg.com/strength");
+INSERT INTO preference (id, name, svg_url) VALUES (UUID(), "Cardiovascular", "/cardiovascular.svg");
+INSERT INTO preference (id, name, svg_url) VALUES (UUID(), "Balance", "/balance.svg");
+INSERT INTO preference (id, name, svg_url) VALUES (UUID(), "Flexibility", "/flexibility.svg");
+INSERT INTO preference (id, name, svg_url) VALUES (UUID(), "Strength", "/strength.svg");
 
 CREATE TABLE user_preference(
     user_id VARCHAR(36),
