@@ -13,7 +13,7 @@ export class TrainerService {
     private connection: Connection,
   ) {}
 
-  async search(
+  async getTrainersByPreferences(
     trainerSearchCriteriaDto: TrainerSearchCriteriaDto,
   ): Promise<Trainer[]> {
     const { preferences } = trainerSearchCriteriaDto;

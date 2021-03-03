@@ -7,10 +7,12 @@ import { TrainerSearchCriteriaDto } from './dtos/trainer-search-criteria-dto';
 export class TrainerController {
   constructor(private trainerService: TrainerService) {}
 
-  @Get('search')
-  async search(
+  @Get('preferences')
+  async getTrainersByPreferences(
     @Body() trainerSearchCriteriaDto: TrainerSearchCriteriaDto,
   ): Promise<Trainer[]> {
-    return this.trainerService.search(trainerSearchCriteriaDto);
+    return this.trainerService.getTrainersByPreferences(
+      trainerSearchCriteriaDto,
+    );
   }
 }
