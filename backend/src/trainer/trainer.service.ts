@@ -39,7 +39,8 @@ export class TrainerService {
         'trainer.lastname',
         'trainer.profileImageUrl',
         'user.id',
-        'preference',
+        'preference.id',
+        'preference.name',
       ])
       .innerJoin('trainer.user', 'user')
       .innerJoin('user.preferences', 'preference')
