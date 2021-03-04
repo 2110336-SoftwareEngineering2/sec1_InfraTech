@@ -19,6 +19,7 @@ export class TrainerService {
   ): Promise<Trainer[]> {
     const { preferences, sortBy } = trainerSearchCriteriaDto;
 
+    // TODO: split finding users that have the specific preferences logic
     const userPreferences = await this.connection
       .createQueryBuilder()
       .select('up.user_id')
@@ -33,6 +34,7 @@ export class TrainerService {
       (userPreference) => userPreference['up_user_id'],
     );
 
+    // TODO: split trainer querying logic
     const trainerQuery = this.trainerRepository
       .createQueryBuilder('trainer')
       .select([
@@ -56,6 +58,8 @@ export class TrainerService {
 
     const trainers = await trainerQuery.getMany();
 
+    // TODO: split sorting logic
+    // TODO: discuss about sorting criteria
     if (sortBy === TrainerSortBy.AverageRating) {
       trainers.sort((trainer1, trainer2) =>
         trainer1.averageRating < trainer2.averageRating ? 1 : -1,
