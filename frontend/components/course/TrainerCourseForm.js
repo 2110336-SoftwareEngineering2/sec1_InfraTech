@@ -1,11 +1,29 @@
 import { Form, Input, Button, Select, Radio, InputNumber } from 'antd';
 
-const TrainerCourseForm = () => {
+const TrainerCourseForm = ({ setShowForm }) => {
+  const [form] = Form.useForm();
+
+  const handleSubmit = (information) => {
+    // TODO: connect to create course API
+    // console.log(information);
+    setShowForm(false);
+  };
+
+  const handleCancle = () => {
+    setShowForm(false);
+    form.resetFields();
+  };
 
   return (
     <div className="px-32 pt-16 pb-10 shadow-around mb-4 flex justify-center">
       <div className="w-full">
-        <Form labelCol={{span: 6}} wrapperCol={{span:14}} layout="horizontal">
+        <Form
+          form={form}
+          labelCol={{ span: 6 }}
+          wrapperCol={{ span: 14 }}
+          layout="horizontal"
+          onFinish={handleSubmit}
+        >
           <Form.Item
             name="title"
             label="Course Title"
@@ -81,10 +99,12 @@ const TrainerCourseForm = () => {
               span: 8,
             }}
           >
+            <Button htmlType="button" className="mr-4" onClick={handleCancle}>
+              Cancel
+            </Button>
             <Button type="primary" htmlType="submit" className="mr-4">
               Submit
             </Button>
-            <Button htmlType="button">Cancel</Button>
           </Form.Item>
         </Form>
       </div>

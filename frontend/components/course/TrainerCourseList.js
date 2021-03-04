@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import { List } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
 import TrainerCourseItem from './TrainerCourseItem';
+import TrainerCourseForm from './TrainerCourseForm';
 
 // TODO: Fetch data from api
 const data = [
@@ -26,16 +28,19 @@ const data = [
 ];
 
 const TrainerCourseList = () => {
+  const [showForm, setShowForm] = useState(false);
+
   return (
     <List
       dataSource={data}
       itemLayout="vertical"
       renderItem={(item) => <TrainerCourseItem course={item} />}
     >
+      {showForm && <TrainerCourseForm setShowForm={setShowForm}/>}
       <div
         className="shadow-around mb-4 bg-gray-100 h-20 text-3xl text-gray-500 flex justify-center items-center hover:bg-gray-200"
         // TODO: Implement adding new course on click
-        // onClick={() => console.log('add course')}
+        onClick={() => setShowForm(true)}
       >
         <PlusOutlined />
       </div>
