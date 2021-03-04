@@ -5,6 +5,7 @@ import {
   CalendarOutlined,
   MessageOutlined,
   HomeOutlined,
+  UserOutlined,
 } from '@ant-design/icons';
 import { USER_TYPE } from './UserType.config';
 
@@ -29,12 +30,13 @@ export const MENU_ITEMS = {
       icon: <SearchOutlined />,
     },
     {
-      text: 'Notification',
-      icon: <BellOutlined />,
+      text: 'My Profile',
+      icon: <UserOutlined />,
+      href: '/profile',
     },
     {
-      text: 'My Courses',
-      icon: <RadarChartOutlined />,
+      text: 'Notification',
+      icon: <BellOutlined />,
     },
     {
       text: 'Schedule',

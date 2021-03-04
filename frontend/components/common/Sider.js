@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import Router from 'next/router';
 import { Layout, Menu } from 'antd';
 
 import { MENU_ITEMS } from '../../config/Sider.config';
 
 const { Sider: AntdSider } = Layout;
 
-const Sider = ({ collapsed, userType }) => {
+const Sider = ({ collapsed, userType, selectedMenu = '0' }) => {
+  const [selectedKey, setSelectedKey] = useState(selectedMenu);
   const [isBroken, setIsBroken] = useState(collapsed);
   const [showLogoText, setShowLogoText] = useState(!collapsed);
 
@@ -38,9 +40,14 @@ const Sider = ({ collapsed, userType }) => {
           {showLogoText && "Let's Exercise!"}
         </span>
       </div>
-      <Menu theme="dark" mode="inline" defaultSelectedKeys={['0']}>
-        {MENU_ITEMS[userType].map(({ text, icon }, index) => (
-          <Menu.Item key={index} icon={icon} title={text}>
+      <Menu
+        theme="dark"
+        mode="inline"
+        selectedKeys={[selectedKey]}
+        onClick={({ item }) => Router.push(item?.props?.href)}
+      >
+        {MENU_ITEMS[userType].map(({ text, icon, href = '/' }, index) => (
+          <Menu.Item key={index} icon={icon} title={text} href={href}>
             {!isBroken && text}
           </Menu.Item>
         ))}
