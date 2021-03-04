@@ -38,4 +38,8 @@ export class Trainer {
   @OneToOne(() => User, (user) => user.id, { primary: true })
   @JoinColumn({ name: 'user_id' })
   user: User;
+
+  @Expose({ groups: [] })
+  @OneToMany(() => Review, (review) => review.trainer)
+  reviews: Review[];
 }
