@@ -55,7 +55,7 @@ CREATE TABLE course(
     `level` VARCHAR(255),
     specialization VARCHAR(255),
     price DECIMAL(18,2),
-    `period` INT,
+    `period` INT
 );
 
 CREATE INDEX IX_course_title ON course(title);
@@ -67,8 +67,8 @@ CREATE INDEX IX_course_period ON course(`period`);
 CREATE TABLE course_trainee(
     trainee_user_id VARCHAR(36),
     course_id VARCHAR(36),
-    CONSTRAINT FK_course_trainee_trainee_user_id FOREIGN KEY (trainee_user_id) REFERENCES trainee(id) ON DELETE CASCADE,
-    CONSTRAINT FK_course_trainee_course_id FOREIGN KEY (course_id) REFERENCES course(id) ON DELETE CASCADE,
+    CONSTRAINT FK_course_trainee_trainee_user_id FOREIGN KEY (trainee_user_id) REFERENCES trainee(user_id) ON DELETE CASCADE,
+    CONSTRAINT FK_course_trainee_course_id FOREIGN KEY (course_id) REFERENCES course(id) ON DELETE CASCADE
 );
 
 -- Mock User --
