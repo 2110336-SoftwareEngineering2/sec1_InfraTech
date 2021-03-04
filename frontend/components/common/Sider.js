@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Layout, Menu } from 'antd';
 
@@ -46,10 +45,13 @@ const Sider = ({ collapsed, userType }) => {
         mode="inline"
         defaultSelectedKeys={['/']}
         selectedKeys={[router.pathname]}
+        onClick={({ item }) => {
+          router.push(item?.props?.href);
+        }}
       >
         {MENU_ITEMS[userType].map(({ text, icon, href }) => (
-          <Menu.Item key={href} icon={icon} title={text}>
-            <Link href={href}>{!isBroken && text}</Link>
+          <Menu.Item key={href} icon={icon} title={text} href={href}>
+            {!isBroken && text}
           </Menu.Item>
         ))}
       </Menu>
