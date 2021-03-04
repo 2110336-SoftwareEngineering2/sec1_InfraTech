@@ -46,7 +46,6 @@ const Sider = ({ collapsed, userType }) => {
         mode="inline"
         defaultSelectedKeys={['/']}
         selectedKeys={[router.pathname]}
-        onClick={() => console.log(router.pathname)}
       >
         {MENU_ITEMS[userType].map(({ text, icon, href }) => (
           <Menu.Item key={href} icon={icon} title={text}>
