@@ -4,6 +4,7 @@ import { TrainerSearchCriteriaDto } from './dtos/trainer-search-criteria-dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TrainerRepository } from '../register/repositories/trainer.repository';
 import { Connection } from 'typeorm';
+import { TrainerSortBy } from './enums/trainer-sort-by.enum';
 
 @Injectable()
 export class TrainerService {
@@ -16,7 +17,7 @@ export class TrainerService {
   async getTrainersByPreferences(
     trainerSearchCriteriaDto: TrainerSearchCriteriaDto,
   ): Promise<Trainer[]> {
-    const { preferences } = trainerSearchCriteriaDto;
+    const { preferences, sortBy } = trainerSearchCriteriaDto;
 
     const userPreferences = await this.connection
       .createQueryBuilder()
@@ -54,6 +55,12 @@ export class TrainerService {
     }
 
     const trainers = await trainerQuery.getMany();
+
+    if (sortBy === TrainerSortBy.AverageRating) {
+      trainers.sort((trainer1, trainer2) =>
+        trainer1.averageRating < trainer2.averageRating ? 1 : -1,
+      );
+    }
 
     return trainers;
   }
