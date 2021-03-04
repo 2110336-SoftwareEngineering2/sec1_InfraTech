@@ -3,6 +3,8 @@ import { User } from './user.entity';
 
 @Entity({ name: 'trainee' })
 export class Trainee {
+  @PrimaryColumn({ name: 'user_id' })
+  userId: string;
 
   @Column()
   firstname: string;
