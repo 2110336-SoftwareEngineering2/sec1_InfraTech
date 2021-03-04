@@ -1,19 +1,15 @@
 import { Form, Input, Button, Select, Radio, InputNumber } from 'antd';
 
 const TrainerCourseForm = () => {
-  const layout = {
-    labelCol: { span: 6 },
-    wrapperCol: { span: 14 },
-  };
 
   return (
     <div className="px-32 pt-16 pb-10 shadow-around mb-4 flex justify-center">
       <div className="w-full">
-        <Form {...layout} layout="horizontal">
+        <Form labelCol={{span: 6}} wrapperCol={{span:14}} layout="horizontal">
           <Form.Item
             name="title"
             label="Course Title"
-            rules={[{ required: true }]}
+            rules={[{ required: true, message: 'Title is required' }]}
           >
             <Input />
           </Form.Item>
@@ -21,7 +17,7 @@ const TrainerCourseForm = () => {
           <Form.Item
             name="description"
             label="Course Description"
-            rules={[{ required: true }]}
+            rules={[{ required: true, message: 'Description is required' }]}
           >
             <Input.TextArea showCount maxLength={150} />
           </Form.Item>
@@ -29,7 +25,9 @@ const TrainerCourseForm = () => {
           <Form.Item
             label="Difficulty Level"
             name="difficulty"
-            rules={[{ required: true }]}
+            rules={[
+              { required: true, message: 'Please select diffifulty level' },
+            ]}
           >
             <Radio.Group>
               <Radio.Button value="beginner">Beginner</Radio.Button>
@@ -41,7 +39,9 @@ const TrainerCourseForm = () => {
           <Form.Item
             name="specialization"
             label="Specialization"
-            rules={[{ required: true }]}
+            rules={[
+              { required: true, message: 'Please select specialization' },
+            ]}
           >
             <Select>
               <Select.Option value="abs">Abs</Select.Option>
@@ -52,14 +52,26 @@ const TrainerCourseForm = () => {
           <Form.Item
             name="period"
             label="Training Period (hours)"
-            rules={[{ required: true }]}
+            rules={[
+              {
+                type: 'integer',
+                message: 'Input must be an integer',
+              },
+              { required: true, message: 'Training Period is required' },
+            ]}
           >
             <InputNumber min={1} />
           </Form.Item>
           <Form.Item
             name="price"
             label="Price (bahts)"
-            rules={[{ required: true }]}
+            rules={[
+              {
+                type: 'integer',
+                message: 'Input must be an integer',
+              },
+              { required: true, message: 'Price is required' },
+            ]}
           >
             <InputNumber min={0} />
           </Form.Item>
