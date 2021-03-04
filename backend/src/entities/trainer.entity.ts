@@ -42,4 +42,18 @@ export class Trainer {
   @Expose({ groups: [] })
   @OneToMany(() => Review, (review) => review.trainer)
   reviews: Review[];
+
+  @Expose({ groups: ['search'] })
+  get averageRating(): number {
+    if (this.reviews?.length > 0) {
+      const sumOfRating = this.reviews.reduce(
+        (total, { rating }) => total + rating,
+        0,
+      );
+      const numberOfReviews = this.reviews.length;
+      return sumOfRating / numberOfReviews;
+    } else {
+      return 0;
+    }
+  }
 }
