@@ -48,6 +48,29 @@ CREATE TABLE user_preference(
     CONSTRAINT FK_user_preference_preference_id FOREIGN KEY (preference_id) REFERENCES preference(id) ON DELETE CASCADE
 );
 
+CREATE TABLE course(
+    id VARCHAR(36) PRIMARY KEY,
+    title VARCHAR(255),
+    `description` VARCHAR(255),
+    `level` VARCHAR(255),
+    specialization VARCHAR(255),
+    price DECIMAL(18,2),
+    `period` INT,
+);
+
+CREATE INDEX IX_course_title ON course(title);
+CREATE INDEX IX_course_level ON course(`level`);
+CREATE INDEX IX_course_specialization ON course(`specialization`);
+CREATE INDEX IX_course_price ON course(`price`);
+CREATE INDEX IX_course_period ON course(`period`);
+
+CREATE TABLE course_trainee(
+    trainee_user_id VARCHAR(36),
+    course_id VARCHAR(36),
+    CONSTRAINT FK_course_trainee_trainee_user_id FOREIGN KEY (trainee_user_id) REFERENCES trainee(id) ON DELETE CASCADE,
+    CONSTRAINT FK_course_trainee_course_id FOREIGN KEY (course_id) REFERENCES course(id) ON DELETE CASCADE,
+);
+
 -- Mock User --
 INSERT INTO user VALUES ("38a04ba7-096f-4af3-abb2-e38a518a01f7", "tanboi@lnwzamail.com", "$2a$10$XPTfy6sx.TUnze7fHhP6XOWds8bdQaS2NTaELcIKHcyqwNPBKtQk6", "$2a$10$XPTfy6sx.TUnze7fHhP6XO");
 INSERT INTO trainer VALUES ("38a04ba7-096f-4af3-abb2-e38a518a01f7", "Somlux", "Kamsing", "MALE", "081234567", "2017-06-15 00:00:00", "0", "https://www.aceshowbiz.com/images/photo/john_cena.jpg");
