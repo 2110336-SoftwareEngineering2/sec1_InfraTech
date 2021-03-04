@@ -11,9 +11,6 @@ import { Review } from '../trainer/entities/review.entity';
 import { Expose } from 'class-transformer';
 @Entity({ name: 'trainer' })
 export class Trainer {
-  @OneToOne(() => User, (user) => user.id, { primary: true })
-  @JoinColumn({ name: 'user_id' })
-  user: User;
   @PrimaryColumn({ name: 'user_id' })
   userId: string;
 
@@ -37,4 +34,8 @@ export class Trainer {
 
   @Column({ name: 'profile_image_url' })
   profileImageUrl: string;
+
+  @OneToOne(() => User, (user) => user.id, { primary: true })
+  @JoinColumn({ name: 'user_id' })
+  user: User;
 }
