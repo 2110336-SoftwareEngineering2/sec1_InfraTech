@@ -36,7 +36,11 @@ const TrainerCourseList = () => {
       itemLayout="vertical"
       renderItem={(item) => <TrainerCourseItem course={item} />}
     >
-      {showForm && <TrainerCourseForm setShowForm={setShowForm}/>}
+      {showForm && (
+        <div className="px-32 pt-16 pb-10 shadow-around mb-4 flex justify-center">
+          <TrainerCourseForm setShowForm={setShowForm} />
+        </div>
+      )}
       <div
         className="shadow-around mb-4 bg-gray-100 h-20 text-3xl text-gray-500 flex justify-center items-center hover:bg-gray-200"
         // TODO: Implement adding new course on click
