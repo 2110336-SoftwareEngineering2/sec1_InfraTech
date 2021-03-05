@@ -1,5 +1,6 @@
-import { Entity, Column, OneToOne, PrimaryColumn, JoinColumn } from 'typeorm';
+import { Entity, Column, OneToOne, PrimaryColumn, JoinColumn, OneToMany } from 'typeorm';
 import { User } from './user.entity';
+import { Course } from './course.entity';
 @Entity({ name: 'trainer' })
 export class Trainer {
   @OneToOne(() => User, (user) => user.id, { primary: true })
@@ -26,4 +27,7 @@ export class Trainer {
 
   @Column({ name: 'profile_image_url' })
   profileImageUrl: string;
+
+  @OneToMany(() => Course, course => course.trainer)
+  courses: Course[];
 }
