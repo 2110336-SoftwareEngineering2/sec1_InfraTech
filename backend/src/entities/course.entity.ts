@@ -6,32 +6,44 @@ import {
   JoinTable,
 } from 'typeorm';
 import { Preference } from '../preference/entities/preference.entity';
+import { Trainee } from './trainee.entity';
 
 @Entity({ name: 'user' })
 export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ unique: true })
-  email: string;
+  @Column()
+  title: string;
 
   @Column()
-  password: string;
+  description: string;
 
   @Column()
-  salt: string;
+  level: string;
 
-  @ManyToMany(() => Preference, { cascade: true })
+  @Column()
+  specialization: string;
+
+  @Column()
+  price: number;
+
+  @Column()
+  period: number;
+
+  @ManyToMany(() => Trainee, { cascade: true })
   @JoinTable({
-    name: 'user_preference',
+    name: 'course_trainee',
     joinColumn: {
-      name: 'user_id',
+      name: 'course_id',
       referencedColumnName: 'id',
     },
     inverseJoinColumn: {
-      name: 'preference_id',
-      referencedColumnName: 'id',
+      name: 'trainee_user_id',
+      referencedColumnName: 'user',
     },
   })
-  preferences: Preference[];
+  trainees: Trainee[];
+
+  
 }
