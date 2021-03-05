@@ -55,7 +55,9 @@ CREATE TABLE course(
     `level` VARCHAR(255),
     specialization VARCHAR(255),
     price DECIMAL(18,2),
-    `period` INT
+    `period` INT,
+    trainer_user_id VARCHAR(36),
+    CONSTRAINT FK_course_trainer_user_id FOREIGN KEY (trainer_user_id) REFERENCES trainer(user_id) ON DELETE CASCADE
 );
 
 CREATE INDEX IX_course_title ON course(title);
