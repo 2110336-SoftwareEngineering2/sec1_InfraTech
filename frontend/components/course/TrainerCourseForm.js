@@ -1,6 +1,6 @@
 import { Form, Input, Button, Select, Radio, InputNumber } from 'antd';
 
-const TrainerCourseForm = ({ setShowForm }) => {
+const TrainerCourseForm = ({ setShowForm, showButton=true }) => {
   const [form] = Form.useForm();
 
   const handleSubmit = (information) => {
@@ -96,12 +96,16 @@ const TrainerCourseForm = ({ setShowForm }) => {
             span: 8,
           }}
         >
-          <Button htmlType="button" className="mr-4" onClick={handleCancle}>
-            Cancel
-          </Button>
-          <Button type="primary" htmlType="submit" className="mr-4">
-            Submit
-          </Button>
+          {showButton && (
+            <>
+              <Button htmlType="button" className="mr-4" onClick={handleCancle}>
+                Cancel
+              </Button>
+              <Button type="primary" htmlType="submit" className="mr-4">
+                Submit
+              </Button>
+            </>
+          )}
         </Form.Item>
       </Form>
     </div>

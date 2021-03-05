@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Modal, Button } from 'antd';
 
+import TrainerCourseForm from './TrainerCourseForm';
+
 const TrainerCourseEditModal = ({ visible, setVisible }) => {
   const [loading, setLoading] = useState(false);
 
@@ -13,15 +15,17 @@ const TrainerCourseEditModal = ({ visible, setVisible }) => {
   };
 
   const handleCancel = () => {
-    setVisible(false)
+    setVisible(false);
   };
 
   return (
     <Modal
       title="Edit Course"
       visible={visible}
+      centered={true}
       onOk={handleSubmit}
       onCancel={handleCancel}
+      width={1000}
       footer={[
         <Button key="cancel" onClick={handleCancel}>
           Cancel
@@ -36,7 +40,9 @@ const TrainerCourseEditModal = ({ visible, setVisible }) => {
         </Button>,
       ]}
     >
-      <p>text</p>
+      <div className="pt-8">
+        <TrainerCourseForm showButton={false} />
+      </div>
     </Modal>
   );
 };
