@@ -13,7 +13,7 @@ const data = [
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
     level: 'Beginner',
     period: 5,
-    specialize: 'Abs',
+    specialization: 'Abs',
     price: 2999,
   },
   {
@@ -22,7 +22,7 @@ const data = [
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
     level: 'Intermediate',
     period: 10,
-    specialize: 'Cardio',
+    specialization: 'Cardio',
     price: 499,
   },
 ];

@@ -1,7 +1,12 @@
 import { Form, Input, Button, Select, Radio, InputNumber } from 'antd';
 
-const TrainerCourseForm = ({ setShowForm, showButton=true }) => {
+const TrainerCourseForm = ({ courseInfo, setShowForm, showButton = true }) => {
   const [form] = Form.useForm();
+  const initialValues = {
+    ...courseInfo,
+    difficulty: courseInfo?.level?.toLowerCase() ?? '',
+    specialization: courseInfo?.specialization?.toLowerCase() ?? '',
+  };
 
   const handleSubmit = (information) => {
     // TODO: connect to create course API
@@ -22,6 +27,7 @@ const TrainerCourseForm = ({ setShowForm, showButton=true }) => {
         wrapperCol={{ span: 14 }}
         layout="horizontal"
         onFinish={handleSubmit}
+        initialValues={initialValues}
       >
         <Form.Item
           name="title"

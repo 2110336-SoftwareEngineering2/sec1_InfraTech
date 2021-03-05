@@ -3,7 +3,12 @@ import { Modal, Button } from 'antd';
 
 import TrainerCourseForm from './TrainerCourseForm';
 
-const TrainerCourseEditModal = ({ visible, setVisible }) => {
+const TrainerCourseEditModal = ({
+  courseInfo,
+  setCourseInfo,
+  visible,
+  setVisible,
+}) => {
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = () => {
@@ -41,7 +46,11 @@ const TrainerCourseEditModal = ({ visible, setVisible }) => {
       ]}
     >
       <div className="pt-8">
-        <TrainerCourseForm showButton={false} />
+        <TrainerCourseForm
+          courseInfo={courseInfo}
+          showButton={false}
+          handleSubmit={setCourseInfo}
+        />
       </div>
     </Modal>
   );
