@@ -4,12 +4,14 @@ import {
   PrimaryGeneratedColumn,
   ManyToMany,
   JoinTable,
+  ManyToOne,
 } from 'typeorm';
 import { Preference } from '../preference/entities/preference.entity';
 import { Trainee } from './trainee.entity';
+import { Trainer } from './trainer.entity';
 
 @Entity({ name: 'user' })
-export class User {
+export class Course {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -45,5 +47,6 @@ export class User {
   })
   trainees: Trainee[];
 
-  
+  @ManyToOne(() => Trainer, trainer => trainer.courses)
+  trainer: Trainer;
 }
