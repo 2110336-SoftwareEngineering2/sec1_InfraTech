@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { List } from 'antd';
+import { List, Form } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
 import TrainerCourseItem from './TrainerCourseItem';
-import TrainerCourseForm from './TrainerCourseForm';
+import TrainerCourseFormModal from './TrainerCourseFormModal';
 
 // TODO: Fetch data from api
 const data = [
@@ -28,7 +28,28 @@ const data = [
 ];
 
 const TrainerCourseList = () => {
-  const [showForm, setShowForm] = useState(false);
+  const [form] = Form.useForm();
+  const [showCreateForm, setShowCreateForm] = useState(false);
+  const [submitLoading, setSubmitLoading] = useState(false);
+
+  const handleSubmit = async (formValues) => {
+    //TODO: Connect to create course API
+    try {
+      await form.validateFields();
+      setSubmitLoading(true);
+      setTimeout(() => {
+        setShowCreateForm(false);
+        setSubmitLoading(false);
+      }, 3000);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleCancel = () => {
+    setShowCreateForm(false);
+    form.resetFields();
+  };
 
   return (
     <List
@@ -36,18 +57,21 @@ const TrainerCourseList = () => {
       itemLayout="vertical"
       renderItem={(item) => <TrainerCourseItem course={item} />}
     >
-      {showForm && (
-        <div className="px-32 pt-16 pb-10 shadow-around mb-4 flex justify-center">
-          <TrainerCourseForm setShowForm={setShowForm} />
-        </div>
-      )}
       <div
         className="shadow-around mb-4 bg-gray-100 h-20 text-3xl text-gray-500 flex justify-center items-center hover:bg-gray-200"
         // TODO: Implement adding new course on click
-        onClick={() => setShowForm(true)}
+        onClick={() => setShowCreateForm(true)}
       >
         <PlusOutlined />
       </div>
+      <TrainerCourseFormModal
+        form={form}
+        title="Create Course"
+        visible={showCreateForm}
+        loading={submitLoading}
+        handleSubmit={handleSubmit}
+        handleCancel={handleCancel}
+      />
     </List>
   );
 };

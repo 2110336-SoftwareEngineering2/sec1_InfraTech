@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { List, Space } from 'antd';
+import { List, Space, Form } from 'antd';
 import {
   ClockCircleOutlined,
   DollarCircleOutlined,
@@ -9,11 +9,32 @@ import {
   DeleteOutlined,
 } from '@ant-design/icons';
 
-import TrainerCourseEditModal from './TrainerCourseEditModal';
+import TrainerCourseFormModal from './TrainerCourseFormModal';
 
 // TODO: Implement onClick for edit and delete icon
 const TrainerCourseItem = ({ course }) => {
+  const [form] = Form.useForm();
   const [showEditForm, setShowEditForm] = useState(false);
+  const [submitLoading, setSubmitLoading] = useState(false);
+
+  const handleSubmit = async (formValues) => {
+    //TODO: Connect to edit course API
+    try {
+      await form.validateFields();
+      setSubmitLoading(true);
+      setTimeout(() => {
+        setShowEditForm(false);
+        setSubmitLoading(false);
+      }, 3000);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleCancel = () => {
+    setShowEditForm(false);
+    form.resetFields();
+  };
 
   return (
     <>
@@ -28,10 +49,13 @@ const TrainerCourseItem = ({ course }) => {
             <DeleteOutlined className="ml-2 hover:text-black" />
           </div>
         </div>
-        <div className="text-lg">{course.description}</div>
+        <div>{course.description}</div>
         <List.Item
           actions={[
-            <IconText icon={<RadarChartOutlined />} text={course.specialize} />,
+            <IconText
+              icon={<RadarChartOutlined />}
+              text={course.specialization}
+            />,
             <IconText icon={<DashboardOutlined />} text={course.level} />,
             <IconText
               icon={<ClockCircleOutlined />}
@@ -44,16 +68,21 @@ const TrainerCourseItem = ({ course }) => {
           ]}
         />
       </div>
-      <TrainerCourseEditModal
+      <TrainerCourseFormModal
+        form={form}
+        title="Edit Course"
         visible={showEditForm}
-        setVisible={setShowEditForm}
+        loading={submitLoading}
+        initialFormValues={course}
+        handleSubmit={handleSubmit}
+        handleCancel={handleCancel}
       />
     </>
   );
 };
 
 const IconText = ({ icon, text }) => (
-  <Space className="text-lg text-gray-800">
+  <Space className="text-gray-800">
     {icon}
     {text}
   </Space>

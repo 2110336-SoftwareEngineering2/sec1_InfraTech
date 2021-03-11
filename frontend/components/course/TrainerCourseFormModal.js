@@ -1,43 +1,33 @@
-import { useState } from 'react';
 import { Modal, Button } from 'antd';
 
 import TrainerCourseForm from './TrainerCourseForm';
 
-const TrainerCourseEditModal = ({
-  courseInfo,
-  setCourseInfo,
+const TrainerCourseFormModal = ({
+  form,
+  title,
+  initialFormValues,
   visible,
-  setVisible,
+  loading,
+  handleSubmit,
+  handleCancel,
 }) => {
-  const [loading, setLoading] = useState(false);
-
-  const handleSubmit = () => {
-    setLoading(true);
-    setTimeout(() => {
-      setVisible(false);
-      setLoading(false);
-    }, 3000);
-  };
-
-  const handleCancel = () => {
-    setVisible(false);
-  };
-
   return (
     <Modal
-      title="Edit Course"
+      title={title}
       visible={visible}
       centered={true}
       onOk={handleSubmit}
       onCancel={handleCancel}
       width={1000}
       footer={[
-        <Button key="cancel" onClick={handleCancel}>
+        <Button form="course-form" key="cancel" onClick={handleCancel}>
           Cancel
         </Button>,
         <Button
+          form="course-form"
           key="submit"
           type="primary"
+          htmlType="submit"
           loading={loading}
           onClick={handleSubmit}
         >
@@ -47,13 +37,13 @@ const TrainerCourseEditModal = ({
     >
       <div className="pt-8">
         <TrainerCourseForm
-          courseInfo={courseInfo}
-          showButton={false}
-          handleSubmit={setCourseInfo}
+          form={form}
+          initialFormValues={initialFormValues}
+          handleSubmit={handleSubmit}
         />
       </div>
     </Modal>
   );
 };
 
-export default TrainerCourseEditModal;
+export default TrainerCourseFormModal;
