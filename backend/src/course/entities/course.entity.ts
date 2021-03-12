@@ -48,10 +48,10 @@ export class Course {
   })
   trainees: Trainee[];
 
-  @Column()
+  @Column({ name: 'trainer_user_id' })
   trainerUserId: string;
 
   @ManyToOne(() => Trainer, trainer => trainer.courses)
-  @JoinColumn({name: 'trainer_user_id'})
+  @JoinColumn({ name: 'trainer_user_id' })
   trainer: Trainer;
 }
