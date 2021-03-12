@@ -1,4 +1,4 @@
-import { Controller, Req, Get, UseGuards, Patch, Body, ForbiddenException } from '@nestjs/common';
+import { Controller, Req, Get, UseGuards, Patch, Body, ForbiddenException, Param } from '@nestjs/common';
 import { CourseService } from './course.service';
 import { LetXRequest } from 'src/middlewares/auth.middleware';
 import { AuthGuard } from '../guards/auth.guard';
@@ -29,6 +29,7 @@ export class CourseController {
   @Role(UserType.Trainer)
   @UseGuards(RoleGuard)
   async getCourse(
+    @Param('id') id,
     @Req() request: LetXRequest,
   ): Promise<Course> {
     let course: Course = await this.courseService.getCourse(id);
