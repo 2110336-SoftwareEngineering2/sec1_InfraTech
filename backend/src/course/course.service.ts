@@ -21,13 +21,8 @@ export class CourseService {
   async listCourses(userId: string): Promise<Course[]> {
     const courses = await this.courseRepository.find({
       where: {
-        trainer: {
-          user: {
-            id: userId
-          }
-        }
+        trainerUserId: userId,
       },
-      relations: ["trainer", "trainer.user", "trainee"]
     });
 
     return courses;
@@ -38,7 +33,6 @@ export class CourseService {
       where: {
         id: id,
       },
-      relations: ["trainer", "trainer.user", "trainee"]
     });
 
     return course;

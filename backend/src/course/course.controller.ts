@@ -1,4 +1,4 @@
-import { Controller, Req, Get, UseGuards, Patch, Body, ForbiddenException, Param, Post } from '@nestjs/common';
+import { Controller, Req, Get, UseGuards, Patch, Body, ForbiddenException, Param, Post, Delete } from '@nestjs/common';
 import { CourseService } from './course.service';
 import { LetXRequest } from 'src/middlewares/auth.middleware';
 import { AuthGuard } from '../guards/auth.guard';
@@ -50,5 +50,21 @@ export class CourseController {
     @Req() request: LetXRequest,
   ): Promise<Course> {
     return await this.courseService.createCourse(request.user.id, courseDto);
+  }
+
+  @Delete(':id')
+  @Role(UserType.Trainer)
+  @UseGuards(RoleGuard)
+  async deleteCourse(
+    @Param('id') id,
+    @Req() request: LetXRequest,
+  ): Promise<void> {
+    let course = await this.courseService.getCourse(id);
+
+    if (course.trainer.user.id != request.user.id) {
+      throw new ForbiddenException();
+    }
+
+    await this.courseService.deleteCourse(id);
   }
 }
