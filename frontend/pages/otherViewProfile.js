@@ -9,7 +9,7 @@ import TrainerCourseList from '../components/course/TrainerCourseList';
 import Loading from '../components/common/Loading';
 import { USER_TYPE } from '../config/UserType.config';
 
-const Profile = () => {
+const otherViewProfile = () => {
   const { user, mutateUser } = useUser({ redirectTo: '/login' });
   const [isEditing, setIsEditing] = useState(false);
 
@@ -22,23 +22,16 @@ const Profile = () => {
       {user ? (
         <div className="min-h-screen flex justify-center">
           <div className="bg-white w-full mx-8 mt-8 py-12 px-24">
-            <div className="text-3xl font-bold">
-              {isEditing ? 'Edit Profile' : 'Profile'}
-            </div>
-            {isEditing ? (
-              <EditProfile profile={user} setIsEditing={setIsEditing} />
-            ) : (
-              <InformationProfile
-                profile={user}
-                setIsEditing={setIsEditing}
-                ownView={true}
-              />
-            )}
+            <InformationProfile
+              profile={user}
+              setIsEditing={setIsEditing}
+              ownView={false}
+            />
             {user.type === USER_TYPE.TRAINER && (
               <>
                 <hr className="my-16" />
-                <div className="text-3xl font-bold mb-10">My Courses</div>
-                <TrainerCourseList />
+                <div className="text-4xl font-bold mb-10">My Courses</div>
+                <TrainerCourseList ownView={false} />
               </>
             )}
           </div>
@@ -50,4 +43,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default otherViewProfile;
