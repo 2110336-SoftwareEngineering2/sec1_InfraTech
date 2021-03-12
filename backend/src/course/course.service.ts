@@ -66,6 +66,7 @@ export class CourseService {
     try {
       course = await queryRunner.manager.save(Course, course);
     } catch (error) {
+      console.error(error);
       await queryRunner.rollbackTransaction();
 
       if (error.code === 'ER_DUP_ENTRY') {
