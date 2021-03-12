@@ -1,4 +1,4 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, ConflictException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, In, Connection, EntityTarget } from 'typeorm';
 import { User } from '../entities/user.entity';
@@ -52,8 +52,28 @@ export class CourseService {
       specialization: dto.specialization,
       price: dto.price,
       period: dto.period,
-
+      trainer: {
+        user: {
+          id: trainerUserId,
+        }
+      }
     })
+
+    const queryRunner = this.connection.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+
+    try {
+      course = await queryRunner.manager.save(Course, course);
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+
+      if (error.code === 'ER_DUP_ENTRY') {
+        throw new ConflictException('This course already exists');
+      } else {
+        throw new InternalServerErrorException();
+      }
+    }
 
     return course;
   }
