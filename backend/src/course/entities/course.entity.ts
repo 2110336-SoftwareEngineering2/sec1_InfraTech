@@ -10,7 +10,7 @@ import { Preference } from '../../preference/entities/preference.entity';
 import { Trainee } from '../../entities/trainee.entity';
 import { Trainer } from '../../entities/trainer.entity';
 
-@Entity({ name: 'user' })
+@Entity({ name: 'course' })
 export class Course {
   @PrimaryGeneratedColumn('uuid')
   id: string;
