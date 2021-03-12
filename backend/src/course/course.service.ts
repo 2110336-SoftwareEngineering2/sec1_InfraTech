@@ -52,11 +52,7 @@ export class CourseService {
       specialization: dto.specialization,
       price: dto.price,
       period: dto.period,
-      trainer: {
-        user: {
-          id: trainerUserId,
-        }
-      }
+      trainerUserId: trainerUserId,
     })
 
     const queryRunner = this.connection.createQueryRunner();

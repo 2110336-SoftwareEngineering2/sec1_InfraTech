@@ -5,6 +5,7 @@ import {
   ManyToMany,
   JoinTable,
   ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 import { Preference } from '../../preference/entities/preference.entity';
 import { Trainee } from '../../entities/trainee.entity';
@@ -47,6 +48,10 @@ export class Course {
   })
   trainees: Trainee[];
 
+  @Column()
+  trainerUserId: string;
+
   @ManyToOne(() => Trainer, trainer => trainer.courses)
+  @JoinColumn({name: 'trainer_user_id', referencedColumnName: 'id'})
   trainer: Trainer;
 }
