@@ -52,6 +52,6 @@ export class Course {
   trainerUserId: string;
 
   @ManyToOne(() => Trainer, trainer => trainer.courses)
-  @JoinColumn({name: 'trainer_user_id', referencedColumnName: 'id'})
+  @JoinColumn({name: 'trainer_user_id'})
   trainer: Trainer;
 }
