@@ -1,32 +1,26 @@
 import { Form, Input, Button, Select, Radio, InputNumber } from 'antd';
 
-const TrainerCourseForm = ({ setShowForm }) => {
-  const [form] = Form.useForm();
-
-  const handleSubmit = (information) => {
-    // TODO: connect to create course API
-    // console.log(information);
-    setShowForm(false);
+const TrainerCourseForm = ({ form, initialFormValues, handleSubmit }) => {
+  const initialValues = {
+    ...initialFormValues,
+    difficulty: initialFormValues?.level?.toLowerCase() ?? '',
+    specialization: initialFormValues?.specialization?.toLowerCase() ?? '',
   };
-
-  const handleCancle = () => {
-    setShowForm(false);
-    form.resetFields();
-  };
-
   return (
     <div className="w-full">
       <Form
+        id="course-form"
         form={form}
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 14 }}
         layout="horizontal"
-        onFinish={handleSubmit}
+        onFinish={(values) => handleSubmit(values)}
       >
         <Form.Item
           name="title"
           label="Course Title"
           rules={[{ required: true, message: 'Title is required' }]}
+          initialValue={initialValues.title}
         >
           <Input />
         </Form.Item>
@@ -35,6 +29,7 @@ const TrainerCourseForm = ({ setShowForm }) => {
           name="description"
           label="Course Description"
           rules={[{ required: true, message: 'Description is required' }]}
+          initialValue={initialValues.description}
         >
           <Input.TextArea showCount maxLength={150} />
         </Form.Item>
@@ -45,6 +40,7 @@ const TrainerCourseForm = ({ setShowForm }) => {
           rules={[
             { required: true, message: 'Please select diffifulty level' },
           ]}
+          initialValue={initialValues.difficulty}
         >
           <Radio.Group>
             <Radio.Button value="beginner">Beginner</Radio.Button>
@@ -57,6 +53,7 @@ const TrainerCourseForm = ({ setShowForm }) => {
           name="specialization"
           label="Specialization"
           rules={[{ required: true, message: 'Please select specialization' }]}
+          initialValue={initialValues.specialization}
         >
           <Select>
             <Select.Option value="abs">Abs</Select.Option>
@@ -74,6 +71,7 @@ const TrainerCourseForm = ({ setShowForm }) => {
             },
             { required: true, message: 'Training Period is required' },
           ]}
+          initialValue={initialValues.period}
         >
           <InputNumber min={1} />
         </Form.Item>
@@ -87,21 +85,9 @@ const TrainerCourseForm = ({ setShowForm }) => {
             },
             { required: true, message: 'Price is required' },
           ]}
+          initialValue={initialValues.price}
         >
           <InputNumber min={0} />
-        </Form.Item>
-        <Form.Item
-          wrapperCol={{
-            offset: 6,
-            span: 8,
-          }}
-        >
-          <Button htmlType="button" className="mr-4" onClick={handleCancle}>
-            Cancel
-          </Button>
-          <Button type="primary" htmlType="submit" className="mr-4">
-            Submit
-          </Button>
         </Form.Item>
       </Form>
     </div>
