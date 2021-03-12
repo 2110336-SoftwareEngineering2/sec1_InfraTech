@@ -2,10 +2,10 @@ import { Controller, Req, Get, UseGuards, Patch, Body, ForbiddenException, Param
 import { CourseService } from './course.service';
 import { LetXRequest } from 'src/middlewares/auth.middleware';
 import { AuthGuard } from '../guards/auth.guard';
-import { TrainerProfileDto } from './dtos/trainer-profile-dto';
-import { TraineeProfileDto } from './dtos/trainee-profile-dto';
-import { UpdateTrainerProfileDto } from './dtos/update-trainer-profile-dto';
-import { UpdateTraineeProfileDto } from './dtos/update-trainee-profile-dto';
+import { TrainerProfileDto } from '../profile/dtos/trainer-profile-dto';
+import { TraineeProfileDto } from '../profile/dtos/trainee-profile-dto';
+import { UpdateTrainerProfileDto } from '../profile/dtos/update-trainer-profile-dto';
+import { UpdateTraineeProfileDto } from '../profile/dtos/update-trainee-profile-dto';
 import { ApiBody, ApiExtraModels, getSchemaPath } from '@nestjs/swagger';
 import { Course } from './entities/course.entity';
 import { RoleGuard } from 'src/guards/role.guard';
