@@ -89,6 +89,21 @@ const TrainerCourseForm = ({ form, initialFormValues, handleSubmit }) => {
         >
           <InputNumber min={0} />
         </Form.Item>
+        <Form.Item
+          name="province"
+          label="Province"
+          rules={[{ required: true, message: 'Province is required' }]}
+          initialValue={initialValues.province}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="city"
+          label="City"
+          initialValue={initialValues.city}
+        >
+          <Input />
+        </Form.Item>
       </Form>
     </div>
   );

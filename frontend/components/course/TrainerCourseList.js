@@ -15,6 +15,8 @@ const data = [
     period: 5,
     specialization: 'Abs',
     price: 2999,
+    city: 'Samyan',
+    province: 'Bangkok',
   },
   {
     title: 'Mock Title 2',
@@ -24,6 +26,7 @@ const data = [
     period: 10,
     specialization: 'Cardio',
     price: 499,
+    province: 'Lopburi',
   },
 ];
 

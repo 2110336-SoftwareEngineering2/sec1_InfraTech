@@ -7,6 +7,7 @@ import {
   DashboardOutlined,
   EditOutlined,
   DeleteOutlined,
+  EnvironmentOutlined,
 } from '@ant-design/icons';
 
 import TrainerCourseFormModal from './TrainerCourseFormModal';
@@ -64,6 +65,10 @@ const TrainerCourseItem = ({ course }) => {
             <IconText
               icon={<DollarCircleOutlined />}
               text={`${course.price} bahts`}
+            />,
+            <IconText
+              icon={<EnvironmentOutlined />}
+              text={`${course.city || ''} ${course.province}`}
             />,
           ]}
         />
