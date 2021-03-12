@@ -8,13 +8,25 @@ import {
   EditOutlined,
   DeleteOutlined,
   EnvironmentOutlined,
+  UserOutlined,
 } from '@ant-design/icons';
 
 import TrainerCourseFormModal from './TrainerCourseFormModal';
+import TraineeListModal from './TraineeListModal';
+
+const data = [
+  {
+    id: 1,
+    name: 'Manny Pacquiao',
+  },
+  { id: 2, name: 'Manny John' },
+  { id: 3, name: 'Manny Jake' },
+];
 
 // TODO: Implement onClick for edit and delete icon
 const TrainerCourseItem = ({ course }) => {
   const [form] = Form.useForm();
+  const [showTraineeList, setShowTraineeList] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
   const [submitLoading, setSubmitLoading] = useState(false);
 
@@ -43,6 +55,10 @@ const TrainerCourseItem = ({ course }) => {
         <div className="mb-6 flex justify-between">
           <span className=" text-blue font-bold text-xl">{course.title}</span>
           <div className="text-lg text-gray-400">
+            <UserOutlined
+              className="ml-2 hover:text-black"
+              onClick={() => setShowTraineeList(true)}
+            />
             <EditOutlined
               className="ml-2 hover:text-black"
               onClick={() => setShowEditForm(true)}
@@ -73,6 +89,10 @@ const TrainerCourseItem = ({ course }) => {
           ]}
         />
       </div>
+      <TraineeListModal
+        visible={showTraineeList}
+        setVisible={setShowTraineeList}
+      />
       <TrainerCourseFormModal
         form={form}
         title="Edit Course"

@@ -15,7 +15,7 @@ const TrainerCourseFormModal = ({
     <Modal
       title={title}
       visible={visible}
-      centered={true}
+      centered
       onOk={handleSubmit}
       onCancel={handleCancel}
       width={1000}
