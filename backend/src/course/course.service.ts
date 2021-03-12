@@ -65,6 +65,7 @@ export class CourseService {
 
     try {
       course = await queryRunner.manager.save(Course, course);
+      await queryRunner.commitTransaction();
     } catch (error) {
       console.error(error);
       await queryRunner.rollbackTransaction();
