@@ -8,6 +8,7 @@ import { UserType } from 'src/register/enums/user-type.enum';
 import { Preference } from '../preference/entities/preference.entity';
 import { omit } from 'lodash';
 import { Course } from './entities/course.entity';
+import { CourseDto } from './dtos/course.dto';
 
 @Injectable()
 export class CourseService {
@@ -43,13 +44,16 @@ export class CourseService {
     return course;
   }
 
-  async createCourse(id: string): Promise<Course> {
-    const course = await this.courseRepository.findOneOrFail({
-      where: {
-        id: id,
-      },
-      relations: ["trainer", "trainer.user", "trainee"]
-    });
+  async createCourse(trainerUserId: string, dto: CourseDto): Promise<Course> {
+    let course = await this.courseRepository.create({
+      title: dto.title,
+      description: dto.description,
+      level: dto.level,
+      specialization: dto.specialization,
+      price: dto.price,
+      period: dto.period,
+
+    })
 
     return course;
   }
