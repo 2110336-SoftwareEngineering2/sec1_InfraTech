@@ -9,11 +9,15 @@ import { USER_TYPE } from '../../config/UserType.config';
 const { Content } = Layout;
 
 const AppLayout = ({ user, mutateUser, children, selectedMenu }) => {
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(true);
 
   return (
     <Layout>
-      <Sider collapsed={collapsed} userType={user?.type ?? USER_TYPE.GUEST} selectedMenu={selectedMenu} />
+      <Sider
+        collapsed={collapsed}
+        userType={user?.type ?? USER_TYPE.GUEST}
+        selectedMenu={selectedMenu}
+      />
       <Layout>
         <Header
           username={user?.firstname}
