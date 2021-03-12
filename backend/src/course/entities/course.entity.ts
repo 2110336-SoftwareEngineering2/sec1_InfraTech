@@ -6,9 +6,9 @@ import {
   JoinTable,
   ManyToOne,
 } from 'typeorm';
-import { Preference } from '../preference/entities/preference.entity';
-import { Trainee } from './trainee.entity';
-import { Trainer } from './trainer.entity';
+import { Preference } from '../../preference/entities/preference.entity';
+import { Trainee } from '../../entities/trainee.entity';
+import { Trainer } from '../../entities/trainer.entity';
 
 @Entity({ name: 'user' })
 export class Course {

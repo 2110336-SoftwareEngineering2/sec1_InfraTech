@@ -1,6 +1,6 @@
 import { Entity, Column, OneToOne, PrimaryColumn, JoinColumn, OneToMany } from 'typeorm';
 import { User } from './user.entity';
-import { Course } from './course.entity';
+import { Course } from '../course/entities/course.entity';
 @Entity({ name: 'trainer' })
 export class Trainer {
   @OneToOne(() => User, (user) => user.id, { primary: true })
