@@ -1,4 +1,4 @@
-import { Controller, Req, Get, UseGuards, Patch, Body, ForbiddenException, Param } from '@nestjs/common';
+import { Controller, Req, Get, UseGuards, Patch, Body, ForbiddenException, Param, Post } from '@nestjs/common';
 import { CourseService } from './course.service';
 import { LetXRequest } from 'src/middlewares/auth.middleware';
 import { AuthGuard } from '../guards/auth.guard';
@@ -11,6 +11,7 @@ import { Course } from './entities/course.entity';
 import { RoleGuard } from 'src/guards/role.guard';
 import { Role } from 'src/decorators/role.decorator';
 import { UserType } from 'src/register/enums/user-type.enum';
+import { CourseDto } from './dtos/course.dto';
 
 @Controller('course')
 export class CourseController {
@@ -39,5 +40,15 @@ export class CourseController {
     }
 
     return course;
+  }
+
+  @Post()
+  @Role(UserType.Trainer)
+  @UseGuards(RoleGuard)
+  async createCourse(
+    @Body() courseDto: CourseDto,
+    @Req() request: LetXRequest,
+  ): Promise<Course> {
+    return await this.courseService.createCourse(request.user.id, courseDto);
   }
 }
