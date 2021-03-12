@@ -43,4 +43,20 @@ export class CourseService {
     return course;
   }
 
+  async createCourse(id: string): Promise<Course> {
+    const course = await this.courseRepository.findOneOrFail({
+      where: {
+        id: id,
+      },
+      relations: ["trainer", "trainer.user", "trainee"]
+    });
+
+    return course;
+  }
+
+  async deleteCourse(id: string): Promise<void> {
+    await this.courseRepository.delete({
+      id: id,
+    });
+  }
 }
