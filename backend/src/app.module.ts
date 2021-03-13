@@ -11,6 +11,7 @@ import * as config from 'config';
 import { CourseModule } from './course/course.module';
 import { TraineeModule } from './trainee/trainee.module';
 import { UserModule } from './user/user.module';
+import { ApplicationModule } from './application/application.module';
 
 const dbConfig = config.get('db');
 
@@ -33,6 +34,7 @@ const dbConfig = config.get('db');
     PreferenceModule,
     TrainerModule,
     CourseModule,
+    ApplicationModule,
     TraineeModule,
     UserModule,
   ],
