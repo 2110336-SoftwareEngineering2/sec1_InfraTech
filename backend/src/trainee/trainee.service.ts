@@ -26,7 +26,7 @@ export class TraineeService {
       .birthdate(registrationInfo.birthdate)
       .phoneNumber(registrationInfo.phoneNumber)
       .profileImageUrl(registrationInfo.profileImageUrl);
-    
+
     return traineeBuilder.build();
   }
 }
