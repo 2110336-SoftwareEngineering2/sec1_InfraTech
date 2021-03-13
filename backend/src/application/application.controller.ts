@@ -1,31 +1,67 @@
-import {
-  Controller,
-  Req,
-  UseGuards,
-  Body,
-  Post, Param
-} from "@nestjs/common";
+import { Controller, Req, UseGuards, Body, Post, Param, Query } from "@nestjs/common";
 import { LetXRequest } from 'src/middlewares/auth.middleware';
 import { RoleGuard } from 'src/guards/role.guard';
 import { Role } from 'src/decorators/role.decorator';
 import { UserType } from 'src/register/enums/user-type.enum';
-import { TraineeService } from '../trainee/trainee.service';
-import { Trainee } from '../entities/trainee.entity';
+import { ApplicationService } from './application.service';
 
 @Controller('application')
 export class ApplicationController {
-  constructor(private traineeService: TraineeService) {}
+  constructor(private applicationService: ApplicationService) {}
 
   @Post(':courseId')
   @Role(UserType.Trainee)
   @UseGuards(RoleGuard)
-  async createCourse(
+  async applyCourse(
     @Param('courseId') courseId,
     @Req() request: LetXRequest,
-  ): Promise<Trainee> {
-    return this.traineeService.applyCourse({
+  ): Promise<void> {
+    return await this.applicationService.createWithApplicationInfoAndSave({
       courseId: courseId,
-      userId: request.user.id,
+      traineeId: request.user.id,
+    });
+  }
+
+  @Post('/cancel/:courseId')
+  @Role(UserType.Trainee)
+  @UseGuards(RoleGuard)
+  async cancelCourse(
+    @Param('courseId') courseId,
+    @Req() request: LetXRequest,
+  ): Promise<void> {
+    return await this.applicationService.cancelByTrainee({
+      courseId: courseId,
+      traineeId: request.user.id,
+    });
+  }
+
+  @Post('/approve/:courseId')
+  @Role(UserType.Trainer)
+  @UseGuards(RoleGuard)
+  async approveCourse(
+    @Param('courseId') courseId,
+    @Query('traineeId') traineeId,
+    @Req() request: LetXRequest,
+  ): Promise<void> {
+    return await this.applicationService.approveByTrainer({
+      courseId: courseId,
+      traineeId: traineeId,
+      trainerId: request.user.id,
+    });
+  }
+
+  @Post('/reject/:courseId')
+  @Role(UserType.Trainer)
+  @UseGuards(RoleGuard)
+  async rejectCourse(
+    @Param('courseId') courseId,
+    @Query('traineeId') traineeId,
+    @Req() request: LetXRequest,
+  ): Promise<void> {
+    return await this.applicationService.rejectByTrainer({
+      courseId: courseId,
+      traineeId: traineeId,
+      trainerId: request.user.id,
     });
   }
 }
