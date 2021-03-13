@@ -1,11 +1,24 @@
-import { Form, Input, Button, Select, Radio, InputNumber } from 'antd';
+import { Form, Input, Select, Radio, InputNumber } from 'antd';
+import useSWR from 'swr';
+import axios from 'axios';
+
+import { API_HOST } from '../../config/config';
 
 const TrainerCourseForm = ({ form, initialFormValues, handleSubmit }) => {
+  const { data: preferences } = useSWR(
+    `${API_HOST}/preference`,
+    async (url) => {
+      const res = await axios.get(url);
+      return res?.data ?? {};
+    },
+  );
+
   const initialValues = {
     ...initialFormValues,
     difficulty: initialFormValues?.level?.toLowerCase() ?? '',
     specialization: initialFormValues?.specialization?.toLowerCase() ?? '',
   };
+
   return (
     <div className="w-full">
       <Form
@@ -56,9 +69,15 @@ const TrainerCourseForm = ({ form, initialFormValues, handleSubmit }) => {
           initialValue={initialValues.specialization}
         >
           <Select>
-            <Select.Option value="abs">Abs</Select.Option>
-            <Select.Option value="cardio">Cardio</Select.Option>
-            <Select.Option value="body-weight">Body Weight</Select.Option>
+            {preferences &&
+              preferences.map((preference) => (
+                <Select.Option
+                  key={preference.id}
+                  value={preference.name.toLowerCase()}
+                >
+                  {preference.name}
+                </Select.Option>
+              ))}
           </Select>
         </Form.Item>
         <Form.Item
@@ -88,6 +107,17 @@ const TrainerCourseForm = ({ form, initialFormValues, handleSubmit }) => {
           initialValue={initialValues.price}
         >
           <InputNumber min={0} />
+        </Form.Item>
+        <Form.Item
+          name="province"
+          label="Province"
+          rules={[{ required: true, message: 'Province is required' }]}
+          initialValue={initialValues.province}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item name="city" label="City" initialValue={initialValues.city}>
+          <Input />
         </Form.Item>
       </Form>
     </div>

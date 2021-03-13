@@ -22,7 +22,7 @@ const Profile = () => {
       {user ? (
         <div className="min-h-screen flex justify-center">
           <div className="bg-white w-full mx-8 mt-8 py-12 px-24">
-            <div className="text-4xl font-bold">
+            <div className="text-3xl font-bold">
               {isEditing ? 'Edit Profile' : 'Profile'}
             </div>
             {isEditing ? (
@@ -33,7 +33,7 @@ const Profile = () => {
             {user.type === USER_TYPE.TRAINER && (
               <>
                 <hr className="my-16" />
-                <div className="text-4xl font-bold mb-10">My Courses</div>
+                <div className="text-3xl font-bold mb-10">My Courses</div>
                 <TrainerCourseList />
               </>
             )}
