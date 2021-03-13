@@ -116,7 +116,11 @@ const TrainerCourseForm = ({ form, initialFormValues, handleSubmit }) => {
         >
           <Input />
         </Form.Item>
-        <Form.Item name="city" label="City" initialValue={initialValues.city}>
+        <Form.Item
+          name="city"
+          label="City"
+          initialValue={initialValues.city}
+        >
           <Input />
         </Form.Item>
       </Form>
