@@ -8,16 +8,20 @@ import {
 import { Trainee } from '../../entities/trainee.entity';
 import { Course } from '../../course/entities/course.entity';
 
+export enum ApplicationStatus {
+  PENDING = 'pending',
+  APPROVED = 'approved',
+  REJECTED = 'rejected',
+  CANCELED = 'canceled',
+}
+
 @Entity({ name: 'application' })
 export class Application {
   @PrimaryGeneratedColumn('uuid')
   public id: string;
 
   @Column()
-  public approved: boolean;
-
-  @Column()
-  public finished: boolean;
+  public status: ApplicationStatus;
 
   @Column({ name: 'trainee_user_id' })
   public traineeUserId: string;
