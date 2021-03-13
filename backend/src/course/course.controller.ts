@@ -1,12 +1,17 @@
-import { Controller, Req, Get, UseGuards, Patch, Body, ForbiddenException, Param, Post, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Req,
+  Get,
+  UseGuards,
+  Patch,
+  Body,
+  ForbiddenException,
+  Param,
+  Post,
+  Delete,
+} from '@nestjs/common';
 import { CourseService } from './course.service';
 import { LetXRequest } from 'src/middlewares/auth.middleware';
-import { AuthGuard } from '../guards/auth.guard';
-import { TrainerProfileDto } from '../profile/dtos/trainer-profile-dto';
-import { TraineeProfileDto } from '../profile/dtos/trainee-profile-dto';
-import { UpdateTrainerProfileDto } from '../profile/dtos/update-trainer-profile-dto';
-import { UpdateTraineeProfileDto } from '../profile/dtos/update-trainee-profile-dto';
-import { ApiBody, ApiExtraModels, getSchemaPath } from '@nestjs/swagger';
 import { Course } from './entities/course.entity';
 import { RoleGuard } from 'src/guards/role.guard';
 import { Role } from 'src/decorators/role.decorator';
@@ -20,9 +25,7 @@ export class CourseController {
   @Get()
   @Role(UserType.Trainer)
   @UseGuards(RoleGuard)
-  async listCourses(
-    @Req() request: LetXRequest,
-  ): Promise<Course[]> {
+  async listCourses(@Req() request: LetXRequest): Promise<Course[]> {
     return await this.courseService.listCourses(request.user.id);
   }
 
@@ -33,7 +36,7 @@ export class CourseController {
     @Param('id') id,
     @Req() request: LetXRequest,
   ): Promise<Course> {
-    let course: Course = await this.courseService.getCourse(id);
+    const course: Course = await this.courseService.getCourse(id);
 
     if (course.trainer.user.id != request.user.id) {
       throw new ForbiddenException();
@@ -59,7 +62,7 @@ export class CourseController {
     @Param('id') id,
     @Req() request: LetXRequest,
   ): Promise<void> {
-    let course = await this.courseService.getCourse(id);
+    const course = await this.courseService.getCourse(id);
 
     if (course.trainer.user.id != request.user.id) {
       throw new ForbiddenException();
