@@ -4,9 +4,14 @@ import { Repository } from 'typeorm';
 
 import { User } from '../entities/user.entity';
 import { Builder } from 'builder-pattern';
-import { RegisterFormDto } from '../register/dtos/register-form-dto';
 import { Preference } from '../preference/entities/preference.entity';
 import * as bcrypt from 'bcryptjs';
+
+interface RegistrationInfo {
+  email: string;
+  password: string;
+  preferences: Preference[];
+}
 
 @Injectable()
 export class UserService {
@@ -17,16 +22,15 @@ export class UserService {
     private traineeRepository: Repository<User>,
   ) {}
 
-  async createWithRegistrationInfo(
-    registrationInfo: RegisterFormDto,
-    preferences: Preference[],
-  ): Promise<User> {
-    const userBuilder = Builder(User)
-      .email(registrationInfo.email)
-      .preferences(preferences);
+  async createWithRegistrationInfo({
+    email,
+    password,
+    preferences,
+  }: RegistrationInfo): Promise<User> {
+    const userBuilder = Builder(User).email(email).preferences(preferences);
 
     const salt = await bcrypt.genSalt(this.saltRounds);
-    const hash = await bcrypt.hash(registrationInfo.password, salt);
+    const hash = await bcrypt.hash(password, salt);
 
     userBuilder.password(hash).salt(salt);
 
