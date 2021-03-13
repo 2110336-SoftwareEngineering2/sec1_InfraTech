@@ -70,12 +70,13 @@ CREATE TABLE application(
     id VARCHAR(36) PRIMARY KEY,
     trainee_user_id VARCHAR(36),
     course_id VARCHAR(36),
-    approved tinyint(1),
-    finished tinyint(1),
---    CONSTRAINT PK_user_preference PRIMARY KEY (trainee_user_id, course_id),
+    status VARCHAR(100),
     CONSTRAINT FK_application_trainee_user_id FOREIGN KEY (trainee_user_id) REFERENCES trainee(user_id) ON DELETE CASCADE,
     CONSTRAINT FK_application_course_id FOREIGN KEY (course_id) REFERENCES course(id) ON DELETE CASCADE
 );
+
+-- TODO : Create index for application (course_id, trainee_id)
+-- TODO : Create index for application (trainee_id, course_id)
 
 -- Mock User --
 INSERT INTO user VALUES ("38a04ba7-096f-4af3-abb2-e38a518a01f7", "tanboi@lnwzamail.com", "$2a$10$XPTfy6sx.TUnze7fHhP6XOWds8bdQaS2NTaELcIKHcyqwNPBKtQk6", "$2a$10$XPTfy6sx.TUnze7fHhP6XO");
