@@ -6,10 +6,12 @@ import {
   JoinTable,
   ManyToOne,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
 import { Preference } from '../../preference/entities/preference.entity';
 import { Trainee } from '../../entities/trainee.entity';
 import { Trainer } from '../../entities/trainer.entity';
+import { TraineeToCourse } from '../../application/entities/application.entity';
 
 @Entity({ name: 'course' })
 export class Course {
@@ -34,24 +36,13 @@ export class Course {
   @Column()
   period: number;
 
-  @ManyToMany(() => Trainee, { cascade: true })
-  @JoinTable({
-    name: 'course_trainee',
-    joinColumn: {
-      name: 'course_id',
-      referencedColumnName: 'id',
-    },
-    inverseJoinColumn: {
-      name: 'trainee_user_id',
-      referencedColumnName: 'user',
-    },
-  })
-  trainees: Trainee[];
-
   @Column({ name: 'trainer_user_id' })
   trainerUserId: string;
 
-  @ManyToOne(() => Trainer, trainer => trainer.courses)
+  @OneToMany(() => TraineeToCourse, (traineeToCourse) => traineeToCourse.course)
+  public traineeToCourse: TraineeToCourse[];
+
+  @ManyToOne(() => Trainer, (trainer) => trainer.courses)
   @JoinColumn({ name: 'trainer_user_id' })
   trainer: Trainer;
 }
