@@ -11,7 +11,7 @@ import {
 import { Preference } from '../../preference/entities/preference.entity';
 import { Trainee } from '../../entities/trainee.entity';
 import { Trainer } from '../../entities/trainer.entity';
-import { TraineeToCourse } from '../../application/entities/application.entity';
+import { Application } from '../../application/entities/application.entity';
 
 @Entity({ name: 'course' })
 export class Course {
@@ -39,8 +39,8 @@ export class Course {
   @Column({ name: 'trainer_user_id' })
   trainerUserId: string;
 
-  @OneToMany(() => TraineeToCourse, (traineeToCourse) => traineeToCourse.course)
-  public traineeToCourse: TraineeToCourse[];
+  @OneToMany(() => Application, (traineeToCourse) => traineeToCourse.course)
+  public applications: Application[];
 
   @ManyToOne(() => Trainer, (trainer) => trainer.courses)
   @JoinColumn({ name: 'trainer_user_id' })
