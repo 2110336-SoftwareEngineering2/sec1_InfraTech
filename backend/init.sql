@@ -70,6 +70,7 @@ CREATE TABLE application(
     id VARCHAR(36) PRIMARY KEY,
     trainee_user_id VARCHAR(36),
     course_id VARCHAR(36),
+-- TODO : change status to enum
     status VARCHAR(100),
     CONSTRAINT FK_application_trainee_user_id FOREIGN KEY (trainee_user_id) REFERENCES trainee(user_id) ON DELETE CASCADE,
     CONSTRAINT FK_application_course_id FOREIGN KEY (course_id) REFERENCES course(id) ON DELETE CASCADE

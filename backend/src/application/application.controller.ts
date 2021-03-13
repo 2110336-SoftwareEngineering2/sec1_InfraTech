@@ -1,4 +1,4 @@
-import { Controller, Req, UseGuards, Body, Post, Param, Query } from "@nestjs/common";
+import { Controller, Req, UseGuards, Body, Post, Param, Query, Get } from "@nestjs/common";
 import { LetXRequest } from 'src/middlewares/auth.middleware';
 import { RoleGuard } from 'src/guards/role.guard';
 import { Role } from 'src/decorators/role.decorator';
@@ -8,6 +8,19 @@ import { ApplicationService } from './application.service';
 @Controller('application')
 export class ApplicationController {
   constructor(private applicationService: ApplicationService) {}
+
+  @Get()
+  @Role(UserType.Trainee)
+  @UseGuards(RoleGuard)
+  async getCourse(
+    @Param('courseId') courseId,
+    @Req() request: LetXRequest,
+  ): Promise<void> {
+    return await this.applicationService.createWithApplicationInfoAndSave({
+      courseId: courseId,
+      traineeId: request.user.id,
+    });
+  }
 
   @Post(':courseId')
   @Role(UserType.Trainee)

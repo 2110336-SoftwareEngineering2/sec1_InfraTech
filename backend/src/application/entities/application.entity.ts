@@ -13,6 +13,7 @@ export enum ApplicationStatus {
   APPROVED = 'approved',
   REJECTED = 'rejected',
   CANCELED = 'canceled',
+  COMPLETE = 'complete',
 }
 
 @Entity({ name: 'application' })
