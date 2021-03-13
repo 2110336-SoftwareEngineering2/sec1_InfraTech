@@ -2,14 +2,10 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  ManyToMany,
-  JoinTable,
   ManyToOne,
   JoinColumn,
   OneToMany,
 } from 'typeorm';
-import { Preference } from '../../preference/entities/preference.entity';
-import { Trainee } from '../../entities/trainee.entity';
 import { Trainer } from '../../entities/trainer.entity';
 import { Application } from '../../application/entities/application.entity';
 
@@ -39,7 +35,7 @@ export class Course {
   @Column({ name: 'trainer_user_id' })
   trainerUserId: string;
 
-  @OneToMany(() => Application, (traineeToCourse) => traineeToCourse.course)
+  @OneToMany(() => Application, (application) => application.course)
   public applications: Application[];
 
   @ManyToOne(() => Trainer, (trainer) => trainer.courses)
