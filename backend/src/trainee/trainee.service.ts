@@ -43,17 +43,6 @@ export class TraineeService {
     return trainee;
   }
 
-  async applyCourse({ courseId, userId }: ApplicationInfo): Promise<Trainee> {
-    const application = Builder(Application)
-      .approved(false)
-      .finished(false)
-      .course(Builder(Course).id(courseId).build())
-      .trainee(Builder(Trainee).userId(userId).build())
-      .build();
-
-    return await this.getTraineeInformation(userId);
-  }
-
   async getTraineeInformation(userId: string): Promise<Trainee> {
     return await this.traineeRepository
       .createQueryBuilder('trainee')
