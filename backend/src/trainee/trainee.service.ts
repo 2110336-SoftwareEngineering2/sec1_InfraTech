@@ -14,20 +14,19 @@ export class TraineeService {
     private traineeRepository: Repository<Trainee>,
   ) {}
 
-  async createTraineeWithRegistrationInfoAndSave(
+  async createWithRegistrationInfo(
     user: User,
     registrationInfo: RegisterFormDto,
   ): Promise<Trainee> {
-    const trainee = Builder(Trainee)
+    const traineeBuilder = Builder(Trainee)
       .user(user)
       .firstname(registrationInfo.firstname)
       .lastname(registrationInfo.lastname)
       .gender(registrationInfo.gender)
       .birthdate(registrationInfo.birthdate)
       .phoneNumber(registrationInfo.phoneNumber)
-      .profileImageUrl(registrationInfo.profileImageUrl)
-      .build();
-
-    return await this.traineeRepository.save(trainee);
+      .profileImageUrl(registrationInfo.profileImageUrl);
+    
+    return traineeBuilder.build();
   }
 }
