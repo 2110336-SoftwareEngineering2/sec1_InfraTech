@@ -67,13 +67,14 @@ CREATE INDEX IX_course_price ON course(`price`);
 CREATE INDEX IX_course_period ON course(`period`);
 
 CREATE TABLE application(
+    id VARCHAR(36) PRIMARY KEY,
     trainee_user_id VARCHAR(36),
     course_id VARCHAR(36),
     approved tinyint(1),
     finished tinyint(1),
-    CONSTRAINT PK_user_preference PRIMARY KEY (trainee_user_id, course_id),
-    CONSTRAINT FK_course_trainee_trainee_user_id FOREIGN KEY (trainee_user_id) REFERENCES trainee(user_id) ON DELETE CASCADE,
-    CONSTRAINT FK_course_trainee_course_id FOREIGN KEY (course_id) REFERENCES course(id) ON DELETE CASCADE
+--    CONSTRAINT PK_user_preference PRIMARY KEY (trainee_user_id, course_id),
+    CONSTRAINT FK_application_trainee_user_id FOREIGN KEY (trainee_user_id) REFERENCES trainee(user_id) ON DELETE CASCADE,
+    CONSTRAINT FK_application_course_id FOREIGN KEY (course_id) REFERENCES course(id) ON DELETE CASCADE
 );
 
 -- Mock User --
