@@ -33,7 +33,19 @@ export class Application {
   @JoinColumn({ name: 'trainee_user_id' })
   public trainee: Trainee;
 
-  @ManyToOne(() => Course, (course) => course.applications )
+  @ManyToOne(() => Course, (course) => course.applications)
   @JoinColumn({ name: 'course_id' })
   public course: Course;
+
+  public approve() {
+    this.status = ApplicationStatus.APPROVED;
+  }
+
+  public cancel() {
+    this.status = ApplicationStatus.CANCELED;
+  }
+
+  public reject() {
+    this.status = ApplicationStatus.REJECTED;
+  }
 }

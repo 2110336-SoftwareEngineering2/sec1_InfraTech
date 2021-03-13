@@ -29,10 +29,12 @@ export class ApplicationController {
     @Param('courseId') courseId,
     @Req() request: LetXRequest,
   ): Promise<void> {
-    return await this.applicationService.cancelByTrainee({
+    const application = await this.applicationService.getPendingApplication({
       courseId: courseId,
       traineeId: request.user.id,
     });
+    application.cancel();
+    await this.applicationService.save(application);
   }
 
   @Post('/approve/:courseId')
@@ -43,11 +45,16 @@ export class ApplicationController {
     @Query('traineeId') traineeId,
     @Req() request: LetXRequest,
   ): Promise<void> {
-    return await this.applicationService.approveByTrainer({
+    const application = await this.applicationService.getPendingApplication({
       courseId: courseId,
-      traineeId: traineeId,
-      trainerId: request.user.id,
+      traineeId: request.user.id,
     });
+    await this.applicationService.validateTrainer({
+      trainerId: traineeId,
+      application: application,
+    });
+    application.approve();
+    await this.applicationService.save(application);
   }
 
   @Post('/reject/:courseId')
@@ -58,10 +65,15 @@ export class ApplicationController {
     @Query('traineeId') traineeId,
     @Req() request: LetXRequest,
   ): Promise<void> {
-    return await this.applicationService.rejectByTrainer({
+    const application = await this.applicationService.getPendingApplication({
       courseId: courseId,
-      traineeId: traineeId,
-      trainerId: request.user.id,
+      traineeId: request.user.id,
     });
+    await this.applicationService.validateTrainer({
+      trainerId: traineeId,
+      application: application,
+    });
+    application.reject();
+    await this.applicationService.save(application);
   }
 }

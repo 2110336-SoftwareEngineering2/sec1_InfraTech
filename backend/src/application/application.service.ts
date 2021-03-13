@@ -69,16 +69,7 @@ export class ApplicationService {
     }
   }
 
-  async cancelByTrainee({
-    courseId,
-    traineeId,
-  }: TraineeCancellation): Promise<void> {
-    const application = await this.getPendingApplication({
-      courseId,
-      traineeId,
-    });
-
-    application.status = ApplicationStatus.APPROVED;
+  async save(application: Application) {
     await this.applicationRepository.save(application);
   }
 
