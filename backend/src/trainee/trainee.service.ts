@@ -56,6 +56,8 @@ export class TraineeService {
 
     trainee.applications.push(application);
 
+    await this.traineeRepository.save(trainee);
+
     return trainee;
   }
 }
