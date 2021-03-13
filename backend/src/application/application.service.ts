@@ -30,6 +30,18 @@ interface Validation {
   application: Application;
 }
 
+interface TraineeApplicationsFilter {
+  traineeId: string;
+  // status may be used in the future
+  status?: ApplicationStatus;
+}
+
+interface TrainerApplicationFilter {
+  trainerId: string;
+  // status may be used in the future
+  status?: ApplicationStatus;
+}
+
 @Injectable()
 export class ApplicationService {
   constructor(
@@ -47,6 +59,27 @@ export class ApplicationService {
       .trainee(Builder(Trainee).userId(traineeId).build())
       .build();
     await this.applicationRepository.save(application);
+  }
+
+  async getTraineeApplications({
+    traineeId,
+    status,
+  }: TraineeApplicationsFilter): Promise<Application[]> {
+    return await this.applicationRepository.find({
+      where: [{ traineeUserId: traineeId }],
+      relations: ['course'],
+    });
+  }
+
+  async getTrainerApplications({
+    trainerId,
+    status,
+  }: TrainerApplicationFilter): Promise<Application[]> {
+    return await this.applicationRepository
+      .createQueryBuilder('application')
+      .leftJoinAndSelect('application.course', 'course')
+      .where('course.trainer_user_id=:trainerId', { trainerId: trainerId })
+      .getMany();
   }
 
   async getPendingApplication({
@@ -80,35 +113,5 @@ export class ApplicationService {
         HttpStatus.NOT_FOUND,
       );
     }
-  }
-
-  async approveByTrainer({
-    courseId,
-    traineeId,
-    trainerId,
-  }: TrainerApprove): Promise<void> {
-    const application = await this.getPendingApplication({
-      traineeId,
-      courseId,
-    });
-    await this.validateTrainer({ trainerId, application });
-
-    application.status = ApplicationStatus.APPROVED;
-    await this.applicationRepository.save(application);
-  }
-
-  async rejectByTrainer({
-    courseId,
-    traineeId,
-    trainerId,
-  }: TrainerReject): Promise<void> {
-    const application = await this.getPendingApplication({
-      traineeId,
-      courseId,
-    });
-    await this.validateTrainer({ trainerId, application });
-
-    application.status = ApplicationStatus.REJECTED;
-    await this.applicationRepository.save(application);
   }
 }
