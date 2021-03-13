@@ -66,9 +66,10 @@ CREATE INDEX IX_course_specialization ON course(`specialization`);
 CREATE INDEX IX_course_price ON course(`price`);
 CREATE INDEX IX_course_period ON course(`period`);
 
-CREATE TABLE course_trainee(
+CREATE TABLE application(
     trainee_user_id VARCHAR(36),
     course_id VARCHAR(36),
+    CONSTRAINT PK_user_preference PRIMARY KEY (trainee_user_id, course_id),
     CONSTRAINT FK_course_trainee_trainee_user_id FOREIGN KEY (trainee_user_id) REFERENCES trainee(user_id) ON DELETE CASCADE,
     CONSTRAINT FK_course_trainee_course_id FOREIGN KEY (course_id) REFERENCES course(id) ON DELETE CASCADE
 );
