@@ -6,8 +6,8 @@ import { User } from '../entities/user.entity';
 import { Trainee } from '../entities/trainee.entity';
 import { Builder } from 'builder-pattern';
 import { RegisterFormDto } from '../register/dtos/register-form-dto';
-import { Course } from '../course/entities/course.entity';
 import { Application } from '../application/entities/application.entity';
+import { Course } from '../course/entities/course.entity';
 
 interface RegistrationInfo {
   user: User;
@@ -44,20 +44,22 @@ export class TraineeService {
   }
 
   async applyCourse({ courseId, userId }: ApplicationInfo): Promise<Trainee> {
-    const trainee = await this.traineeRepository.findOneOrFail({
-      where: [{ user: { id: userId } }],
-      relations: ['user', 'applications'],
-    });
-
     const application = Builder(Application)
-      .courseId(courseId)
-      .traineeUserId(userId)
+      .approved(false)
+      .finished(false)
+      .course(Builder(Course).id(courseId).build())
+      .trainee(Builder(Trainee).userId(userId).build())
       .build();
 
-    trainee.applications.push(application);
+    return await this.getTraineeInformation(userId);
+  }
 
-    await this.traineeRepository.save(trainee);
-
-    return trainee;
+  async getTraineeInformation(userId: string): Promise<Trainee> {
+    return await this.traineeRepository
+      .createQueryBuilder('trainee')
+      .leftJoinAndSelect('trainee.applications', 'application')
+      .where('trainee.user_id=:id', { id: userId })
+      .leftJoinAndSelect('application.course', 'course')
+      .getOneOrFail();
   }
 }
