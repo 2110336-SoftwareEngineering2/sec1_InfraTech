@@ -8,6 +8,8 @@ import { ProfileModule } from './profile/profile.module';
 import { PreferenceModule } from './preference/preference.module';
 import { TrainerModule } from './trainer/trainer.module';
 import * as config from 'config';
+import { TraineeModule } from './trainee/trainee.module';
+import { UserModule } from './user/user.module';
 
 const dbConfig = config.get('db');
 
@@ -29,6 +31,8 @@ const dbConfig = config.get('db');
     ProfileModule,
     PreferenceModule,
     TrainerModule,
+    TraineeModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import Router from 'next/router';
+import { useRouter } from 'next/router';
 import { Layout, Menu } from 'antd';
 
 import { MENU_ITEMS } from '../../config/Sider.config';
 
 const { Sider: AntdSider } = Layout;
 
-const Sider = ({ collapsed, userType, selectedMenu = '0' }) => {
-  const [selectedKey, setSelectedKey] = useState(selectedMenu);
+const Sider = ({ collapsed, userType }) => {
+  const router = useRouter();
   const [isBroken, setIsBroken] = useState(collapsed);
   const [showLogoText, setShowLogoText] = useState(!collapsed);
 
@@ -43,11 +43,14 @@ const Sider = ({ collapsed, userType, selectedMenu = '0' }) => {
       <Menu
         theme="dark"
         mode="inline"
-        selectedKeys={[selectedKey]}
-        onClick={({ item }) => Router.push(item?.props?.href)}
+        defaultSelectedKeys={['/']}
+        selectedKeys={[router.pathname]}
+        onClick={({ item }) => {
+          router.push(item?.props?.href);
+        }}
       >
-        {MENU_ITEMS[userType].map(({ text, icon, href = '/' }, index) => (
-          <Menu.Item key={index} icon={icon} title={text} href={href}>
+        {MENU_ITEMS[userType].map(({ text, icon, href }) => (
+          <Menu.Item key={href} icon={icon} title={text} href={href}>
             {!isBroken && text}
           </Menu.Item>
         ))}
