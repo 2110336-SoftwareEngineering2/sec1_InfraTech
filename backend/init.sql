@@ -59,6 +59,41 @@ CREATE TABLE review(
     CONSTRAINT FK_review_trainer_user_id FOREIGN KEY (trainer_user_id) REFERENCES trainer(user_id) ON DELETE CASCADE
 );
 
+DELIMITER //
+CREATE PROCEDURE update_trainer_rating(IN trainer_user_id VARCHAR(36))
+BEGIN
+    UPDATE trainer SET average_rating = (
+		SELECT CAST(SUM(review.rating)/COUNT(review.id) AS DECIMAL(3,2))
+		FROM review
+		WHERE review.trainer_user_id = trainer_user_id
+    ) WHERE trainer.user_id = trainer_user_id;
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER trigger_review_insert AFTER INSERT ON review
+FOR EACH ROW
+BEGIN
+	CALL update_trainer_rating(NEW.trainer_user_id);
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER trigger_review_update AFTER UPDATE ON review
+FOR EACH ROW
+BEGIN
+	CALL update_trainer_rating(NEW.trainer_user_id);
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER trigger_review_delete AFTER DELETE ON review
+FOR EACH ROW
+BEGIN
+	CALL update_trainer_rating(OLD.trainer_user_id);
+END //
+DELIMITER ;
+
 -- Mock User --
 INSERT INTO user VALUES ("38a04ba7-096f-4af3-abb2-e38a518a01f7", "tanboi@lnwzamail.com", "$2a$10$XPTfy6sx.TUnze7fHhP6XOWds8bdQaS2NTaELcIKHcyqwNPBKtQk6", "$2a$10$XPTfy6sx.TUnze7fHhP6XO");
 INSERT INTO trainer VALUES ("38a04ba7-096f-4af3-abb2-e38a518a01f7", "Somlux", "Kamsing", "MALE", "081234567", "2017-06-15 00:00:00", "0", "https://www.aceshowbiz.com/images/photo/john_cena.jpg");
