@@ -44,7 +44,7 @@ export class Course {
     },
     inverseJoinColumn: {
       name: 'trainee_user_id',
-      referencedColumnName: 'user_id',
+      referencedColumnName: 'userId',
     },
   })
   trainees: Trainee[];
@@ -56,6 +56,6 @@ export class Course {
   public applications: Application[];
 
   @ManyToOne(() => Trainer, (trainer) => trainer.courses)
-  @JoinColumn({ name: 'trainer_user_id', referencedColumnName: 'user_id' })
+  @JoinColumn({ name: 'trainer_user_id', referencedColumnName: 'userId' })
   trainer: Trainer;
 }

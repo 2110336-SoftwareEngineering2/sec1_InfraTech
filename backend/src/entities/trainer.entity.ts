@@ -3,6 +3,9 @@ import { User } from './user.entity';
 import { Course } from '../course/entities/course.entity';
 @Entity({ name: 'trainer' })
 export class Trainer {
+  @PrimaryColumn({ name: 'user_id' })
+  public userId: string;
+
   @OneToOne(() => User, (user) => user.id, { primary: true })
   @JoinColumn({ name: 'user_id' })
   user: User;
