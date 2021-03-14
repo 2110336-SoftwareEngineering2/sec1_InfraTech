@@ -1,6 +1,4 @@
-import { useState } from 'react';
 import { List } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
 
 import TrainerCourseItemInOtherview from './TrainerCourseItemInOtherview';
 
@@ -14,7 +12,10 @@ const data = [
     period: 5,
     specialize: 'Abs',
     price: 2999,
-    status: 'noregisted',
+    status: 'pending',
+    trainer: {
+      name: 'chain',
+    },
   },
   {
     title: 'Mock Title 2',
@@ -24,7 +25,10 @@ const data = [
     period: 10,
     specialize: 'Cardio',
     price: 499,
-    status: 'accepted',
+    status: 'success',
+    trainer: {
+      name: 'tong',
+    },
   },
   {
     title: 'Mock Title 3',
@@ -34,17 +38,24 @@ const data = [
     period: 10,
     specialize: 'Cardio',
     price: 499,
-    status: 'registed',
+    status: 'register',
+    trainer: {
+      name: 'mark',
+    },
   },
 ];
 
-const TrainerCourseListInOtherview = ({ type }) => {
+const TrainerCourseListInOtherview = ({ type, filter, showTrainerName }) => {
   return (
     <List
-      dataSource={data}
+      dataSource={filter ? data.filter((item) => item.status == filter) : data}
       itemLayout="vertical"
       renderItem={(item) => (
-        <TrainerCourseItemInOtherview course={item} type={type} />
+        <TrainerCourseItemInOtherview
+          course={item}
+          type={type}
+          showTrainerName={showTrainerName}
+        />
       )}
     />
   );
