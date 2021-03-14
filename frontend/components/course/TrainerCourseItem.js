@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { List, Space, Form } from 'antd';
+import { useCookies } from 'react-cookie';
+import { List, Space } from 'antd';
 import {
   ClockCircleOutlined,
   DollarCircleOutlined,
@@ -68,20 +69,34 @@ const TrainerCourseItem = ({ course, courses, mutateCourse }) => {
           actions={[
             <IconText
               icon={<RadarChartOutlined />}
-              text={course.specialization}
+              text={
+                course?.specialization
+                  ? course.specialization.charAt(0).toUpperCase() +
+                    course.specialization.slice(1)
+                  : ''
+              }
             />,
-            <IconText icon={<DashboardOutlined />} text={course.level} />,
+            <IconText
+              icon={<DashboardOutlined />}
+              text={
+                course?.level
+                  ? course.level.charAt(0).toUpperCase() + course.level.slice(1)
+                  : ''
+              }
+            />,
             <IconText
               icon={<ClockCircleOutlined />}
               text={`${course.period} days`}
             />,
             <IconText
               icon={<DollarCircleOutlined />}
-              text={`${course.price} bahts`}
+              text={`${Math.trunc(course.price)} bahts`}
             />,
             <IconText
               icon={<EnvironmentOutlined />}
-              text={`${course.city || ''} ${course.province}`}
+              text={`${course.city ? course.city + ',' : ''} ${
+                course.province
+              }`}
             />,
           ]}
         />
