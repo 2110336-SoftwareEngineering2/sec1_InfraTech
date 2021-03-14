@@ -3,9 +3,8 @@ import { User } from './user.entity';
 
 @Entity({ name: 'trainee' })
 export class Trainee {
-  @OneToOne(() => User, (user) => user.id, { primary: true })
-  @JoinColumn({ name: 'user_id' })
-  user: User;
+  @PrimaryColumn({ name: 'user_id' })
+  userId: string;
 
   @Column()
   firstname: string;
@@ -24,4 +23,8 @@ export class Trainee {
 
   @Column({ name: 'profile_image_url' })
   profileImageUrl: string;
+
+  @OneToOne(() => User, (user) => user.id, { primary: true })
+  @JoinColumn({ name: 'user_id' })
+  user: User;
 }
