@@ -10,10 +10,12 @@ import {
   EnvironmentOutlined,
   UserOutlined,
 } from '@ant-design/icons';
+import axios from 'axios';
 
 import TrainerCourseFormModal from './TrainerCourseFormModal';
 import TraineeListModal from './TraineeListModal';
 
+import { COOKIE_NAME, API_HOST } from '../../config/config';
 const data = [
   {
     id: 1,
@@ -22,31 +24,23 @@ const data = [
   { id: 2, name: 'Manny John' },
   { id: 3, name: 'Manny Jake' },
 ];
-
-// TODO: Implement onClick for edit and delete icon
-const TrainerCourseItem = ({ course }) => {
-  const [form] = Form.useForm();
+const TrainerCourseItem = ({ course, courses, mutateCourse }) => {
+  const [token] = useCookies([COOKIE_NAME]);
   const [showTraineeList, setShowTraineeList] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
-  const [submitLoading, setSubmitLoading] = useState(false);
 
-  const handleSubmit = async (formValues) => {
-    //TODO: Connect to edit course API
-    try {
-      await form.validateFields();
-      setSubmitLoading(true);
-      setTimeout(() => {
-        setShowEditForm(false);
-        setSubmitLoading(false);
-      }, 3000);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const handleCancel = () => {
-    setShowEditForm(false);
-    form.resetFields();
+  const handleDelete = async (id) => {
+    // try {
+    //   await axios.delete(`${API_HOST}/course/${id}`, {
+    //     headers: {
+    //       Authorization: `Bearer ${token[COOKIE_NAME] || ''}`,
+    //       'Access-Control-Allow-Origin': '*',
+    //     },
+    //   });
+    //   mutateCourse([courses.filter((course) => course.id !== id)]);
+    // } catch (err) {
+    //   console.error(err);
+    // }
   };
 
   return (
@@ -63,7 +57,10 @@ const TrainerCourseItem = ({ course }) => {
               className="ml-2 hover:text-black"
               onClick={() => setShowEditForm(true)}
             />
-            <DeleteOutlined className="ml-2 hover:text-black" />
+            <DeleteOutlined
+              className="ml-2 hover:text-black"
+              onClick={() => handleDelete(course.id)}
+            />
           </div>
         </div>
         <div>{course.description}</div>
