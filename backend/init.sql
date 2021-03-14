@@ -16,6 +16,7 @@ CREATE TABLE trainer (
     birthdate DATETIME,
     cid VARCHAR(13),
     profile_image_url VARCHAR(255),
+    average_rating DECIMAL(3,2),
     CONSTRAINT FK_trainer_user_id FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
 );
 
