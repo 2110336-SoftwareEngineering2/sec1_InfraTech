@@ -15,6 +15,8 @@ const TrainerCourseForm = ({ form, initialFormValues, handleSubmit }) => {
 
   const initialValues = {
     ...initialFormValues,
+    price: parseInt(initialFormValues?.price ?? 0) || null,
+    period: parseInt(initialFormValues?.period ?? 0) || null,
     difficulty: initialFormValues?.level?.toLowerCase() ?? '',
     specialization: initialFormValues?.specialization?.toLowerCase() ?? '',
   };
@@ -49,11 +51,11 @@ const TrainerCourseForm = ({ form, initialFormValues, handleSubmit }) => {
 
         <Form.Item
           label="Difficulty Level"
-          name="difficulty"
+          name="level"
           rules={[
             { required: true, message: 'Please select diffifulty level' },
           ]}
-          initialValue={initialValues.difficulty}
+          initialValue={initialValues.level}
         >
           <Radio.Group>
             <Radio.Button value="beginner">Beginner</Radio.Button>
