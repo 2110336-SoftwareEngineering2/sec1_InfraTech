@@ -16,7 +16,7 @@ const TrainerCourseFormModal = ({
       title={title}
       visible={visible}
       centered
-      onOk={handleSubmit}
+      // onOk={handleSubmit}
       onCancel={handleCancel}
       width={1000}
       footer={[
@@ -29,7 +29,6 @@ const TrainerCourseFormModal = ({
           type="primary"
           htmlType="submit"
           loading={loading}
-          onClick={handleSubmit}
         >
           Submit
         </Button>,

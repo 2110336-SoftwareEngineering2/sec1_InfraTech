@@ -1,9 +1,14 @@
 import { useState } from 'react';
-import { List, Form } from 'antd';
+import { useCookies } from 'react-cookie';
+import { List } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
+import useSWR from 'swr';
 
 import TrainerCourseItem from './TrainerCourseItem';
-import TrainerCourseFormModal from './TrainerCourseFormModal';
+import TrainerCreateCourseFormModal from './TrainerCreateCourseFormModal';
+import axios from 'axios';
+
+import { COOKIE_NAME, API_HOST } from '../../config/config';
 
 const courses = [
   {

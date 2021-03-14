@@ -13,8 +13,8 @@ import {
 } from '@ant-design/icons';
 import axios from 'axios';
 
-import TrainerCourseFormModal from './TrainerCourseFormModal';
 import TraineeListModal from './TraineeListModal';
+import TrainerEditCourseFormModal from './TrainerEditCourseFormModal';
 
 import { COOKIE_NAME, API_HOST } from '../../config/config';
 const data = [
@@ -105,14 +105,14 @@ const TrainerCourseItem = ({ course, courses, mutateCourse }) => {
         visible={showTraineeList}
         setVisible={setShowTraineeList}
       />
-      <TrainerCourseFormModal
-        form={form}
-        title="Edit Course"
+      <TrainerEditCourseFormModal
+        courses={courses}
+        id={course.id}
+        trainerUserId={course.trainerUserId}
+        // mutateCourse={mutateCourse}
         visible={showEditForm}
-        loading={submitLoading}
+        setVisible={setShowEditForm}
         initialFormValues={course}
-        handleSubmit={handleSubmit}
-        handleCancel={handleCancel}
       />
     </>
   );
