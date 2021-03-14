@@ -38,6 +38,7 @@ interface TraineeApplicationsFilter {
 
 interface TrainerApplicationFilter {
   trainerId: string;
+  courseId?: string;
   // status may be used in the future
   status?: ApplicationStatus;
 }
@@ -63,7 +64,6 @@ export class ApplicationService {
 
   async getTraineeApplications({
     traineeId,
-    status,
   }: TraineeApplicationsFilter): Promise<Application[]> {
     return await this.applicationRepository.find({
       where: [{ traineeUserId: traineeId }],
@@ -73,11 +73,26 @@ export class ApplicationService {
 
   async getTrainerApplications({
     trainerId,
-    status,
   }: TrainerApplicationFilter): Promise<Application[]> {
     return await this.applicationRepository
       .createQueryBuilder('application')
       .leftJoinAndSelect('application.course', 'course')
+      .where('course.trainer_user_id=:trainerId', { trainerId: trainerId })
+      .getMany();
+  }
+
+  async getTrainerApplicationsByCourseId({
+    trainerId,
+    courseId,
+  }: TrainerApplicationFilter): Promise<Application[]> {
+    return await this.applicationRepository
+      .createQueryBuilder('application')
+      .leftJoinAndSelect(
+        'application.course',
+        'course',
+        'course.id=:courseId',
+        { courseId: courseId },
+      )
       .where('course.trainer_user_id=:trainerId', { trainerId: trainerId })
       .getMany();
   }

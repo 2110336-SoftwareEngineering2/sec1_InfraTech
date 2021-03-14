@@ -21,7 +21,7 @@ export class ApplicationController {
 
   @Get()
   @UseGuards(AuthGuard)
-  async getCourse(@Req() request: LetXRequest): Promise<Application[]> {
+  async getApplication(@Req() request: LetXRequest): Promise<Application[]> {
     if (request.user.type === UserType.Trainee) {
       // TODO : use pagination for performance purpose
       return await this.applicationService.getTraineeApplications({
@@ -33,6 +33,19 @@ export class ApplicationController {
         trainerId: request.user.id,
       });
     }
+  }
+
+  @Get(':courseId')
+  @Role(UserType.Trainer)
+  @UseGuards(RoleGuard)
+  async getApplicationByCourseId(
+    @Param('courseId') courseId,
+    @Req() request: LetXRequest,
+  ): Promise<Application[]> {
+    return await this.applicationService.getTrainerApplicationsByCourseId({
+      courseId: courseId,
+      trainerId: request.user.id,
+    });
   }
 
   @Post(':courseId')
