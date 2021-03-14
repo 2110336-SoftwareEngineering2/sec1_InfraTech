@@ -5,8 +5,8 @@ import {
   Post,
   Param,
   Query,
-  Get,
-} from '@nestjs/common';
+  Get, Patch
+} from "@nestjs/common";
 import { LetXRequest } from 'src/middlewares/auth.middleware';
 import { RoleGuard } from 'src/guards/role.guard';
 import { Role } from 'src/decorators/role.decorator';
@@ -61,7 +61,7 @@ export class ApplicationController {
     });
   }
 
-  @Post('/cancel/:courseId')
+  @Patch('/cancel/:courseId')
   @Role(UserType.Trainee)
   @UseGuards(RoleGuard)
   async cancelCourse(
@@ -76,7 +76,7 @@ export class ApplicationController {
     await this.applicationService.save(application);
   }
 
-  @Post('/approve/:courseId')
+  @Patch('/approve/:courseId')
   @Role(UserType.Trainer)
   @UseGuards(RoleGuard)
   async approveCourse(
@@ -96,7 +96,7 @@ export class ApplicationController {
     await this.applicationService.save(application);
   }
 
-  @Post('/reject/:courseId')
+  @Patch('/reject/:courseId')
   @Role(UserType.Trainer)
   @UseGuards(RoleGuard)
   async rejectCourse(
