@@ -35,20 +35,6 @@ export class Course {
   @Column()
   period: number;
 
-  @ManyToMany(() => Trainee, { cascade: true })
-  @JoinTable({
-    name: 'course_trainee',
-    joinColumn: {
-      name: 'course_id',
-      referencedColumnName: 'id',
-    },
-    inverseJoinColumn: {
-      name: 'trainee_user_id',
-      referencedColumnName: 'userId',
-    },
-  })
-  trainees: Trainee[];
-
   @Column({ name: 'trainer_user_id' })
   trainerUserId: string;
 
