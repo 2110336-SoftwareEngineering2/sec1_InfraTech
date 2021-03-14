@@ -24,7 +24,7 @@ const InformationProfile = ({ profile, setIsEditing, ownView }) => {
         {ownView ? (
           <CustomUpload value={profile.profileImageUrl} disable={true} />
         ) : (
-          <Image value={profile.profileImageUrl} />
+          <Image src={profile.profileImageUrl} />
         )}
       </div>
       <div className="w-3/5">
