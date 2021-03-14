@@ -1,0 +1,71 @@
+import { useState } from 'react';
+import { List } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
+
+import TrainerCourseItem from './TrainerCourseItemcourseInOtherview';
+import TrainerCourseForm from './TrainerCourseInOtherview';
+
+// TODO: Fetch data from api
+const data = [
+  {
+    title: 'Mock Title 1',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+    level: 'Beginner',
+    period: 5,
+    specialize: 'Abs',
+    price: 2999,
+    status: 'noregisted',
+  },
+  {
+    title: 'Mock Title 2',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    level: 'Intermediate',
+    period: 10,
+    specialize: 'Cardio',
+    price: 499,
+    status: 'accepted',
+  },
+  {
+    title: 'Mock Title 3',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    level: 'Intermediate',
+    period: 10,
+    specialize: 'Cardio',
+    price: 499,
+    status: 'registed',
+  },
+];
+
+const TrainerCourseList = ({ ownView }) => {
+  const [showForm, setShowForm] = useState(false);
+
+  return (
+    <List
+      dataSource={data}
+      itemLayout="vertical"
+      renderItem={(item) => (
+        <TrainerCourseItem course={item} ownView={ownView} />
+      )}
+    >
+      {showForm && (
+        <div className="px-32 pt-16 pb-10 shadow-around mb-4 flex justify-center">
+          <TrainerCourseForm setShowForm={setShowForm} />
+        </div>
+      )}
+      {ownView && (
+        <div
+          className="shadow-around mb-4 bg-gray-100 h-20 text-3xl text-gray-500 flex justify-center items-center hover:bg-gray-200"
+          // TODO: Implement adding new course on click
+          onClick={() => setShowForm(true)}
+        >
+          <PlusOutlined />
+        </div>
+      )}
+    </List>
+  );
+};
+
+export default TrainerCourseList;
