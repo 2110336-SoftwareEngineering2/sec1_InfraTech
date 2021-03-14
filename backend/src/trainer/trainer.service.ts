@@ -17,7 +17,7 @@ export class TrainerService {
   async getTrainersByPreferences(
     trainerSearchCriteriaDto: TrainerSearchCriteriaDto,
   ): Promise<Trainer[]> {
-    const { preferences, sortBy } = trainerSearchCriteriaDto;
+    const { preferences, sortBy, sortType, limit } = trainerSearchCriteriaDto;
 
     // TODO: split finding users that have the specific preferences logic
     const userPreferences = await this.connection
@@ -38,14 +38,17 @@ export class TrainerService {
     const trainerQuery = this.trainerRepository
       .createQueryBuilder('trainer')
       .select([
+        'trainer.userId',
         'trainer.firstname',
         'trainer.lastname',
         'trainer.profileImageUrl',
+        'trainer.averageRating',
         'user.id',
         'preference.id',
         'preference.name',
         'review',
       ])
+      .addSelect('CONCAT(trainer.firstname, trainer.lastname)', 'fullname')
       .leftJoin('trainer.user', 'user')
       .leftJoin('user.preferences', 'preference')
       .leftJoin('trainer.reviews', 'review');
@@ -56,15 +59,15 @@ export class TrainerService {
       });
     }
 
-    const trainers = await trainerQuery.getMany();
-
-    // TODO: split sorting logic
-    // TODO: discuss about sorting criteria
-    if (sortBy === TrainerSortBy.AverageRating) {
-      trainers.sort((trainer1, trainer2) =>
-        trainer1.averageRating < trainer2.averageRating ? 1 : -1,
-      );
+    if (sortBy == TrainerSortBy.AverageRating) {
+      trainerQuery.orderBy('trainer.averageRating', sortType);
+    } else if (sortBy == TrainerSortBy.Fullname) {
+      trainerQuery.orderBy('fullname', sortType);
     }
+
+    trainerQuery.take(limit);
+
+    const trainers = await trainerQuery.getMany();
 
     return trainers;
   }
