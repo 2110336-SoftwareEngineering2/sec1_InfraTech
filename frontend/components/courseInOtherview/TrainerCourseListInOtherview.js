@@ -2,8 +2,7 @@ import { useState } from 'react';
 import { List } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
-import TrainerCourseItem from './TrainerCourseItemcourseInOtherview';
-import TrainerCourseForm from './TrainerCourseInOtherview';
+import TrainerCourseItemInOtherview from './TrainerCourseItemInOtherview';
 
 // TODO: Fetch data from api
 const data = [
@@ -39,33 +38,16 @@ const data = [
   },
 ];
 
-const TrainerCourseList = ({ ownView }) => {
-  const [showForm, setShowForm] = useState(false);
-
+const TrainerCourseListInOtherview = ({ type }) => {
   return (
     <List
       dataSource={data}
       itemLayout="vertical"
       renderItem={(item) => (
-        <TrainerCourseItem course={item} ownView={ownView} />
+        <TrainerCourseItemInOtherview course={item} type={type} />
       )}
-    >
-      {showForm && (
-        <div className="px-32 pt-16 pb-10 shadow-around mb-4 flex justify-center">
-          <TrainerCourseForm setShowForm={setShowForm} />
-        </div>
-      )}
-      {ownView && (
-        <div
-          className="shadow-around mb-4 bg-gray-100 h-20 text-3xl text-gray-500 flex justify-center items-center hover:bg-gray-200"
-          // TODO: Implement adding new course on click
-          onClick={() => setShowForm(true)}
-        >
-          <PlusOutlined />
-        </div>
-      )}
-    </List>
+    />
   );
 };
 
-export default TrainerCourseList;
+export default TrainerCourseListInOtherview;

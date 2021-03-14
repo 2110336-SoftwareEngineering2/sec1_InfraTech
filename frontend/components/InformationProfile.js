@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Image } from 'antd';
 import CustomUpload from './CustomUpload';
 
-const InformationProfile = ({ profile, setIsEditing }) => {
+const InformationProfile = ({ profile, setIsEditing, ownView }) => {
   const calculateAge = (birthdate) => {
     const date = new Date(birthdate);
     var ageDifMs = Date.now() - date.getTime();

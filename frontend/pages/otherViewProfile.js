@@ -5,9 +5,10 @@ import useUser from '../lib/useUser';
 import { AppLayout } from '../components/common';
 import EditProfile from '../components/EditProfile';
 import InformationProfile from '../components/InformationProfile';
-import TrainerCourseList from '../components/course/TrainerCourseList';
+
 import Loading from '../components/common/Loading';
 import { USER_TYPE } from '../config/UserType.config';
+import TrainerCourseListInOtherview from '../components/courseInOtherview/TrainerCourseListInOtherview';
 
 const otherViewProfile = () => {
   const { user, mutateUser } = useUser({ redirectTo: '/login' });
@@ -27,13 +28,9 @@ const otherViewProfile = () => {
               setIsEditing={setIsEditing}
               ownView={false}
             />
-            {user.type === USER_TYPE.TRAINER && (
-              <>
-                <hr className="my-16" />
-                <div className="text-4xl font-bold mb-10">My Courses</div>
-                <TrainerCourseList ownView={false} />
-              </>
-            )}
+            <hr className="my-16" />
+            <div className="text-4xl font-bold mb-10">Trainer's Courses</div>
+            <TrainerCourseListInOtherview type={USER_TYPE.TRAINER} />
           </div>
         </div>
       ) : (
