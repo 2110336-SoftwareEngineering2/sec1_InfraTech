@@ -65,10 +65,12 @@ export class ApplicationService {
   async getTraineeApplications({
     traineeId,
   }: TraineeApplicationsFilter): Promise<Application[]> {
-    return await this.applicationRepository.find({
-      where: [{ traineeUserId: traineeId }],
-      relations: ['course'],
-    });
+    return await this.applicationRepository
+      .createQueryBuilder('application')
+      .where('application.trainee_user_id=:traineeId', { traineeId: traineeId })
+      .leftJoinAndSelect('application.course', 'course')
+      .leftJoinAndSelect('course.trainer', 'trainer')
+      .getMany();
   }
 
   async getTrainerApplications({
@@ -76,8 +78,13 @@ export class ApplicationService {
   }: TrainerApplicationFilter): Promise<Application[]> {
     return await this.applicationRepository
       .createQueryBuilder('application')
-      .leftJoinAndSelect('application.course', 'course')
-      .where('course.trainer_user_id=:trainerId', { trainerId: trainerId })
+      .leftJoinAndSelect(
+        'application.course',
+        'course',
+        'course.trainer_user_id=:trainerId',
+        { trainerId: trainerId },
+      )
+      .leftJoinAndSelect('application.trainee', 'trainee')
       .getMany();
   }
 
@@ -87,13 +94,11 @@ export class ApplicationService {
   }: TrainerApplicationFilter): Promise<Application[]> {
     return await this.applicationRepository
       .createQueryBuilder('application')
-      .leftJoinAndSelect(
-        'application.course',
-        'course',
-        'course.id=:courseId',
-        { courseId: courseId },
-      )
+      .leftJoin('application.course', 'course', 'course.id=:courseId', {
+        courseId: courseId,
+      })
       .where('course.trainer_user_id=:trainerId', { trainerId: trainerId })
+      .leftJoinAndSelect('application.trainee', 'trainee')
       .getMany();
   }
 
