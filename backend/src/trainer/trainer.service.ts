@@ -53,10 +53,14 @@ export class TrainerService {
       .leftJoin('user.preferences', 'preference')
       .leftJoin('trainer.reviews', 'review');
 
-    if (userIds.length > 0) {
-      trainerQuery.where('user.id IN (:...userIds)', {
-        userIds,
-      });
+    if (preferences?.length > 0) {
+      if (userIds.length > 0) {
+        trainerQuery.where('user.id IN (:...userIds)', {
+          userIds,
+        });
+      } else {
+        return [];
+      }
     }
 
     if (sortBy == TrainerSortBy.AverageRating) {
