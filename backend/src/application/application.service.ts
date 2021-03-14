@@ -65,10 +65,12 @@ export class ApplicationService {
   async getTraineeApplications({
     traineeId,
   }: TraineeApplicationsFilter): Promise<Application[]> {
-    return await this.applicationRepository.find({
-      where: [{ traineeUserId: traineeId }],
-      relations: ['course'],
-    });
+    return await this.applicationRepository
+      .createQueryBuilder('application')
+      .where('application.trainee_user_id=:traineeId', { traineeId: traineeId })
+      .leftJoinAndSelect('application.course', 'course')
+      .leftJoinAndSelect('course.trainer', 'trainer')
+      .getMany();
   }
 
   async getTrainerApplications({
