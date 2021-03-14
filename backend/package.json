@@ -31,6 +31,7 @@
     "@types/bcryptjs": "^2.4.2",
     "@types/jsonwebtoken": "^8.5.0",
     "bcryptjs": "^2.4.3",
+    "builder-pattern": "^1.2.4",
     "config": "^3.3.3",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",

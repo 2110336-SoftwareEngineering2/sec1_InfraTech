@@ -50,13 +50,16 @@ CREATE TABLE user_preference(
 
 CREATE TABLE course(
     id VARCHAR(36) PRIMARY KEY,
-    title VARCHAR(255),
+    title VARCHAR(255) NOT NULL,
     `description` VARCHAR(255),
     `level` VARCHAR(255),
     specialization VARCHAR(255),
     price DECIMAL(18,2),
     `period` INT,
-    trainer_user_id VARCHAR(36),
+    trainer_user_id VARCHAR(36) NOT NULL,
+    city VARCHAR(255),
+    province VARCHAR(255) NOT NULL,
+
     CONSTRAINT FK_course_trainer_user_id FOREIGN KEY (trainer_user_id) REFERENCES trainer(user_id) ON DELETE CASCADE
 );
 
@@ -73,6 +76,20 @@ CREATE TABLE course_trainee(
     CONSTRAINT FK_course_trainee_course_id FOREIGN KEY (course_id) REFERENCES course(id) ON DELETE CASCADE
 );
 
+CREATE TABLE application(
+    id VARCHAR(36) PRIMARY KEY,
+    trainee_user_id VARCHAR(36),
+    course_id VARCHAR(36),
+-- TODO : change status to enum
+    status VARCHAR(100),
+    CONSTRAINT FK_application_trainee_user_id FOREIGN KEY (trainee_user_id) REFERENCES trainee(user_id) ON DELETE CASCADE,
+    CONSTRAINT FK_application_course_id FOREIGN KEY (course_id) REFERENCES course(id) ON DELETE CASCADE
+);
+
+-- TODO : Create index for application (course_id, trainee_id)
+-- TODO : Create index for application (trainee_id, course_id)
+
 -- Mock User --
 INSERT INTO user VALUES ("38a04ba7-096f-4af3-abb2-e38a518a01f7", "tanboi@lnwzamail.com", "$2a$10$XPTfy6sx.TUnze7fHhP6XOWds8bdQaS2NTaELcIKHcyqwNPBKtQk6", "$2a$10$XPTfy6sx.TUnze7fHhP6XO");
 INSERT INTO trainer VALUES ("38a04ba7-096f-4af3-abb2-e38a518a01f7", "Somlux", "Kamsing", "MALE", "081234567", "2017-06-15 00:00:00", "0", "https://www.aceshowbiz.com/images/photo/john_cena.jpg");
+INSERT INTO course VALUES ("random-course-id", "title", "description", "level", "specialization", 1000, 5, "38a04ba7-096f-4af3-abb2-e38a518a01f7")
