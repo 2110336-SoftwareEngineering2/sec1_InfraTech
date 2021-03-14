@@ -9,6 +9,7 @@ import {
   Param,
   Post,
   Delete,
+  Put,
 } from '@nestjs/common';
 import { CourseService } from './course.service';
 import { LetXRequest } from 'src/middlewares/auth.middleware';
@@ -53,6 +54,17 @@ export class CourseController {
     @Req() request: LetXRequest,
   ): Promise<Course> {
     return await this.courseService.createCourse(request.user.id, courseDto);
+  }
+
+  @Put(':id')
+  @Role(UserType.Trainer)
+  @UseGuards(RoleGuard)
+  async updateCourse(
+    @Param('id') id,
+    @Body() courseDto: CourseDto,
+    @Req() request: LetXRequest,
+  ): Promise<Course> {
+    return await this.courseService.updateCourse(id, courseDto);
   }
 
   @Delete(':id')

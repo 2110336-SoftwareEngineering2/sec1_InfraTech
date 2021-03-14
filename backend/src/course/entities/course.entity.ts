@@ -35,6 +35,12 @@ export class Course {
   @Column()
   period: number;
 
+  @Column()
+  city: string;
+
+  @Column()
+  province: string;
+
   @Column({ name: 'trainer_user_id' })
   trainerUserId: string;
 

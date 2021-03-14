@@ -49,6 +49,8 @@ export class CourseService {
       price: dto.price,
       period: dto.period,
       trainerUserId: trainerUserId,
+      city: dto.city,
+      province: dto.province,
     })
 
     const queryRunner = this.connection.createQueryRunner();
@@ -70,6 +72,11 @@ export class CourseService {
     }
 
     return course;
+  }
+
+  async updateCourse(id: string, courseDto: CourseDto): Promise<Course> {
+    await this.courseRepository.update(id, courseDto);
+    return await this.getCourse(id);
   }
 
   async deleteCourse(id: string): Promise<void> {
