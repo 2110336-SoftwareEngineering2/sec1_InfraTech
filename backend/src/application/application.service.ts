@@ -76,8 +76,13 @@ export class ApplicationService {
   }: TrainerApplicationFilter): Promise<Application[]> {
     return await this.applicationRepository
       .createQueryBuilder('application')
-      .leftJoinAndSelect('application.course', 'course')
-      .where('course.trainer_user_id=:trainerId', { trainerId: trainerId })
+      .leftJoinAndSelect(
+        'application.course',
+        'course',
+        'course.trainer_user_id=:trainerId',
+        { trainerId: trainerId },
+      )
+      .leftJoinAndSelect('application.trainee', 'trainee')
       .getMany();
   }
 
@@ -94,6 +99,7 @@ export class ApplicationService {
         { courseId: courseId },
       )
       .where('course.trainer_user_id=:trainerId', { trainerId: trainerId })
+      .leftJoinAndSelect('application.trainee', 'trainee')
       .getMany();
   }
 
