@@ -30,6 +30,16 @@ export class CourseController {
     return await this.courseService.listCourses(request.user.id);
   }
 
+  @Get('trainer/:user_id')
+  @Role(UserType.Trainer)
+  @UseGuards(RoleGuard)
+  async listCoursesByTrainer(
+    @Param('user_id') user_id,
+    @Req() request: LetXRequest,
+  ): Promise<Course[]> {
+    return await this.courseService.listCourses(user_id);
+  }
+
   @Get(':id')
   @Role(UserType.Trainer)
   @UseGuards(RoleGuard)
