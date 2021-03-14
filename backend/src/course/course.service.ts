@@ -23,6 +23,7 @@ export class CourseService {
       where: {
         trainerUserId: userId,
       },
+      relations: ["trainer"],
     });
 
     return courses;
@@ -33,6 +34,7 @@ export class CourseService {
       where: {
         id: id,
       },
+      relations: ["trainer"],
     });
 
     return course;

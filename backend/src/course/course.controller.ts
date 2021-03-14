@@ -35,7 +35,7 @@ export class CourseController {
   ): Promise<Course> {
     let course: Course = await this.courseService.getCourse(id);
 
-    if (course.trainer.user.id != request.user.id) {
+    if (course.trainerUserId != request.user.id) {
       throw new ForbiddenException();
     }
 
@@ -61,7 +61,7 @@ export class CourseController {
   ): Promise<void> {
     let course = await this.courseService.getCourse(id);
 
-    if (course.trainer.user.id != request.user.id) {
+    if (course.trainerUserId != request.user.id) {
       throw new ForbiddenException();
     }
 
