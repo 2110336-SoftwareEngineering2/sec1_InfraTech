@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import { API_HOST } from '../../config/config';
 
-const TrainerCourseForm = ({ form, initialFormValues, handleSubmit }) => {
+const TrainerCourseForm = ({ form, formId, initialFormValues, handleSubmit }) => {
   const { data: preferences } = useSWR(
     `${API_HOST}/preference`,
     async (url) => {
@@ -24,7 +24,7 @@ const TrainerCourseForm = ({ form, initialFormValues, handleSubmit }) => {
   return (
     <div className="w-full">
       <Form
-        id="course-form"
+        id={formId}
         form={form}
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 14 }}

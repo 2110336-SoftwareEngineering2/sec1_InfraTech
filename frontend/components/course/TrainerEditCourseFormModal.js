@@ -21,8 +21,7 @@ const TrainerEditCourseFormModal = ({
   const [submitLoading, setSubmitLoading] = useState(false);
 
   const handleEdit = async (formValues) => {
-    console.log(formValues);
-    console.log('edit');
+    console.log('edit', id);
     try {
       await form.validateFields();
       setSubmitLoading(true);
@@ -60,6 +59,7 @@ const TrainerEditCourseFormModal = ({
   return (
     <TrainerCourseFormModal
       form={form}
+      formId={`edit-form-${id}`}
       title="Edit Course"
       visible={visible}
       loading={submitLoading}

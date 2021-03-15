@@ -49,6 +49,7 @@ const TrainerCreateCourseFormModal = ({
   return (
     <TrainerCourseFormModal
       form={form}
+      formId="create-form"
       title="Create Course"
       visible={visible}
       loading={submitLoading}
