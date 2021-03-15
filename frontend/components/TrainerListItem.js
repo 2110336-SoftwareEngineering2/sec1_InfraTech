@@ -10,6 +10,7 @@ const TrainerListItem = ({ trainer }) => {
           width={180}
           height={180}
           layout="fixed"
+          className="rounded-full"
         />
         <div className="mx-8 my-6">
           <div className="font-bold text-2xl">

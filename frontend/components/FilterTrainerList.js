@@ -7,7 +7,14 @@ import { TrainerSortBy, TrainerSortType } from '../config/FilterTrainer.config';
 
 const { Option } = Select;
 
-const FilterTrainerList = ({ preferenceFilter }) => {
+const FilterTrainerList = ({
+  preferenceFilter,
+  setPreferenceFilter,
+  sortBy,
+  setSortBy,
+  sortType,
+  setSortType,
+}) => {
   const [preferenceOptions, setPreferenceOptions] = useState([]);
 
   const getPreferences = async () => {
@@ -19,6 +26,24 @@ const FilterTrainerList = ({ preferenceFilter }) => {
   useEffect(() => {
     getPreferences();
   }, []);
+
+  const handleSortBy = (value) => {
+    setSortBy(value);
+  };
+
+  const handleSortType = (value) => {
+    setSortType(value);
+  };
+
+  const handlePreferences = (value) => {
+    if (preferenceFilter.includes(value)) {
+      setPreferenceFilter(
+        preferenceFilter.filter((perference) => perference != value),
+      );
+    } else {
+      setPreferenceFilter([...preferenceFilter, value]);
+    }
+  };
 
   return (
     <div className="my-6">
@@ -34,7 +59,8 @@ const FilterTrainerList = ({ preferenceFilter }) => {
               )
             }
             color={preferenceFilter.includes(preference.id) && 'blue'}
-            className="text-xl rounded-xl p-2 my-4"
+            onClick={() => handlePreferences(preference.id)}
+            className="text-xl rounded-xl p-2 my-4 cursor-pointer"
           >
             {preference.name}
           </Tag>
@@ -44,17 +70,19 @@ const FilterTrainerList = ({ preferenceFilter }) => {
         <div>
           <div className="text-xl">Sort By</div>
           <Select
-            defaultValue={TrainerSortBy.AverageRating}
+            defaultValue={sortBy}
+            onChange={handleSortBy}
             className="w-64 text-xl my-4"
           >
-            <Option value={TrainerSortBy.Fullname}>Full Name</Option>
             <Option value={TrainerSortBy.AverageRating}>Rating</Option>
+            <Option value={TrainerSortBy.Fullname}>Full Name</Option>
           </Select>
         </div>
         <div className="ml-12">
           <div className="text-xl">Sort Order</div>
           <Select
-            defaultValue={TrainerSortType.Ascending}
+            defaultValue={sortType}
+            onChange={handleSortType}
             className="w-64 text-xl my-4"
           >
             <Option value={TrainerSortType.Ascending}>Ascending</Option>
