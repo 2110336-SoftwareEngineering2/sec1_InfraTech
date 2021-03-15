@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import { API_HOST } from '../../config/config';
 
-const TrainerCourseForm = ({ form, initialFormValues, handleSubmit }) => {
+const TrainerCourseForm = ({ form, formId, initialFormValues, handleSubmit }) => {
   const { data: preferences } = useSWR(
     `${API_HOST}/preference`,
     async (url) => {
@@ -15,6 +15,8 @@ const TrainerCourseForm = ({ form, initialFormValues, handleSubmit }) => {
 
   const initialValues = {
     ...initialFormValues,
+    price: parseInt(initialFormValues?.price ?? 0) || null,
+    period: parseInt(initialFormValues?.period ?? 0) || null,
     difficulty: initialFormValues?.level?.toLowerCase() ?? '',
     specialization: initialFormValues?.specialization?.toLowerCase() ?? '',
   };
@@ -22,7 +24,7 @@ const TrainerCourseForm = ({ form, initialFormValues, handleSubmit }) => {
   return (
     <div className="w-full">
       <Form
-        id="course-form"
+        id={formId}
         form={form}
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 14 }}
@@ -49,11 +51,11 @@ const TrainerCourseForm = ({ form, initialFormValues, handleSubmit }) => {
 
         <Form.Item
           label="Difficulty Level"
-          name="difficulty"
+          name="level"
           rules={[
             { required: true, message: 'Please select diffifulty level' },
           ]}
-          initialValue={initialValues.difficulty}
+          initialValue={initialValues.level}
         >
           <Radio.Group>
             <Radio.Button value="beginner">Beginner</Radio.Button>

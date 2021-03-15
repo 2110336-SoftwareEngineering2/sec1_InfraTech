@@ -4,6 +4,7 @@ import TrainerCourseForm from './TrainerCourseForm';
 
 const TrainerCourseFormModal = ({
   form,
+  formId,
   title,
   initialFormValues,
   visible,
@@ -16,20 +17,18 @@ const TrainerCourseFormModal = ({
       title={title}
       visible={visible}
       centered
-      onOk={handleSubmit}
       onCancel={handleCancel}
       width={1000}
       footer={[
-        <Button form="course-form" key="cancel" onClick={handleCancel}>
+        <Button form={formId} key="cancel" onClick={handleCancel}>
           Cancel
         </Button>,
         <Button
-          form="course-form"
+          form={formId}
           key="submit"
           type="primary"
           htmlType="submit"
           loading={loading}
-          onClick={handleSubmit}
         >
           Submit
         </Button>,
@@ -38,6 +37,7 @@ const TrainerCourseFormModal = ({
       <div className="pt-8">
         <TrainerCourseForm
           form={form}
+          formId={formId}
           initialFormValues={initialFormValues}
           handleSubmit={handleSubmit}
         />
