@@ -9,6 +9,7 @@ import {
 import { Trainer } from '../entities/trainer.entity';
 import { TrainerService } from './trainer.service';
 import { TrainerSearchCriteriaDto } from './dtos/trainer-search-criteria-dto';
+import { TrainerUseCases } from './enums/trainer-use-cases.enum';
 
 @Controller('trainer')
 export class TrainerController {
@@ -16,7 +17,7 @@ export class TrainerController {
 
   @UseInterceptors(ClassSerializerInterceptor)
   @SerializeOptions({
-    groups: ['search'],
+    groups: [TrainerUseCases.GetTrainerByPreferences],
   })
   @Get('preferences')
   async getTrainersByPreferences(
