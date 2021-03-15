@@ -1,10 +1,22 @@
-import { Entity, Column, OneToOne, PrimaryColumn, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  OneToOne,
+  PrimaryColumn,
+  JoinColumn,
+  OneToMany,
+} from 'typeorm';
 import { User } from './user.entity';
+import { Application } from '../application/entities/application.entity';
 
 @Entity({ name: 'trainee' })
 export class Trainee {
   @PrimaryColumn({ name: 'user_id' })
-  userId: string;
+  public userId: string;
+
+  @OneToOne(() => User, (user) => user.id)
+  @JoinColumn({ name: 'user_id' })
+  user: User;
 
   @Column()
   firstname: string;
@@ -24,7 +36,6 @@ export class Trainee {
   @Column({ name: 'profile_image_url' })
   profileImageUrl: string;
 
-  @OneToOne(() => User, (user) => user.id, { primary: true })
-  @JoinColumn({ name: 'user_id' })
-  user: User;
+  @OneToMany(() => Application, (application) => application.trainee)
+  public applications: Application[];
 }
