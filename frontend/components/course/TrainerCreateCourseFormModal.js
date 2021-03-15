@@ -18,19 +18,18 @@ const TrainerCreateCourseFormModal = ({
   const [submitLoading, setSubmitLoading] = useState(false);
 
   const handleCreate = async (formValues) => {
-    console.log('create');
     try {
       await form.validateFields();
       setSubmitLoading(true);
-      // const res = await axios.post(`${API_HOST}/course`, formValues, {
-      //   headers: {
-      //     Authorization: `Bearer ${token[COOKIE_NAME] || ''}`,
-      //     'Access-Control-Allow-Origin': '*',
-      //   },
-      // });
-      // if (res?.data) {
-      //   mutateCourse([courses.concat(res.data)]);
-      // }
+      const res = await axios.post(`${API_HOST}/course`, formValues, {
+        headers: {
+          Authorization: `Bearer ${token[COOKIE_NAME] || ''}`,
+          'Access-Control-Allow-Origin': '*',
+        },
+      });
+      if (res?.data) {
+        mutateCourse([courses.concat(res.data)]);
+      }
       setVisible(false);
     } catch (err) {
       console.error(err);
