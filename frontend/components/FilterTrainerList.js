@@ -44,7 +44,7 @@ const FilterTrainerList = ({
       setPreferenceFilter([...preferenceFilter, value]);
     }
   };
-
+  console.log(preferenceOptions);
   return (
     <div className="my-6">
       <div>

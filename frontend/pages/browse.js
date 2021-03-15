@@ -6,6 +6,8 @@ import TrainerListItem from '../components/TrainerListItem';
 import FilterTrainerList from '../components/FilterTrainerList';
 import { List } from 'antd';
 import { TrainerSortBy, TrainerSortType } from '../config/FilterTrainer.config';
+import { API_HOST } from '../config/config';
+import axios from 'axios';
 
 const data = [
   {
@@ -32,14 +34,32 @@ const data = [
 
 const Browse = () => {
   const { user, mutateUser } = useUser({});
-  const [preferenceFilter, setPreferenceFilter] = useState();
+  const [preferenceFilter, setPreferenceFilter] = useState([]);
   const [sortBy, setSortBy] = useState(TrainerSortBy.AverageRating);
   const [sortType, setSortType] = useState(TrainerSortType.Ascending);
+  const [trainerList, setTrainerList] = useState([]);
+
+  const getTrainerList = async () => {
+    await axios
+      .get(`${API_HOST}/trainer/preferences`, {
+        params: {
+          preferences: preferenceFilter,
+          sortBy: sortBy,
+          sortType: sortType,
+          limit: 10,
+        },
+      })
+      .then(({ data }) => setTrainerList(data));
+  };
 
   useEffect(() => {
     user &&
       setPreferenceFilter(user.preferences.map((preference) => preference.id));
   }, [user]);
+
+  useEffect(() => {
+    getTrainerList();
+  }, [preferenceFilter, sortBy, sortType]);
 
   return (
     <AppLayout user={user} mutateUser={mutateUser}>
@@ -56,7 +76,7 @@ const Browse = () => {
         />
         <div className="text-2xl font-bold">Trainer List</div>
         <List
-          dataSource={data}
+          dataSource={trainerList}
           itemLayout="vertical"
           renderItem={(item) => <TrainerListItem trainer={item} />}
         />
