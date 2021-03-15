@@ -44,11 +44,6 @@ export const MENU_ITEMS = {
       href: '/notification',
     },
     {
-      text: 'Schedule',
-      icon: <CalendarOutlined />,
-      href: '/schedule',
-    },
-    {
       text: 'Chat',
       icon: <MessageOutlined />,
       href: '/chat',
@@ -79,11 +74,6 @@ export const MENU_ITEMS = {
       text: 'My Courses',
       icon: <RadarChartOutlined />,
       href: '/course',
-    },
-    {
-      text: 'Schedule',
-      icon: <CalendarOutlined />,
-      href: '/schedule',
     },
     {
       text: 'Chat',
