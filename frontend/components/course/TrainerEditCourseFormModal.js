@@ -21,27 +21,26 @@ const TrainerEditCourseFormModal = ({
   const [submitLoading, setSubmitLoading] = useState(false);
 
   const handleEdit = async (formValues) => {
-    console.log('edit', id);
     try {
       await form.validateFields();
       setSubmitLoading(true);
-      // const updateData = {
-      //   ...formValues,
-      //   id,
-      //   trainerUserId,
-      // };
-      // const res = await axios.put(`${API_HOST}/course/${id}`, updateData, {
-      //   headers: {
-      //     Authorization: `Bearer ${token[COOKIE_NAME] || ''}`,
-      //     'Access-Control-Allow-Origin': '*',
-      //   },
-      // });
-      // if (res?.data) {
-      //   mutateCourse([
-      //     ...courses.filter((course) => course.id !== id),
-      //     res.data,
-      //   ]);
-      // }
+      const updateData = {
+        ...formValues,
+        id,
+        trainerUserId,
+      };
+      const res = await axios.put(`${API_HOST}/course/${id}`, updateData, {
+        headers: {
+          Authorization: `Bearer ${token[COOKIE_NAME] || ''}`,
+          'Access-Control-Allow-Origin': '*',
+        },
+      });
+      if (res?.data) {
+        mutateCourse([
+          ...courses.filter((course) => course.id !== id),
+          res.data,
+        ]);
+      }
       setVisible(false);
     } catch (err) {
       console.error(err);

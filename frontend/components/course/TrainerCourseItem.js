@@ -109,7 +109,7 @@ const TrainerCourseItem = ({ course, courses, mutateCourse }) => {
         courses={courses}
         id={course.id}
         trainerUserId={course.trainerUserId}
-        // mutateCourse={mutateCourse}
+        mutateCourse={mutateCourse}
         visible={showEditForm}
         setVisible={setShowEditForm}
         initialFormValues={course}
