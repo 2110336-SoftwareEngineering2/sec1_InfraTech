@@ -71,4 +71,10 @@ export class TrainerService {
 
     return trainers;
   }
+
+  async getTrainerById(id: string): Promise<Trainer> {
+    return this.trainerRepository.findOneOrFail({
+      where: { userId: id },
+    });
+  }
 }
