@@ -3,6 +3,7 @@ import {
   ClassSerializerInterceptor,
   Controller,
   Get,
+  Param,
   SerializeOptions,
   UseInterceptors,
 } from '@nestjs/common';
@@ -26,5 +27,14 @@ export class TrainerController {
     return this.trainerService.getTrainersByPreferences(
       trainerSearchCriteriaDto,
     );
+  }
+
+  @UseInterceptors(ClassSerializerInterceptor)
+  @SerializeOptions({
+    groups: [TrainerUseCases.GetTrainerById],
+  })
+  @Get(':id')
+  async getTrainerById(@Param('id') id: string): Promise<Trainer> {
+    return this.trainerService.getTrainerById(id);
   }
 }
