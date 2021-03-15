@@ -1,6 +1,6 @@
 import {
   SearchOutlined,
-  BellOutlined,
+  ApiOutlined,
   RadarChartOutlined,
   CalendarOutlined,
   MessageOutlined,
@@ -39,9 +39,9 @@ export const MENU_ITEMS = {
       href: '/profile',
     },
     {
-      text: 'Notification',
-      icon: <BellOutlined />,
-      href: '/notification',
+      text: 'Request',
+      icon: <ApiOutlined />,
+      href: '/request',
     },
     {
       text: 'Chat',
@@ -64,11 +64,6 @@ export const MENU_ITEMS = {
       text: 'My Profile',
       icon: <UserOutlined />,
       href: '/profile',
-    },
-    {
-      text: 'Notification',
-      icon: <BellOutlined />,
-      href: '/notification',
     },
     {
       text: 'My Courses',
