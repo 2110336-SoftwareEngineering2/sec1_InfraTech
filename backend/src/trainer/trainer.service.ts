@@ -38,11 +38,7 @@ export class TrainerService {
     const trainerQuery = this.trainerRepository
       .createQueryBuilder('trainer')
       .select([
-        'trainer.userId',
-        'trainer.firstname',
-        'trainer.lastname',
-        'trainer.profileImageUrl',
-        'trainer.averageRating',
+        'trainer',
         'user.id',
         'preference.id',
         'preference.name',
