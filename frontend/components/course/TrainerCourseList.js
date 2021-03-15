@@ -10,49 +10,23 @@ import axios from 'axios';
 
 import { COOKIE_NAME, API_HOST } from '../../config/config';
 
-const courses = [
-  {
-    id:'1',
-    title: 'Mock Title 1',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    level: 'beginner',
-    period: 5,
-    specialization: 'balance',
-    price: 2999,
-    city: 'Samyan',
-    province: 'Bangkok',
-  },
-  {
-    id:'2',
-    title: 'Mock Title 2',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    level: 'intermediate',
-    period: 10,
-    specialization: 'strength',
-    price: 499,
-    province: 'Lopburi',
-  },
-];
-
 const TrainerCourseList = () => {
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [token] = useCookies([COOKIE_NAME]);
-  // const { data: courses, mutate: mutateCourse } = useSWR(
-  //   [`${API_HOST}/course`, token],
-  //   async (url, token) => {
-  //     if (!token[COOKIE_NAME]) return;
+  const { data: courses, mutate: mutateCourse } = useSWR(
+    [`${API_HOST}/course`, token],
+    async (url, token) => {
+      if (!token[COOKIE_NAME]) return;
 
-  //     const res = await axios.get(url, {
-  //       headers: {
-  //         Authorization: `Bearer ${token[COOKIE_NAME] || ''}`,
-  //         'Access-Control-Allow-Origin': '*',
-  //       },
-  //     });
-  //     return res?.data ?? {};
-  //   },
-  // );
+      const res = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${token[COOKIE_NAME] || ''}`,
+          'Access-Control-Allow-Origin': '*',
+        },
+      });
+      return res?.data ?? {};
+    },
+  );
 
   return (
     <List
@@ -64,7 +38,7 @@ const TrainerCourseList = () => {
             <TrainerCourseItem
               course={course}
               courses={courses}
-              // mutateCourse={mutateCourse}
+              mutateCourse={mutateCourse}
             />
           );
       }}
@@ -77,7 +51,7 @@ const TrainerCourseList = () => {
       </div>
       <TrainerCreateCourseFormModal
         courses={courses}
-        // mutateCourse={mutateCourse}
+        mutateCourse={mutateCourse}
         visible={showCreateForm}
         setVisible={setShowCreateForm}
       />
