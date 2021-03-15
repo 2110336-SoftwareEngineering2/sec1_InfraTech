@@ -31,17 +31,17 @@ const TrainerCourseItem = ({ course, courses, mutateCourse }) => {
   const [showEditForm, setShowEditForm] = useState(false);
 
   const handleDelete = async (id) => {
-    // try {
-    //   await axios.delete(`${API_HOST}/course/${id}`, {
-    //     headers: {
-    //       Authorization: `Bearer ${token[COOKIE_NAME] || ''}`,
-    //       'Access-Control-Allow-Origin': '*',
-    //     },
-    //   });
-    //   mutateCourse([courses.filter((course) => course.id !== id)]);
-    // } catch (err) {
-    //   console.error(err);
-    // }
+    try {
+      await axios.delete(`${API_HOST}/course/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token[COOKIE_NAME] || ''}`,
+          'Access-Control-Allow-Origin': '*',
+        },
+      });
+      mutateCourse([courses.filter((course) => course.id !== id)]);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
