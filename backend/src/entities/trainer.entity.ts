@@ -9,6 +9,7 @@ import {
 import { User } from './user.entity';
 import { Review } from '../trainer/entities/review.entity';
 import { Expose } from 'class-transformer';
+import { Course } from '../course/entities/course.entity';
 @Entity({ name: 'trainer' })
 export class Trainer {
   @PrimaryColumn({ name: 'user_id' })
