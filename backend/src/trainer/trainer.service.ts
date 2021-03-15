@@ -3,7 +3,8 @@ import { Trainer } from 'src/entities/trainer.entity';
 import { TrainerSearchCriteriaDto } from './dtos/trainer-search-criteria-dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TrainerRepository } from '../register/repositories/trainer.repository';
-import { Connection, In } from 'typeorm';
+import { Connection } from 'typeorm';
+import { TrainerSortBy } from './enums/trainer-sort-by.enum';
 
 @Injectable()
 export class TrainerService {
@@ -16,8 +17,9 @@ export class TrainerService {
   async getTrainersByPreferences(
     trainerSearchCriteriaDto: TrainerSearchCriteriaDto,
   ): Promise<Trainer[]> {
-    const { preferences } = trainerSearchCriteriaDto;
+    const { preferences, sortBy } = trainerSearchCriteriaDto;
 
+    // TODO: split finding users that have the specific preferences logic
     const userPreferences = await this.connection
       .createQueryBuilder()
       .select('up.user_id')
@@ -32,7 +34,8 @@ export class TrainerService {
       (userPreference) => userPreference['up_user_id'],
     );
 
-    const trainers = await this.trainerRepository
+    // TODO: split trainer querying logic
+    const trainerQuery = this.trainerRepository
       .createQueryBuilder('trainer')
       .select([
         'trainer.firstname',
@@ -41,13 +44,27 @@ export class TrainerService {
         'user.id',
         'preference.id',
         'preference.name',
+        'review',
       ])
-      .innerJoin('trainer.user', 'user')
-      .innerJoin('user.preferences', 'preference')
-      .where('user.id IN (:...userIds)', {
+      .leftJoin('trainer.user', 'user')
+      .leftJoin('user.preferences', 'preference')
+      .leftJoin('trainer.reviews', 'review');
+
+    if (userIds.length > 0) {
+      trainerQuery.where('user.id IN (:...userIds)', {
         userIds,
-      })
-      .getMany();
+      });
+    }
+
+    const trainers = await trainerQuery.getMany();
+
+    // TODO: split sorting logic
+    // TODO: discuss about sorting criteria
+    if (sortBy === TrainerSortBy.AverageRating) {
+      trainers.sort((trainer1, trainer2) =>
+        trainer1.averageRating < trainer2.averageRating ? 1 : -1,
+      );
+    }
 
     return trainers;
   }

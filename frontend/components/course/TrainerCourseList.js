@@ -13,8 +13,10 @@ const data = [
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
     level: 'Beginner',
     period: 5,
-    specialization: 'Abs',
+    specialization: 'Balance',
     price: 2999,
+    city: 'Samyan',
+    province: 'Bangkok',
   },
   {
     title: 'Mock Title 2',
@@ -22,8 +24,9 @@ const data = [
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
     level: 'Intermediate',
     period: 10,
-    specialization: 'Cardio',
+    specialization: 'Strength',
     price: 499,
+    province: 'Lopburi',
   },
 ];
 
