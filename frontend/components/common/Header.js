@@ -3,11 +3,13 @@ import { useCookies } from 'react-cookie';
 import Link from 'next/link';
 import Router from 'next/router';
 import Image from 'next/image';
+import getConfig from 'next/config';
 import { Layout, Button } from 'antd';
-import { UserOutlined, MenuOutlined } from '@ant-design/icons';
+import { MenuOutlined } from '@ant-design/icons';
 
 import { COOKIE_NAME } from '../../config/config';
 
+const { publicRuntimeConfig } = getConfig();
 const { Header: AntdHeader } = Layout;
 
 const Header = ({ clickMenu, username, profileImageUrl, mutateUser }) => (
@@ -41,8 +43,12 @@ const GuestHeader = () => (
   </div>
 );
 
-const NonGuestHeader = ({ username, profileImageUrl, mutateUser }) => {
+const NonGuestHeader = ({ username, profileImageUrl = '', mutateUser }) => {
   const [cookies, setCookie, removeCookie] = useCookies([COOKIE_NAME]);
+  const isProfileImageUrlValid =
+    publicRuntimeConfig.imageDomains.filter((domain) =>
+      profileImageUrl.includes(domain),
+    ).length !== 0;
 
   const onClick = () => {
     Router.push('/');
@@ -52,18 +58,14 @@ const NonGuestHeader = ({ username, profileImageUrl, mutateUser }) => {
 
   return (
     <div className="flex items-center text-lg">
-      {profileImageUrl ? (
-        <div className="rounded-full mt-1.5">
-          <Image
-            className="rounded-full"
-            src={profileImageUrl}
-            width={40}
-            height={40}
-          />
-        </div>
-      ) : (
-        <UserOutlined className="text-lg mr-4 rounded-full bg-gray-200 h-10 w-10 inline-flex items-center justify-center cursor-pointer" />
-      )}
+      <div className="rounded-full mt-1.5">
+        <Image
+          className="rounded-full"
+          src={isProfileImageUrlValid ? profileImageUrl : '/avatar.svg'}
+          width={40}
+          height={40}
+        />
+      </div>
       <div className="font-bold ml-4 hidden sm:inline">{username}</div>
       <Link href="/">
         <Button className="ml-6" onClick={onClick} type="primary" danger>

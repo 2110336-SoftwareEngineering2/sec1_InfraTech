@@ -1,11 +1,18 @@
 import { Upload, message, Button } from 'antd';
 import React, { useState } from 'react';
 import Image from 'next/image';
+import getConfig from 'next/config';
 import { LoadingOutlined } from '@ant-design/icons';
 import { getBase64 } from '../lib/utils';
 
+const { publicRuntimeConfig } = getConfig();
+
 const CustomUpload = ({ value, onChange, setFile, disable = false }) => {
-  const triggerChange = imageUrl => {
+  const isProfileImageUrlValid =
+    publicRuntimeConfig.imageDomains.filter((domain) => value.includes(domain))
+      .length !== 0;
+
+  const triggerChange = (imageUrl) => {
     if (onChange) {
       onChange(imageUrl);
     }
@@ -47,7 +54,7 @@ const CustomUpload = ({ value, onChange, setFile, disable = false }) => {
     <div className="relative flex-col item-center">
       <div className="relative ">
         <Image
-          src={value || '/avatar.svg'}
+          src={isProfileImageUrlValid ? value : '/avatar.svg'}
           width={200}
           height={200}
           layout="fixed"
@@ -57,8 +64,7 @@ const CustomUpload = ({ value, onChange, setFile, disable = false }) => {
           <LoadingOutlined className="absolute top-1/2 left-1/2 -mt-2 -ml-2" />
         )}
       </div>
-      {
-        !disable &&
+      {!disable && (
         <Upload
           name="avatar"
           beforeUpload={beforeUpload}
@@ -68,8 +74,7 @@ const CustomUpload = ({ value, onChange, setFile, disable = false }) => {
         >
           <Button className="w-24 mt-4">Change</Button>
         </Upload>
-      }
-
+      )}
     </div>
   );
 };
