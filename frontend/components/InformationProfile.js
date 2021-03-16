@@ -1,8 +1,8 @@
 import React from 'react';
-import { Button } from 'antd';
+import { Button, Image } from 'antd';
 import CustomUpload from './CustomUpload';
 
-const InformationProfile = ({ profile, setIsEditing }) => {
+const InformationProfile = ({ profile, setIsEditing, ownView }) => {
   const calculateAge = (birthdate) => {
     const date = new Date(birthdate);
     var ageDifMs = Date.now() - date.getTime();
@@ -21,7 +21,11 @@ const InformationProfile = ({ profile, setIsEditing }) => {
   return (
     <div className="flex mt-10">
       <div className="mr-32 text-center">
-        <CustomUpload value={profile.profileImageUrl} disable={true} />
+        {ownView ? (
+          <CustomUpload value={profile.profileImageUrl} disable={true} />
+        ) : (
+          <Image src={profile.profileImageUrl} />
+        )}
       </div>
       <div className="w-3/5">
         <div className="text-xl font-bold">{`${profile.firstname} ${profile.lastname}`}</div>

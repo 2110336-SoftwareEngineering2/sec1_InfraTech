@@ -28,7 +28,11 @@ const Profile = () => {
             {isEditing ? (
               <EditProfile profile={user} setIsEditing={setIsEditing} />
             ) : (
-              <InformationProfile profile={user} setIsEditing={setIsEditing} />
+              <InformationProfile
+                profile={user}
+                setIsEditing={setIsEditing}
+                ownView={true}
+              />
             )}
             {user.type === USER_TYPE.TRAINER && (
               <>
