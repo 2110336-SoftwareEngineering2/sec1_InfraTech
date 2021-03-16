@@ -3,6 +3,7 @@ import {
   ClassSerializerInterceptor,
   Controller,
   Get,
+  Post,
   Param,
   SerializeOptions,
   UseInterceptors,
@@ -20,7 +21,7 @@ export class TrainerController {
   @SerializeOptions({
     groups: [TrainerUseCases.GetTrainerByPreferences],
   })
-  @Get('preferences')
+  @Post('preferences')
   async getTrainersByPreferences(
     @Body() trainerSearchCriteriaDto: TrainerSearchCriteriaDto,
   ): Promise<Trainer[]> {
