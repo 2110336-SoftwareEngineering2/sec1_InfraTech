@@ -92,7 +92,7 @@ CREATE TABLE application(
 
 -- Mock User (password: root) --
 INSERT INTO user VALUES ("38a04ba7-096f-4af3-abb2-e38a518a01f7", "tanboi@lnwzamail.com", "$2a$10$XPTfy6sx.TUnze7fHhP6XOWds8bdQaS2NTaELcIKHcyqwNPBKtQk6", "$2a$10$XPTfy6sx.TUnze7fHhP6XO");
-INSERT INTO trainer VALUES ("38a04ba7-096f-4af3-abb2-e38a518a01f7", "Somlux", "Kamsing", "MALE", "081234567", "2017-06-15 00:00:00", "0", "https://www.aceshowbiz.com/images/photo/john_cena.jpg");
+INSERT INTO trainer VALUES ("38a04ba7-096f-4af3-abb2-e38a518a01f7", "Somlux", "Kamsing", "MALE", "081234567", "2017-06-15 00:00:00", "0", "https://www.aceshowbiz.com/images/photo/john_cena.jpg", 0.00);
 INSERT INTO user VALUES ("b1d3aeeb-7cb6-11eb-9490-0242ac140002", "toiban@lnwzamail.com", "$2a$10$XPTfy6sx.TUnze7fHhP6XOWds8bdQaS2NTaELcIKHcyqwNPBKtQk6", "$2a$10$XPTfy6sx.TUnze7fHhP6XO");
 INSERT INTO trainee VALUES ("b1d3aeeb-7cb6-11eb-9490-0242ac140002", "Tyler", "One", "MALE", "081234567", "2017-06-15 00:00:00", "https://esportspedia-streamers.s3.amazonaws.com/thumb/f/f7/Tyler1_2019.jpg/600px-Tyler1_2019.jpg");
 
@@ -105,7 +105,7 @@ INSERT INTO trainee VALUES ("user-id-0","Wongtawan","Junthai","MALE","0882441120
 
 -- eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLWlkLTEiLCJlbWFpbCI6Indvbmd0YXdhbi53cmtAZ21haWwuY29tIiwidHlwZSI6IlRSQUlORVIiLCJpYXQiOjE2MTU3MTA4MTEsImV4cCI6MTYxNjcxMDgxMX0.lrQIy7M9DQW5LbbqbE6natodrCZeLlqfh4rdX6hyggg
 INSERT INTO user VALUES ("user-id-1","wongtawan.wrk@gmail.com","$2a$10$zLA95OWY3aH0lZzyEpKsGOA/DTb7JPqBJeKysldxk2AZSv9ZaphGG","$2a$10$zLA95OWY3aH0lZzyEpKsGO");
-INSERT INTO trainer VALUES ("user-id-1","Wongtawan","Junthai","MALE","0882441120","2000-01-01 00:00:00","1111111111","https://www.google.com");
+INSERT INTO trainer VALUES ("user-id-1","Wongtawan","Junthai","MALE","0882441120","2000-01-01 00:00:00","1111111111","https://www.google.com", 0.00);
 
 INSERT INTO course VALUES ("course-id-0","Course Title 1","description","intermediate","biceps",100000,200,"user-id-1","Thailand","Bangkok");
 INSERT INTO course VALUES ("course-id-1","Course Title 2","description","intermediate","biceps",100000,200,"user-id-1","Thailand","Bangkok");
@@ -161,17 +161,17 @@ END //
 DELIMITER ;
 
 -- Mock User --
-INSERT INTO user VALUES ("38a04ba7-096f-4af3-abb2-e38a518a01f7", "tanboi@lnwzamail.com", "$2a$10$XPTfy6sx.TUnze7fHhP6XOWds8bdQaS2NTaELcIKHcyqwNPBKtQk6", "$2a$10$XPTfy6sx.TUnze7fHhP6XO");
-INSERT INTO trainer VALUES ("38a04ba7-096f-4af3-abb2-e38a518a01f7", "SomluxA", "KamsingA", "MALE", "081234567", "2017-06-15 00:00:00", "0", "https://www.aceshowbiz.com/images/photo/john_cena.jpg", 0);
 INSERT INTO user VALUES ("38a04ba7-096f-4af3-abb2-e38a518a01f8", "tanboi2@lnwzamail.com", "$2a$10$XPTfy6sx.TUnze7fHhP6XOWds8bdQaS2NTaELcIKHcyqwNPBKtQk6", "$2a$10$XPTfy6sx.TUnze7fHhP6XO");
-INSERT INTO trainer VALUES ("38a04ba7-096f-4af3-abb2-e38a518a01f8", "SomluxA", "KamsingB", "MALE", "081234567", "2017-06-15 00:00:00", "0", "https://www.aceshowbiz.com/images/photo/john_cena.jpg", 0);
+INSERT INTO trainer VALUES ("38a04ba7-096f-4af3-abb2-e38a518a01f8", "SomluxA", "KamsingA", "MALE", "081234567", "2017-06-15 00:00:00", "0", "https://www.aceshowbiz.com/images/photo/john_cena.jpg", 0);
 INSERT INTO user VALUES ("38a04ba7-096f-4af3-abb2-e38a518a01f9", "tanboi3@lnwzamail.com", "$2a$10$XPTfy6sx.TUnze7fHhP6XOWds8bdQaS2NTaELcIKHcyqwNPBKtQk6", "$2a$10$XPTfy6sx.TUnze7fHhP6XO");
-INSERT INTO trainer VALUES ("38a04ba7-096f-4af3-abb2-e38a518a01f9", "SomluxB", "KamsingA", "MALE", "081234567", "2017-06-15 00:00:00", "0", "https://www.aceshowbiz.com/images/photo/john_cena.jpg", 0);
-INSERT INTO user VALUES ("b1d3aeeb-7cb6-11eb-9490-0242ac140002", "toiban@lnwzamail.com", "$2a$10$XPTfy6sx.TUnze7fHhP6XOWds8bdQaS2NTaELcIKHcyqwNPBKtQk6", "$2a$10$XPTfy6sx.TUnze7fHhP6XO");
-INSERT INTO trainee VALUES ("b1d3aeeb-7cb6-11eb-9490-0242ac140002", "Tyler", "One", "MALE", "081234567", "2017-06-15 00:00:00", "https://esportspedia-streamers.s3.amazonaws.com/thumb/f/f7/Tyler1_2019.jpg/600px-Tyler1_2019.jpg");
+INSERT INTO trainer VALUES ("38a04ba7-096f-4af3-abb2-e38a518a01f9", "SomluxA", "KamsingB", "MALE", "081234567", "2017-06-15 00:00:00", "0", "https://www.aceshowbiz.com/images/photo/john_cena.jpg", 0);
+INSERT INTO user VALUES ("38a04ba7-096f-4af3-abb2-e38a518a01f0", "tanboi4@lnwzamail.com", "$2a$10$XPTfy6sx.TUnze7fHhP6XOWds8bdQaS2NTaELcIKHcyqwNPBKtQk6", "$2a$10$XPTfy6sx.TUnze7fHhP6XO");
+INSERT INTO trainer VALUES ("38a04ba7-096f-4af3-abb2-e38a518a01f0", "SomluxB", "KamsingA", "MALE", "081234567", "2017-06-15 00:00:00", "0", "https://www.aceshowbiz.com/images/photo/john_cena.jpg", 0);
+INSERT INTO user VALUES ("b1d3aeeb-7cb6-11eb-9490-0242ac140003", "toiban2@lnwzamail.com", "$2a$10$XPTfy6sx.TUnze7fHhP6XOWds8bdQaS2NTaELcIKHcyqwNPBKtQk6", "$2a$10$XPTfy6sx.TUnze7fHhP6XO");
+INSERT INTO trainee VALUES ("b1d3aeeb-7cb6-11eb-9490-0242ac140003", "Tyler", "One", "MALE", "081234567", "2017-06-15 00:00:00", "https://esportspedia-streamers.s3.amazonaws.com/thumb/f/f7/Tyler1_2019.jpg/600px-Tyler1_2019.jpg");
 
 -- Mock Review --
-INSERT INTO review VALUES (UUID(), "b1d3aeeb-7cb6-11eb-9490-0242ac140002", "38a04ba7-096f-4af3-abb2-e38a518a01f7", "You are good", 5);
-INSERT INTO review VALUES (UUID(), "b1d3aeeb-7cb6-11eb-9490-0242ac140002", "38a04ba7-096f-4af3-abb2-e38a518a01f7", "You are bad", 2);
-INSERT INTO review VALUES (UUID(), "b1d3aeeb-7cb6-11eb-9490-0242ac140002", "38a04ba7-096f-4af3-abb2-e38a518a01f8", "You are bad", 2);
-INSERT INTO review VALUES (UUID(), "b1d3aeeb-7cb6-11eb-9490-0242ac140002", "38a04ba7-096f-4af3-abb2-e38a518a01f9", "You are bad", 3);
+INSERT INTO review VALUES (UUID(), "b1d3aeeb-7cb6-11eb-9490-0242ac140003", "38a04ba7-096f-4af3-abb2-e38a518a01f8", "You are good", 5);
+INSERT INTO review VALUES (UUID(), "b1d3aeeb-7cb6-11eb-9490-0242ac140003", "38a04ba7-096f-4af3-abb2-e38a518a01f8", "You are bad", 2);
+INSERT INTO review VALUES (UUID(), "b1d3aeeb-7cb6-11eb-9490-0242ac140003", "38a04ba7-096f-4af3-abb2-e38a518a01f9", "You are bad", 2);
+INSERT INTO review VALUES (UUID(), "b1d3aeeb-7cb6-11eb-9490-0242ac140003", "38a04ba7-096f-4af3-abb2-e38a518a01f0", "You are bad", 3);
