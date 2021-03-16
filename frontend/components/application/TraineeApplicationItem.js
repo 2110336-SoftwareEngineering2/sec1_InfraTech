@@ -16,7 +16,7 @@ import { useCookies } from 'react-cookie';
 // TODO: Implement onClick for register and cancel course
 const TraineeApplicationItem = ({ app }) => {
   const [token] = useCookies([COOKIE_NAME]);
-  console.log(app);
+
   const course = app.course;
   const renderSwitch = (mode) => {
     switch (mode) {
@@ -27,13 +27,13 @@ const TraineeApplicationItem = ({ app }) => {
             <SyncOutlined className="m-2" />
           </>
         );
-      case 'approve':
+      case 'approved':
         return (
           <>
             Registered Course <CheckSquareOutlined className="m-2" />
           </>
         );
-      case 'reject':
+      case 'rejected':
         return (
           <>
             Rejected Course Please cancel and register again
@@ -51,9 +51,9 @@ const TraineeApplicationItem = ({ app }) => {
 
   const colorSwitch = (mode) => {
     switch (mode) {
-      case 'approve':
+      case 'approved':
         return 'indigo-100';
-      case 'reject':
+      case 'rejected':
         return 'red-100';
       case 'complete':
         return 'green-100';
@@ -90,14 +90,16 @@ const TraineeApplicationItem = ({ app }) => {
         <div className="text-lg text-gray-600">
           <>
             {renderSwitch(app.status)}
-            <Button
-              className="ml-6"
-              type="primary"
-              danger
-              onClick={handleCancel}
-            >
-              cancel
-            </Button>
+            {app.status == 'pending' && (
+              <Button
+                className="ml-6"
+                type="primary"
+                danger
+                onClick={handleCancel}
+              >
+                cancel
+              </Button>
+            )}
           </>
         </div>
       </div>
