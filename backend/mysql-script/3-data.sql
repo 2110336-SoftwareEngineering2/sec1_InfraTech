@@ -34,14 +34,14 @@ INSERT INTO trainee VALUES ("user-id-0","Wongtawan","Junthai","MALE","0882441120
 -- cookie: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLWlkLTEiLCJlbWFpbCI6Indvbmd0YXdhbi53cmtAZ21haWwuY29tIiwidHlwZSI6IlRSQUlORVIiLCJpYXQiOjE2MTU3MTA4MTEsImV4cCI6MTYxNjcxMDgxMX0.lrQIy7M9DQW5LbbqbE6natodrCZeLlqfh4rdX6hyggg
 -- password: 1103743852
 INSERT INTO user VALUES ("user-id-1","wongtawan.wrk@gmail.com","$2a$10$zLA95OWY3aH0lZzyEpKsGOA/DTb7JPqBJeKysldxk2AZSv9ZaphGG","$2a$10$zLA95OWY3aH0lZzyEpKsGO");
-INSERT INTO trainer VALUES ("user-id-1","Wongtawan","Junthai","MALE","0882441120","2000-01-01 00:00:00","1111111111","https://www.google.com");
+INSERT INTO trainer VALUES ("user-id-1","Wongtawan","Junthai","MALE","0882441120","2000-01-01 00:00:00","1111111111","https://www.google.com", 1);
 
 -- Mock Course --
-INSERT INTO course VALUES ("d1491b96-fa03-48b9-9bae-bb9c33e98eb2", "Biceps Burst", "Up size you biceps and prepare to go beyond human limits", "beginner", "strength", "1999", "20", "38a04ba7-096f-4af3-abb2-e38a518a01f6", "Sam Yan", "Bangkok");
-INSERT INTO course VALUES ("course-id-0","Course Title 1","description","intermediate","biceps",100000,200,"user-id-1","Thailand","Bangkok");
-INSERT INTO course VALUES ("course-id-1","Course Title 2","description","intermediate","biceps",100000,200,"user-id-1","Thailand","Bangkok");
-INSERT INTO course VALUES ("course-id-2","Course Title 3","description","intermediate","biceps",100000,200,"user-id-1","Thailand","Bangkok");
-INSERT INTO course VALUES ("course-id-3","Course Title 4","description","intermediate","biceps",100000,200,"user-id-1","Thailand","Bangkok");
+INSERT INTO course VALUES ("d1491b96-fa03-48b9-9bae-bb9c33e98eb2", "Biceps Burst", "Up size you biceps and prepare to go beyond human limits", "beginner", "strength", 1999, 20, "38a04ba7-096f-4af3-abb2-e38a518a01f6", "Sam Yan", "Bangkok");
+INSERT INTO course VALUES ("course-id-0","Course Title 1","description","intermediate","strength",100000,200,"user-id-1","Sam Yan", "Bangkok");
+INSERT INTO course VALUES ("course-id-1","Course Title 2","description","intermediate","strength",100000,200,"user-id-1","Sam Yan", "Bangkok");
+INSERT INTO course VALUES ("course-id-2","Course Title 3","description","intermediate","strength",100000,200,"user-id-1","Sam Yan", "Bangkok");
+INSERT INTO course VALUES ("course-id-3","Course Title 4","description","intermediate","strength",100000,200,"user-id-1","Sam Yan", "Bangkok");
 
 INSERT INTO application VALUES ("application-id-0","user-id-0","course-id-0","pending");
 INSERT INTO application VALUES ("application-id-1","user-id-0","course-id-1","pending");
