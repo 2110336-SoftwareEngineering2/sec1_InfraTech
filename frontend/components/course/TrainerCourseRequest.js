@@ -28,9 +28,17 @@ const TrainerCourseRequest = () => {
       itemLayout="vertical"
       renderItem={(item) => (
         <div className="bg-white p-6 shadow-around mb-4">
-          <div className="bg-white mb-4 flex flex-col justify-between">
-            <span className=" text-blue font-bold text-xl">{item.title}</span>
-            <TraineeRequest course_id={item.id} />
+          <div className="bg-white mb-1 flex flex-col justify-between">
+            <span className=" text-blue m-1 font-bold text-xl">
+              {item.title}
+            </span>
+            <span className="font-bold text-xl m-1">new trainee</span>
+            <TraineeRequest course_id={item.id} filter="pending" />
+            <hr className="my-4" />
+            <span className="font-bold text-xl m-1">
+              trainee in this course
+            </span>
+            <TraineeRequest course_id={item.id} filter="approve" />
           </div>
         </div>
       )}
