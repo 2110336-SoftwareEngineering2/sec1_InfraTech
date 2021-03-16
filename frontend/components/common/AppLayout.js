@@ -23,7 +23,7 @@ const AppLayout = ({ user, mutateUser, children, selectedMenu }) => {
           username={user?.firstname}
           profileImageUrl={user?.profileImageUrl}
           clickMenu={() => setCollapsed(!collapsed)}
-          handleSignOut={mutateUser}
+          mutateUser={mutateUser}
         />
         <Content>{children}</Content>
         <Footer />

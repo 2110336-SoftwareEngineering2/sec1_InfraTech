@@ -11,20 +11,24 @@ export default function useUser({
   redirectTo = null,
   redirectWhen = REDIRECT_CONDITION.USER_NOT_FOUND,
 } = {}) {
-  const [token] = useCookies([COOKIE_NAME]);
+  const [token, setCookie, removeCookie] = useCookies([COOKIE_NAME]);
 
-  const { data: user, mutate: mutateUser } = useSWR(
+  const { data: user = null, mutate: mutateUser } = useSWR(
     [`${API_HOST}/profile`, token],
     async (url, token) => {
       if (!token[COOKIE_NAME]) return;
-
-      const res = await axios.get(url, {
-        headers: {
-          Authorization: `Bearer ${token[COOKIE_NAME] || ''}`,
-          'Access-Control-Allow-Origin': '*',
-        },
-      });
-      return res?.data ?? {};
+      try {
+        const res = await axios.get(url, {
+          headers: {
+            Authorization: `Bearer ${token[COOKIE_NAME] || ''}`,
+            'Access-Control-Allow-Origin': '*',
+          },
+        });
+        return res?.data ?? null;
+      } catch (err) {
+        removeCookie(COOKIE_NAME, { path: '/' });
+        return null;
+      }
     },
   );
 

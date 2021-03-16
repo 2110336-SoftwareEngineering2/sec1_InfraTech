@@ -1,10 +1,11 @@
 import { Layout } from 'antd';
+import Link from 'next/link';
 
 const { Footer: AntdFooter } = Layout;
 
 const Footer = () => (
   <AntdFooter className="text-center">
-    LetX ©2021 Created by InfraTech
+    <Link href="/">LetX</Link> ©2021 Created by InfraTech
   </AntdFooter>
 );
 
