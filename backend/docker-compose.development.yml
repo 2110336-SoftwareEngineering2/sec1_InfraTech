@@ -15,13 +15,12 @@ services:
     logging:
       driver: none
   api:
-    image: node:14-alpine
-    working_dir: /letx-backend
-    command: yarn start:dev
+    build: .
     ports:
       - 3001:3000
     volumes:
-      - ./:/letx-backend
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
     depends_on:
       - mysqldb
 volumes:
