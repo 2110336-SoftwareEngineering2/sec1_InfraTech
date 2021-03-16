@@ -20,19 +20,22 @@ export class TrainerService {
     const { preferences, sortBy, sortType, limit } = trainerSearchCriteriaDto;
 
     // TODO: split finding users that have the specific preferences logic
-    const userPreferences = await this.connection
-      .createQueryBuilder()
-      .select('up.user_id')
-      .distinct(true)
-      .from('user_preference', 'up')
-      .where('up.preference_id IN (:...preferenceIds)', {
-        preferenceIds: preferences,
-      })
-      .getRawMany();
+    let userIds;
+    if (preferences?.length > 0) {
+      const userPreferences = await this.connection
+        .createQueryBuilder()
+        .select('up.user_id')
+        .distinct(true)
+        .from('user_preference', 'up')
+        .where('up.preference_id IN (:...preferenceIds)', {
+          preferenceIds: preferences,
+        })
+        .getRawMany();
 
-    const userIds = userPreferences.map(
-      (userPreference) => userPreference['up_user_id'],
-    );
+      userIds = userPreferences.map(
+        (userPreference) => userPreference['up_user_id'],
+      );
+    }
 
     // TODO: split trainer querying logic
     const trainerQuery = this.trainerRepository
