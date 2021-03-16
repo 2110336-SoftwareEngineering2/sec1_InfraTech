@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useCookies } from 'react-cookie';
-import { List, Space } from 'antd';
+import { List, Space, Modal } from 'antd';
 import {
   ClockCircleOutlined,
   DollarCircleOutlined,
@@ -60,7 +60,15 @@ const TrainerCourseItem = ({ course, courses, mutateCourse }) => {
             />
             <DeleteOutlined
               className="ml-2 hover:text-black"
-              onClick={() => handleDelete(course.id)}
+              onClick={() =>
+                Modal.confirm({
+                  title: 'Confirmation',
+                  content:
+                    'Are you sure you want to delete this course? This action cannot be undone.',
+                  centered: true,
+                  onOk: () => handleDelete(course.id),
+                })
+              }
             />
           </div>
         </div>
