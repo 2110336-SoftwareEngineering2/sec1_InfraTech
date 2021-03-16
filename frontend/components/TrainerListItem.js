@@ -16,13 +16,15 @@ const TrainerListItem = ({ trainer }) => {
           <div className="font-bold text-2xl">
             {trainer.firstname + ' ' + trainer.lastname}
           </div>
-          {trainer.User.preferences.map((preference) => (
-            <Tag color="green" className="text-xl mt-2">
-              {preference.name}
-            </Tag>
-          ))}
+          {trainer &&
+            trainer.user.preferences.map((preference) => (
+              <Tag color="green" className="text-xl mt-2">
+                {preference.name}
+              </Tag>
+            ))}
           <Rate
             disabled
+            allowHalf
             value={trainer.averageRating}
             className="block text-2xl mt-6"
           />

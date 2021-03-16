@@ -42,7 +42,7 @@ const Browse = () => {
   const getTrainerList = async () => {
     await axios
       .get(`${API_HOST}/trainer/preferences`, {
-        params: {
+        data: {
           preferences: preferenceFilter,
           sortBy: sortBy,
           sortType: sortType,
