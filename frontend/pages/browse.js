@@ -40,16 +40,14 @@ const Browse = () => {
   const [trainerList, setTrainerList] = useState([]);
 
   const getTrainerList = async () => {
-    await axios
-      .get(`${API_HOST}/trainer/preferences`, {
-        data: {
-          preferences: preferenceFilter,
-          sortBy: sortBy,
-          sortType: sortType,
-          limit: 10,
-        },
-      })
-      .then(({ data }) => setTrainerList(data));
+    const res = await axios.get(`${API_HOST}/trainer/preferences`, {
+      data: {
+        preferences: preferenceFilter,
+        sortBy: sortBy,
+        sortType: sortType,
+      },
+    });
+    setTrainerList(res.data);
   };
 
   useEffect(() => {

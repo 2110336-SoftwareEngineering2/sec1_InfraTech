@@ -18,9 +18,8 @@ const FilterTrainerList = ({
   const [preferenceOptions, setPreferenceOptions] = useState([]);
 
   const getPreferences = async () => {
-    await axios
-      .get(`${API_HOST}/preference`)
-      .then(({ data }) => setPreferenceOptions(data));
+    const res = await axios.get(`${API_HOST}/preference`);
+    setPreferenceOptions(res.data);
   };
 
   useEffect(() => {
@@ -44,7 +43,7 @@ const FilterTrainerList = ({
       setPreferenceFilter([...preferenceFilter, value]);
     }
   };
-  console.log(preferenceOptions);
+
   return (
     <div className="my-6">
       <div>
@@ -61,6 +60,7 @@ const FilterTrainerList = ({
             color={preferenceFilter.includes(preference.id) && 'blue'}
             onClick={() => handlePreferences(preference.id)}
             className="text-xl rounded-xl p-2 my-4 cursor-pointer"
+            key={preference.id}
           >
             {preference.name}
           </Tag>
