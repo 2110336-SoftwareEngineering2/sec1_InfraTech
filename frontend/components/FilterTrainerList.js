@@ -47,7 +47,7 @@ const FilterTrainerList = ({
   return (
     <div className="my-6">
       <div>
-        <div className="text-xl">Select Your Workout Preferences</div>
+        <div className="text-lg">Select Your Workout Preferences</div>
         {preferenceOptions.map((preference) => (
           <Tag
             icon={
@@ -59,7 +59,7 @@ const FilterTrainerList = ({
             }
             color={preferenceFilter.includes(preference.id) && 'blue'}
             onClick={() => handlePreferences(preference.id)}
-            className="text-xl rounded-xl p-2 my-4 cursor-pointer"
+            className="text-lg rounded-xl p-2 my-4 cursor-pointer"
             key={preference.id}
           >
             {preference.name}
@@ -68,22 +68,22 @@ const FilterTrainerList = ({
       </div>
       <div className="flex">
         <div>
-          <div className="text-xl">Sort By</div>
+          <div className="text-lg">Sort By</div>
           <Select
             defaultValue={sortBy}
             onChange={handleSortBy}
-            className="w-64 text-xl my-4"
+            className="w-64 text-lg my-4"
           >
             <Option value={TrainerSortBy.AverageRating}>Rating</Option>
             <Option value={TrainerSortBy.Fullname}>Full Name</Option>
           </Select>
         </div>
         <div className="ml-12">
-          <div className="text-xl">Sort Order</div>
+          <div className="text-lg">Sort Order</div>
           <Select
             defaultValue={sortType}
             onChange={handleSortType}
-            className="w-64 text-xl my-4"
+            className="w-64 text-lg my-4"
           >
             <Option value={TrainerSortType.Ascending}>Ascending</Option>
             <Option value={TrainerSortType.Descending}>Descending</Option>

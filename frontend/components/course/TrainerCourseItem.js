@@ -9,25 +9,15 @@ import {
   EditOutlined,
   DeleteOutlined,
   EnvironmentOutlined,
-  UserOutlined,
 } from '@ant-design/icons';
 import axios from 'axios';
 
-import TraineeListModal from './TraineeListModal';
 import TrainerEditCourseFormModal from './TrainerEditCourseFormModal';
 
 import { COOKIE_NAME, API_HOST } from '../../config/config';
-const data = [
-  {
-    id: 1,
-    name: 'Manny Pacquiao',
-  },
-  { id: 2, name: 'Manny John' },
-  { id: 3, name: 'Manny Jake' },
-];
+
 const TrainerCourseItem = ({ course, courses, mutateCourse }) => {
   const [token] = useCookies([COOKIE_NAME]);
-  const [showTraineeList, setShowTraineeList] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
 
   const handleDelete = async (id) => {
@@ -50,10 +40,6 @@ const TrainerCourseItem = ({ course, courses, mutateCourse }) => {
         <div className="mb-6 flex justify-between">
           <span className=" text-blue font-bold text-xl">{course.title}</span>
           <div className="text-lg text-gray-400">
-            <UserOutlined
-              className="ml-2 hover:text-black"
-              onClick={() => setShowTraineeList(true)}
-            />
             <EditOutlined
               className="ml-2 hover:text-black"
               onClick={() => setShowEditForm(true)}
@@ -109,10 +95,6 @@ const TrainerCourseItem = ({ course, courses, mutateCourse }) => {
           ]}
         />
       </div>
-      <TraineeListModal
-        visible={showTraineeList}
-        setVisible={setShowTraineeList}
-      />
       <TrainerEditCourseFormModal
         courses={courses}
         id={course.id}
