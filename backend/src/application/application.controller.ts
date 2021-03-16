@@ -86,10 +86,10 @@ export class ApplicationController {
   ): Promise<void> {
     const application = await this.applicationService.getPendingApplication({
       courseId: courseId,
-      traineeId: request.user.id,
+      traineeId: traineeId,
     });
     await this.applicationService.validateTrainer({
-      trainerId: traineeId,
+      trainerId: request.user.id,
       application: application,
     });
     application.approve();
@@ -106,10 +106,10 @@ export class ApplicationController {
   ): Promise<void> {
     const application = await this.applicationService.getPendingApplication({
       courseId: courseId,
-      traineeId: request.user.id,
+      traineeId:  traineeId,
     });
     await this.applicationService.validateTrainer({
-      trainerId: traineeId,
+      trainerId: request.user.id,
       application: application,
     });
     application.reject();

@@ -106,6 +106,7 @@ export class ApplicationService {
     traineeId,
     courseId,
   }: TraineeApplication): Promise<Application> {
+    
     try {
       return await this.applicationRepository.findOneOrFail({
         where: [
