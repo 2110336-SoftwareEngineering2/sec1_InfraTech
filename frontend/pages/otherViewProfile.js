@@ -7,8 +7,6 @@ import { AppLayout } from '../components/common';
 import InformationProfile from '../components/InformationProfile';
 
 import Loading from '../components/common/Loading';
-import { USER_TYPE } from '../config/UserType.config';
-import TrainerCourseListInOtherview from '../components/courseInOtherview/TrainerCourseListInOtherview';
 
 const otherViewProfile = () => {
   //TODO:แก้จากเป็น user ตัวเองเป็น user ของ trainer ที่ลิ้งตาม ID ของ trainer
@@ -27,10 +25,8 @@ const otherViewProfile = () => {
             <InformationProfile profile={user} ownView={false} />
             <hr className="my-16" />
             <div className="text-4xl font-bold mb-10">Trainer's Courses</div>
-            <TrainerCourseListInOtherview
-              type={user.type}
-              showTrainerName={false}
-            />
+            {/* TODO:Create TrainerCourseListInOtherview  */}
+            {/* <TrainerCourseListInOtherview /> */}
           </div>
         </div>
       ) : (
