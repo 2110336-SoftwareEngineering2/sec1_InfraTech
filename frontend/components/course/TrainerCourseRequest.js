@@ -21,7 +21,6 @@ const TrainerCourseRequest = () => {
       return res?.data ?? {};
     },
   );
-  console.log(courses);
   return (
     <List
       dataSource={courses}
@@ -38,7 +37,7 @@ const TrainerCourseRequest = () => {
             <span className="font-bold text-xl m-1">
               trainee in this course
             </span>
-            <TraineeRequest course_id={item.id} filter="approve" />
+            <TraineeRequest course_id={item.id} filter="approved" />
           </div>
         </div>
       )}

@@ -23,8 +23,6 @@ const TraineeRequest = ({ course_id, filter }) => {
     },
   );
 
-  console.log(trainees);
-
   const handleApprove = (traineeId) => {
     axios.patch(
       `${API_HOST}/application/approve/${course_id}?traineeId=${traineeId}`,
@@ -37,7 +35,31 @@ const TraineeRequest = ({ course_id, filter }) => {
       },
     );
   };
-  const handleReject = (traineeId) => {};
+  const handleReject = (traineeId) => {
+    axios.patch(
+      `${API_HOST}/application/reject/${course_id}?traineeId=${traineeId}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token[COOKIE_NAME] || ''}`,
+          'Access-Control-Allow-Origin': '*',
+        },
+      },
+    );
+  };
+
+  const handleKick = (traineeId) => {
+    axios.patch(
+      `${API_HOST}/application/cancel/${course_id}?traineeId=${traineeId}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token[COOKIE_NAME] || ''}`,
+          'Access-Control-Allow-Origin': '*',
+        },
+      },
+    );
+  };
 
   return (
     <List
@@ -75,7 +97,7 @@ const TraineeRequest = ({ course_id, filter }) => {
               type="primary"
               danger
               onClick={() => {
-                handleReject(item.traineeUserId);
+                handleKick(item.traineeUserId);
               }}
             >
               Kick

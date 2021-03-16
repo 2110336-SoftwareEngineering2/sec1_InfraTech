@@ -37,23 +37,27 @@ const Course = () => {
             <div className="text-4xl font-bold m-10">
               My Arleady Approve Courses
             </div>
-            <TraineeApplicationList filter="approve" app={app} />
+            <TraineeApplicationList filter="approved" app={app} />
+            <hr className="my-10" />
             <div className="text-4xl font-bold m-10">
               Pending For Approve Courses
             </div>
             <TraineeApplicationList filter="pending" app={app} />
+            <hr className="my-10" />
             <div className="text-4xl font-bold m-10">Complete Courses</div>
             <TraineeApplicationList
               className="bg-green-300"
               filter="complete"
               app={app}
             />
+            <hr className="my-10" />
             <div className="text-4xl font-bold m-10">Rejected Courses</div>
             <TraineeApplicationList
               type={USER_TYPE.TRAINEE}
               filter="reject"
               app={app}
             />
+            <hr className="my-10" />
           </div>
         </div>
       ) : (
