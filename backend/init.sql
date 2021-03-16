@@ -99,11 +99,11 @@ INSERT INTO trainee VALUES ("b1d3aeeb-7cb6-11eb-9490-0242ac140002", "Tyler", "On
 -- Mock Course --
 INSERT INTO course VALUES ("d1491b96-fa03-48b9-9bae-bb9c33e98eb2", "Biceps Burst", "Up size you biceps and prepare to go beyond human limits", "beginner", "strength", "1999", "20", "38a04ba7-096f-4af3-abb2-e38a518a01f7", "Sam Yan", "Bangkok");
 
---eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLWlkLTAiLCJlbWFpbCI6Indvbmd0YXdhbi5wc25AZ21haWwuY29tIiwidHlwZSI6IlRSQUlORUUiLCJpYXQiOjE2MTU3MTA3ODcsImV4cCI6MTYxNjcxMDc4N30.IfHwR_CwfDmAll6ubqa52NS5LbJ49q9BWnMwD9-GGlI
+-- eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLWlkLTAiLCJlbWFpbCI6Indvbmd0YXdhbi5wc25AZ21haWwuY29tIiwidHlwZSI6IlRSQUlORUUiLCJpYXQiOjE2MTU3MTA3ODcsImV4cCI6MTYxNjcxMDc4N30.IfHwR_CwfDmAll6ubqa52NS5LbJ49q9BWnMwD9-GGlI
 INSERT INTO user VALUES ("user-id-0","wongtawan.psn@gmail.com","$2a$10$r16B3Ce8VYmxnaoaLVEAc.VepiOumzJJtwSk.H2xAXiexhEMnAAs.","$2a$10$r16B3Ce8VYmxnaoaLVEAc.");
 INSERT INTO trainee VALUES ("user-id-0","Wongtawan","Junthai","MALE","0882441120","2000-01-01 00:00:00","https://www.google.com");
 
---eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLWlkLTEiLCJlbWFpbCI6Indvbmd0YXdhbi53cmtAZ21haWwuY29tIiwidHlwZSI6IlRSQUlORVIiLCJpYXQiOjE2MTU3MTA4MTEsImV4cCI6MTYxNjcxMDgxMX0.lrQIy7M9DQW5LbbqbE6natodrCZeLlqfh4rdX6hyggg
+-- eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLWlkLTEiLCJlbWFpbCI6Indvbmd0YXdhbi53cmtAZ21haWwuY29tIiwidHlwZSI6IlRSQUlORVIiLCJpYXQiOjE2MTU3MTA4MTEsImV4cCI6MTYxNjcxMDgxMX0.lrQIy7M9DQW5LbbqbE6natodrCZeLlqfh4rdX6hyggg
 INSERT INTO user VALUES ("user-id-1","wongtawan.wrk@gmail.com","$2a$10$zLA95OWY3aH0lZzyEpKsGOA/DTb7JPqBJeKysldxk2AZSv9ZaphGG","$2a$10$zLA95OWY3aH0lZzyEpKsGO");
 INSERT INTO trainer VALUES ("user-id-1","Wongtawan","Junthai","MALE","0882441120","2000-01-01 00:00:00","1111111111","https://www.google.com");
 
