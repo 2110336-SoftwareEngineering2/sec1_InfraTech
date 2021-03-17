@@ -87,7 +87,7 @@ const TraineeApplicationItem = ({ app }) => {
             {course.trainer.firstname}
           </div>
         </div>
-        <div className="text-lg text-gray-600">
+        <div className="text-gray-600">
           <>
             {renderSwitch(app.status)}
             {app.status == 'pending' && (
@@ -103,7 +103,7 @@ const TraineeApplicationItem = ({ app }) => {
           </>
         </div>
       </div>
-      <div className="text-lg">{course.description}</div>
+      <div>{course.description}</div>
       <List.Item
         actions={[
           <IconText icon={<RadarChartOutlined />} text={course.specialize} />,
@@ -123,7 +123,7 @@ const TraineeApplicationItem = ({ app }) => {
 };
 
 const IconText = ({ icon, text }) => (
-  <Space className="text-lg text-gray-800">
+  <Space className=" text-gray-800">
     {icon}
     {text}
   </Space>
