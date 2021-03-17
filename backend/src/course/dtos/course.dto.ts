@@ -6,6 +6,6 @@ export interface CourseDto {
   specialization: string;
   price: number;
   period: number;
-  city: string;
+  district: string;
   province: string;
 }

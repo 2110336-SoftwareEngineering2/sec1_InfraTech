@@ -54,7 +54,7 @@ CREATE TABLE course(
     price DECIMAL(18,2),
     `period` INT,
     trainer_user_id VARCHAR(36) NOT NULL,
-    city VARCHAR(255),
+    district VARCHAR(255),
     province VARCHAR(255) NOT NULL,
 
     CONSTRAINT FK_course_trainer_user_id FOREIGN KEY (trainer_user_id) REFERENCES trainer(user_id) ON DELETE CASCADE

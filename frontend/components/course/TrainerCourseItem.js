@@ -88,8 +88,17 @@ const TrainerCourseItem = ({ course, courses, mutateCourse }) => {
             />,
             <IconText
               icon={<EnvironmentOutlined />}
-              text={`${course.city ? course.city + ',' : ''} ${
-                course.province
+              text={`${
+                course?.district
+                  ? course.district.charAt(0).toUpperCase() +
+                    course.district.slice(1) +
+                    ','
+                  : ''
+              } ${
+                course?.province
+                  ? course.province.charAt(0).toUpperCase() +
+                    course.province.slice(1)
+                  : ''
               }`}
             />,
           ]}

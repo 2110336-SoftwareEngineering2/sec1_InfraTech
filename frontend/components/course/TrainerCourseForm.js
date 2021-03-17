@@ -4,7 +4,12 @@ import axios from 'axios';
 
 import { API_HOST } from '../../config/config';
 
-const TrainerCourseForm = ({ form, formId, initialFormValues, handleSubmit }) => {
+const TrainerCourseForm = ({
+  form,
+  formId,
+  initialFormValues,
+  handleSubmit,
+}) => {
   const { data: preferences } = useSWR(
     `${API_HOST}/preference`,
     async (url) => {
@@ -119,9 +124,9 @@ const TrainerCourseForm = ({ form, formId, initialFormValues, handleSubmit }) =>
           <Input />
         </Form.Item>
         <Form.Item
-          name="city"
-          label="City"
-          initialValue={initialValues.city}
+          name="district"
+          label="District"
+          initialValue={initialValues.district}
         >
           <Input />
         </Form.Item>

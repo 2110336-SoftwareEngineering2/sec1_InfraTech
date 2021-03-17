@@ -49,7 +49,7 @@ export class CourseService {
       price: dto.price,
       period: dto.period,
       trainerUserId: trainerUserId,
-      city: dto.city,
+      district: dto.district,
       province: dto.province,
     })
 
