@@ -2,12 +2,14 @@ import { List } from 'antd';
 
 import TraineeViewCourseItem from './TraineeViewCourseItem';
 
-const TraineeApplicationList = ({ courses }) => {
+const TraineeApplicationList = ({ courses, showStatus }) => {
   return (
     <List
       dataSource={courses}
       itemLayout="vertical"
-      renderItem={(item) => <TraineeViewCourseItem app={item} />}
+      renderItem={(item) => (
+        <TraineeViewCourseItem course={item} showStatus={showStatus} />
+      )}
     />
   );
 };
