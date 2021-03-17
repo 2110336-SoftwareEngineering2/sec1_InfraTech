@@ -1,10 +1,10 @@
 USE letx;
 
 -- Preference
-INSERT INTO preference (id, name, svg_url) VALUES (UUID(), "Cardiovascular", "/cardiovascular.svg");
-INSERT INTO preference (id, name, svg_url) VALUES (UUID(), "Balance", "/balance.svg");
-INSERT INTO preference (id, name, svg_url) VALUES (UUID(), "Flexibility", "/flexibility.svg");
-INSERT INTO preference (id, name, svg_url) VALUES (UUID(), "Strength", "/strength.svg");
+INSERT INTO preference (id, name, svg_url) VALUES ("pref-1", "Cardiovascular", "/cardiovascular.svg");
+INSERT INTO preference (id, name, svg_url) VALUES ("pref-2", "Balance", "/balance.svg");
+INSERT INTO preference (id, name, svg_url) VALUES ("pref-3", "Flexibility", "/flexibility.svg");
+INSERT INTO preference (id, name, svg_url) VALUES ("pref-4", "Strength", "/strength.svg");
 
 -- Mock User --
 
@@ -35,6 +35,21 @@ INSERT INTO trainee VALUES ("user-id-0","Wongtawan","Junthai","MALE","0882441120
 -- password: 1103743852
 INSERT INTO user VALUES ("user-id-1","wongtawan.wrk@gmail.com","$2a$10$zLA95OWY3aH0lZzyEpKsGOA/DTb7JPqBJeKysldxk2AZSv9ZaphGG","$2a$10$zLA95OWY3aH0lZzyEpKsGO");
 INSERT INTO trainer VALUES ("user-id-1","Wongtawan","Junthai","MALE","0882441120","2000-01-01 00:00:00","1111111111","https://www.google.com", 1);
+
+-- Mock User Preference --
+INSERT INTO user_preference VALUES("38a04ba7-096f-4af3-abb2-e38a518a01f6", "pref-1");
+INSERT INTO user_preference VALUES("38a04ba7-096f-4af3-abb2-e38a518a01f6", "pref-4");
+
+INSERT INTO user_preference VALUES("38a04ba7-096f-4af3-abb2-e38a518a01f7", "pref-2");
+
+INSERT INTO user_preference VALUES("38a04ba7-096f-4af3-abb2-e38a518a01f8", "pref-3");
+
+INSERT INTO user_preference VALUES("38a04ba7-096f-4af3-abb2-e38a518a01f9", "pref-1");
+INSERT INTO user_preference VALUES("38a04ba7-096f-4af3-abb2-e38a518a01f9", "pref-3");
+INSERT INTO user_preference VALUES("38a04ba7-096f-4af3-abb2-e38a518a01f9", "pref-4");
+
+INSERT INTO user_preference VALUES("b1d3aeeb-7cb6-11eb-9490-0242ac140002", "pref-2");
+INSERT INTO user_preference VALUES("b1d3aeeb-7cb6-11eb-9490-0242ac140002", "pref-3");
 
 -- Mock Course --
 INSERT INTO course VALUES ("d1491b96-fa03-48b9-9bae-bb9c33e98eb2", "Biceps Burst", "Up size you biceps and prepare to go beyond human limits", "beginner", "strength", 1999, 20, "38a04ba7-096f-4af3-abb2-e38a518a01f6", "Sam Yan", "Bangkok");

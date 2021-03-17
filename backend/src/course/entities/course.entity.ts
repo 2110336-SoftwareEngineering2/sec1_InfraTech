@@ -36,7 +36,7 @@ export class Course {
   period: number;
 
   @Column()
-  city: string;
+  district: string;
 
   @Column()
   province: string;
