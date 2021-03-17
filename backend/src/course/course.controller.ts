@@ -31,8 +31,6 @@ export class CourseController {
   }
 
   @Get('trainer/:user_id')
-  @Role(UserType.Trainer)
-  @UseGuards(RoleGuard)
   async listCoursesByTrainer(
     @Param('user_id') user_id,
     @Req() request: LetXRequest,
