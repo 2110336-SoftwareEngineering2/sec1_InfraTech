@@ -71,7 +71,12 @@ export class Trainer {
 
   @OneToOne(() => User, (user) => user.id, { primary: true })
   @JoinColumn({ name: 'user_id' })
-  @Expose({ groups: [TrainerUseCases.GetTrainerByPreferences] })
+  @Expose({
+    groups: [
+      TrainerUseCases.GetTrainerByPreferences,
+      TrainerUseCases.GetTrainerById,
+    ],
+  })
   user: User;
 
   @OneToMany(() => Review, (review) => review.trainer)
