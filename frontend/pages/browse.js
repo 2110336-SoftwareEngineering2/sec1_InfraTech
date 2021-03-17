@@ -9,29 +9,6 @@ import { TrainerSortBy, TrainerSortType } from '../config/FilterTrainer.config';
 import { API_HOST } from '../config/config';
 import axios from 'axios';
 
-const data = [
-  {
-    userId: 123,
-    firstname: 'Kornnara',
-    lastname: 'Deputsuma',
-    profileImageUrl: '/information.svg',
-    averageRating: 3,
-    User: {
-      id: 123,
-      preferences: [
-        {
-          id: 123,
-          name: 'strength',
-        },
-        {
-          id: 124,
-          name: 'flexibility',
-        },
-      ],
-    },
-  },
-];
-
 const Browse = () => {
   const { user, mutateUser } = useUser({});
   const [preferenceFilter, setPreferenceFilter] = useState([]);
@@ -40,12 +17,10 @@ const Browse = () => {
   const [trainerList, setTrainerList] = useState([]);
 
   const getTrainerList = async () => {
-    const res = await axios.get(`${API_HOST}/trainer/preferences`, {
-      data: {
-        preferences: preferenceFilter,
-        sortBy: sortBy,
-        sortType: sortType,
-      },
+    const res = await axios.post(`${API_HOST}/trainer/preferences`, {
+      preferences: preferenceFilter,
+      sortBy: sortBy,
+      sortType: sortType,
     });
     setTrainerList(res.data);
   };

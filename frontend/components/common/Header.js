@@ -46,8 +46,8 @@ const GuestHeader = () => (
 const NonGuestHeader = ({ username, profileImageUrl = '', mutateUser }) => {
   const [cookies, setCookie, removeCookie] = useCookies([COOKIE_NAME]);
   const isProfileImageUrlValid =
-    publicRuntimeConfig.imageDomains.filter((domain) =>
-      profileImageUrl.includes(domain),
+    publicRuntimeConfig.imageDomains.filter(
+      (domain) => profileImageUrl && profileImageUrl.includes(domain),
     ).length !== 0;
 
   const onClick = () => {

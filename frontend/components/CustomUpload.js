@@ -7,10 +7,11 @@ import { getBase64 } from '../lib/utils';
 
 const { publicRuntimeConfig } = getConfig();
 
-const CustomUpload = ({ value, onChange, setFile, disable = false }) => {
+const CustomUpload = ({ value = '', onChange, setFile, disable = false }) => {
   const isProfileImageUrlValid =
-    publicRuntimeConfig.imageDomains.filter((domain) => value.includes(domain))
-      .length !== 0;
+    publicRuntimeConfig.imageDomains.filter(
+      (domain) => value && value.includes(domain),
+    ).length !== 0;
 
   const triggerChange = (imageUrl) => {
     if (onChange) {
