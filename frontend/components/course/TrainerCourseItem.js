@@ -34,11 +34,16 @@ const TrainerCourseItem = ({ course, courses, mutateCourse }) => {
     }
   };
 
+  const setFirstCapitalLetter = (text = '') =>
+    text.charAt(0).toUpperCase() + text.slice(1);
+
   return (
     <>
       <div className="p-6 shadow-around mb-4">
         <div className="mb-6 flex justify-between">
-          <span className=" text-blue font-bold text-xl">{course.title}</span>
+          <span className=" text-blue font-bold text-xl">
+            {setFirstCapitalLetter(course.title)}
+          </span>
           <div className="text-lg text-gray-400">
             <EditOutlined
               className="ml-2 hover:text-black"
@@ -58,25 +63,16 @@ const TrainerCourseItem = ({ course, courses, mutateCourse }) => {
             />
           </div>
         </div>
-        <div>{course.description}</div>
+        <div>{setFirstCapitalLetter(course.description)}</div>
         <List.Item
           actions={[
             <IconText
               icon={<RadarChartOutlined />}
-              text={
-                course?.specialization
-                  ? course.specialization.charAt(0).toUpperCase() +
-                    course.specialization.slice(1)
-                  : ''
-              }
+              text={setFirstCapitalLetter(course.specialization)}
             />,
             <IconText
               icon={<DashboardOutlined />}
-              text={
-                course?.level
-                  ? course.level.charAt(0).toUpperCase() + course.level.slice(1)
-                  : ''
-              }
+              text={setFirstCapitalLetter(course.level)}
             />,
             <IconText
               icon={<ClockCircleOutlined />}
@@ -90,16 +86,9 @@ const TrainerCourseItem = ({ course, courses, mutateCourse }) => {
               icon={<EnvironmentOutlined />}
               text={`${
                 course?.district
-                  ? course.district.charAt(0).toUpperCase() +
-                    course.district.slice(1) +
-                    ','
+                  ? setFirstCapitalLetter(course.district) + ','
                   : ''
-              } ${
-                course?.province
-                  ? course.province.charAt(0).toUpperCase() +
-                    course.province.slice(1)
-                  : ''
-              }`}
+              } ${setFirstCapitalLetter(course.province)}`}
             />,
           ]}
         />

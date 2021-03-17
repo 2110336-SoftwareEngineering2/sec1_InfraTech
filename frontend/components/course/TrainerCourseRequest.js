@@ -31,11 +31,11 @@ const TrainerCourseRequest = () => {
             <span className=" text-blue m-1 font-bold text-xl">
               {item.title}
             </span>
-            <span className="font-bold text-xl m-1">new trainee</span>
+            <span className="font-bold text-xl m-1">New trainee</span>
             <TraineeRequest course_id={item.id} filter="pending" />
             <hr className="my-4" />
             <span className="font-bold text-xl m-1">
-              trainee in this course
+              Trainee in this course
             </span>
             <TraineeRequest course_id={item.id} filter="approved" />
           </div>
