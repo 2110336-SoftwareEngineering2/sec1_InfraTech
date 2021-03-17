@@ -40,13 +40,7 @@ export class TrainerService {
     // TODO: split trainer querying logic
     const trainerQuery = this.trainerRepository
       .createQueryBuilder('trainer')
-      .select([
-        'trainer',
-        'user.id',
-        'preference.id',
-        'preference.name',
-        'review',
-      ])
+      .select(['trainer', 'user', 'preference', 'review'])
       .addSelect('CONCAT(trainer.firstname, trainer.lastname)', 'fullname')
       .leftJoin('trainer.user', 'user')
       .leftJoin('user.preferences', 'preference')
@@ -78,6 +72,7 @@ export class TrainerService {
   async getTrainerById(id: string): Promise<Trainer> {
     return this.trainerRepository.findOneOrFail({
       where: { userId: id },
+      relations: ['user', 'user.preferences'],
     });
   }
 }
