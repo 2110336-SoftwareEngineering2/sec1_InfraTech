@@ -16,7 +16,11 @@ import { useCookies } from 'react-cookie';
 // TODO: Implement onClick for register and cancel course
 const TraineeApplicationItem = ({ app }) => {
   const [token] = useCookies([COOKIE_NAME]);
-
+  const setFirstCapitalLetter = (text = '') =>
+    text
+      .split(' ')
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
   const course = app.course;
   const renderSwitch = (mode) => {
     switch (mode) {
@@ -80,11 +84,11 @@ const TraineeApplicationItem = ({ app }) => {
       >
         <div className=" mb-6 flex justify-start">
           <div className=" ml-3 text-blue font-bold text-xl">
-            {course.title}
+            {setFirstCapitalLetter(course.title)}
           </div>
           <div className=" ml-3 text-black font-bold text-xl">by trainer</div>
           <div className=" ml-3 text-red-500 font-bold text-xl">
-            {course.trainer.firstname}
+            {setFirstCapitalLetter(course.trainer.firstname)}
           </div>
         </div>
         <div className="text-gray-600">
@@ -103,10 +107,13 @@ const TraineeApplicationItem = ({ app }) => {
           </>
         </div>
       </div>
-      <div>{course.description}</div>
+      <div>{setFirstCapitalLetter(course.description)}</div>
       <List.Item
         actions={[
-          <IconText icon={<RadarChartOutlined />} text={course.specialize} />,
+          <IconText
+            icon={<RadarChartOutlined />}
+            text={course.specialization}
+          />,
           <IconText icon={<DashboardOutlined />} text={course.level} />,
           <IconText
             icon={<ClockCircleOutlined />}
