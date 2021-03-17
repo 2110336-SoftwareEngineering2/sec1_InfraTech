@@ -9,6 +9,7 @@ const { publicRuntimeConfig } = getConfig();
 
 const CustomUpload = ({ value = '', onChange, setFile, disable = false }) => {
   const isProfileImageUrlValid =
+    setFile ||
     publicRuntimeConfig.imageDomains.filter(
       (domain) => value && value.includes(domain),
     ).length !== 0;
