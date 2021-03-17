@@ -35,7 +35,7 @@ const Course = () => {
             My Course
             <hr className="my-16" />
             <div className="text-4xl font-bold m-10">
-              My Arleady Approve Courses
+              My Already Approve Courses
             </div>
             <TraineeApplicationList filter="approved" app={app} />
             <hr className="my-10" />
@@ -54,7 +54,7 @@ const Course = () => {
             <div className="text-4xl font-bold m-10">Rejected Courses</div>
             <TraineeApplicationList
               type={USER_TYPE.TRAINEE}
-              filter="reject"
+              filter="rejected"
               app={app}
             />
             <hr className="my-10" />
