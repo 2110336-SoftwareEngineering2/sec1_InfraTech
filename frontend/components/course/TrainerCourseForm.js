@@ -2,6 +2,7 @@ import { Form, Input, Select, Radio, InputNumber } from 'antd';
 import useSWR from 'swr';
 import axios from 'axios';
 
+import { PROVINCE_NAME } from '../../config/Province.config';
 import { API_HOST } from '../../config/config';
 
 const TrainerCourseForm = ({
@@ -121,7 +122,20 @@ const TrainerCourseForm = ({
           rules={[{ required: true, message: 'Province is required' }]}
           initialValue={initialValues.province}
         >
-          <Input />
+          <Select
+            showSearch
+            style={{ width: 220 }}
+            optionFilterProp="value"
+            filterOption={(input, option) =>
+              option.value.toLowerCase().startsWith(input.toLowerCase())
+            }
+          >
+            {PROVINCE_NAME.map((province, idx) => (
+              <Select.Option key={idx} value={province.toLowerCase()}>
+                {province}
+              </Select.Option>
+            ))}
+          </Select>
         </Form.Item>
         <Form.Item
           name="district"

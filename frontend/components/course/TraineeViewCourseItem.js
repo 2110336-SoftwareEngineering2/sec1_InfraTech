@@ -75,33 +75,32 @@ const TraineeApplicationItem = ({ course, showStatus }) => {
     }
   };
 
+  const setFirstCapitalLetter = (text = '') =>
+    text
+      .split(' ')
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+
   return (
     <div className="p-6 shadow-around mb-4">
       <div className="mb-6 flex justify-between">
-        <span className=" text-blue font-bold text-xl">{course.title}</span>
+        <span className=" text-blue font-bold text-xl">
+          {setFirstCapitalLetter(course.title)}
+        </span>
         <div className="text-lg text-gray-400">
           {showStatus && renderByStatus(course.status)}
         </div>
       </div>
-      <div className="text-lg">{course.description}</div>
+      <div>{setFirstCapitalLetter(course.description)}</div>
       <List.Item
         actions={[
           <IconText
             icon={<RadarChartOutlined />}
-            text={
-              course?.specialization
-                ? course.specialization.charAt(0).toUpperCase() +
-                  course.specialization.slice(1)
-                : ''
-            }
+            text={setFirstCapitalLetter(course?.specialization)}
           />,
           <IconText
             icon={<DashboardOutlined />}
-            text={
-              course?.level
-                ? course.level.charAt(0).toUpperCase() + course.level.slice(1)
-                : ''
-            }
+            text={setFirstCapitalLetter(course?.level)}
           />,
           <IconText
             icon={<ClockCircleOutlined />}
@@ -113,7 +112,11 @@ const TraineeApplicationItem = ({ course, showStatus }) => {
           />,
           <IconText
             icon={<EnvironmentOutlined />}
-            text={`${course.city ? course.city + ',' : ''} ${course.province}`}
+            text={`${
+              course?.district
+                ? setFirstCapitalLetter(course.district) + ','
+                : ''
+            } ${setFirstCapitalLetter(course.province)}`}
           />,
         ]}
       />
@@ -122,7 +125,7 @@ const TraineeApplicationItem = ({ course, showStatus }) => {
 };
 
 const IconText = ({ icon, text }) => (
-  <Space className="text-lg text-gray-800">
+  <Space className="text-gray-800">
     {icon}
     {text}
   </Space>
