@@ -91,7 +91,7 @@ const EditProfile = ({ profile, setIsEditing }) => {
   return (
     <Form form={form} initialValues={profile} onFinish={onSave} size="large">
       <div className="flex mt-10">
-        <div className="mr-32">
+        <div className="mr-16">
           <Form.Item name="profileImageUrl" className="text-center">
             <CustomUpload setFile={setFile} />
           </Form.Item>
