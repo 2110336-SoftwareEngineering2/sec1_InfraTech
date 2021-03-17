@@ -35,7 +35,10 @@ const TrainerCourseItem = ({ course, courses, mutateCourse }) => {
   };
 
   const setFirstCapitalLetter = (text = '') =>
-    text.charAt(0).toUpperCase() + text.slice(1);
+    text
+      .split(' ')
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
 
   return (
     <>
