@@ -83,6 +83,8 @@ CREATE TABLE application(
     CONSTRAINT FK_application_course_id FOREIGN KEY (course_id) REFERENCES course(id) ON DELETE CASCADE
 );
 
+CREATE UNIQUE INDEX IX_trainee_user_id_course_id ON application(trainee_user_id, course_id);
+
 -- TODO : Create index for application (course_id, trainee_id)
 -- TODO : Create index for application (trainee_id, course_id)
 
