@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { Tag, Rate } from 'antd';
 import getConfig from 'next/config';
+import Router from 'next/router';
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -10,8 +11,13 @@ const TrainerListItem = ({ trainer }) => {
       (domain) =>
         trainer.profileImageUrl && trainer.profileImageUrl.includes(domain),
     ).length !== 0;
+
+  const onClick = () => {
+    Router.push('/trainer/' + trainer.user.id);
+  };
+
   return (
-    <div className="p-6 shadow-around my-6">
+    <div onClick={onClick} className="p-6 shadow-around my-6 cursor-pointer">
       <div className="flex">
         <Image
           src={isProfileImageUrlValid ? trainer.profileImageUrl : '/avatar.svg'}
