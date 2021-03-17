@@ -1,14 +1,11 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
 
-import { Trainee } from '../entities/trainee.entity';
-import { Builder } from 'builder-pattern';
-import {
-  Application,
-  ApplicationStatus,
-} from '../application/entities/application.entity';
-import { Course } from '../course/entities/course.entity';
+import { Trainee } from "../entities/trainee.entity";
+import { Builder } from "builder-pattern";
+import { Application, ApplicationStatus } from "../application/entities/application.entity";
+import { Course } from "../course/entities/course.entity";
 
 interface TraineeApplication {
   courseId: string;
@@ -106,7 +103,6 @@ export class ApplicationService {
     traineeId,
     courseId,
   }: TraineeApplication): Promise<Application> {
-    
     try {
       return await this.applicationRepository.findOneOrFail({
         where: [
@@ -125,6 +121,13 @@ export class ApplicationService {
 
   async save(application: Application) {
     await this.applicationRepository.save(application);
+  }
+
+  async remove(application: Application) {
+    if (application.status !== ApplicationStatus.CANCELED) {
+      return;
+    }
+    await this.applicationRepository.remove(application);
   }
 
   async validateTrainer({ trainerId, application }: Validation): Promise<void> {

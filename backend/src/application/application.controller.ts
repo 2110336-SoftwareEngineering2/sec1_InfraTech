@@ -73,7 +73,7 @@ export class ApplicationController {
       traineeId: request.user.id,
     });
     application.cancel();
-    await this.applicationService.save(application);
+    await this.applicationService.remove(application);
   }
 
   @Patch('/approve/:courseId')
