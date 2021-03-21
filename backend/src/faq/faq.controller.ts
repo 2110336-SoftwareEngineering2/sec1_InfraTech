@@ -25,7 +25,28 @@ export class FAQController {
   @Get()
   @Role(UserType.Trainer)
   @UseGuards(RoleGuard)
-  async getFAQs(@Req() request: LetXRequest): Promise<FAQ[]> {
+  async listFAQs(@Req() request: LetXRequest): Promise<FAQ[]> {
     return await this.faqService.listFAQs(request.user.id);
+  }
+
+  @Get('/trainer/:user_id')
+  async getFAQByTrainer(
+    @Param('user_id') user_id,
+    @Req() request: LetXRequest,
+  ): Promise<FAQ[]> {
+    return await this.faqService.listFAQs(user_id);
+  }
+
+  @Get(':id')
+  @Role(UserType.Trainer)
+  @UseGuards(RoleGuard)
+  async getFAQ(@Param('id') id, @Req() request: LetXRequest): Promise<FAQ> {
+    let faq: FAQ = await this.faqService.getFAQ(id);
+
+    if (faq.trainerUserId != request.user.id) {
+      throw new ForbiddenException();
+    }
+
+    return faq;
   }
 }

@@ -1,7 +1,12 @@
-import { Injectable, InternalServerErrorException, ConflictException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  ConflictException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, In, Connection, EntityTarget } from 'typeorm';
 import { FAQ } from './entities/faq.entity';
+import { FAQDto } from './dtos/faq.dto';
 
 @Injectable()
 export class FAQService {
@@ -16,9 +21,19 @@ export class FAQService {
       where: {
         trainerUserId: userId,
       },
-      relations: ["trainer"],
+      relations: ['trainer'],
+    });
+    return faqs;
+  }
+
+  async getFAQ(id: string): Promise<FAQ> {
+    const faq = await this.faqRepository.findOneOrFail({
+      where: {
+        id: id,
+      },
+      relations: ['trainer'],
     });
 
-    return faqs;
+    return faq;
   }
 }
