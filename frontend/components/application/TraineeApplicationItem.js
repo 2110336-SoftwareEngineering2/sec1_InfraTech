@@ -1,9 +1,5 @@
-import { Button, List, Space } from 'antd';
+import { Button } from 'antd';
 import {
-  ClockCircleOutlined,
-  DollarCircleOutlined,
-  RadarChartOutlined,
-  DashboardOutlined,
   CheckSquareOutlined,
   SyncOutlined,
   CloseSquareOutlined,
@@ -13,14 +9,16 @@ import { API_HOST, COOKIE_NAME } from '../../config/config';
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
 
+import CourseItemFooter from './CourseItemFooter';
+
+import {
+  setAllFirstCapitalLetter,
+  setFirstCapitalLetter,
+} from '../../lib/setCapitalLetter';
+
 // TODO: Implement onClick for register and cancel course
 const TraineeApplicationItem = ({ app }) => {
   const [token] = useCookies([COOKIE_NAME]);
-  const setFirstCapitalLetter = (text = '') =>
-    text
-      .split(' ')
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ');
   const course = app.course;
   const renderSwitch = (mode) => {
     switch (mode) {
@@ -84,11 +82,11 @@ const TraineeApplicationItem = ({ app }) => {
       >
         <div className=" mb-6 flex justify-start">
           <div className=" ml-3 text-blue font-bold text-xl">
-            {setFirstCapitalLetter(course.title)}
+            {setAllFirstCapitalLetter(course.title)}
           </div>
           <div className=" ml-3 text-black font-bold text-xl">by trainer</div>
           <div className=" ml-3 text-red-500 font-bold text-xl">
-            {setFirstCapitalLetter(course.trainer.firstname)}
+            {setAllFirstCapitalLetter(course.trainer.firstname)}
           </div>
         </div>
         <div className="text-gray-600">
@@ -108,32 +106,9 @@ const TraineeApplicationItem = ({ app }) => {
         </div>
       </div>
       <div>{setFirstCapitalLetter(course.description)}</div>
-      <List.Item
-        actions={[
-          <IconText
-            icon={<RadarChartOutlined />}
-            text={course.specialization}
-          />,
-          <IconText icon={<DashboardOutlined />} text={course.level} />,
-          <IconText
-            icon={<ClockCircleOutlined />}
-            text={`${course.period} days`}
-          />,
-          <IconText
-            icon={<DollarCircleOutlined />}
-            text={`${course.price} bahts`}
-          />,
-        ]}
-      />
+      <CourseItemFooter course={course} />
     </div>
   );
 };
-
-const IconText = ({ icon, text }) => (
-  <Space className=" text-gray-800">
-    {icon}
-    {text}
-  </Space>
-);
 
 export default TraineeApplicationItem;

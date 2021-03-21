@@ -1,19 +1,16 @@
 import { useState } from 'react';
 import { useCookies } from 'react-cookie';
-import { List, Space, Modal } from 'antd';
-import {
-  ClockCircleOutlined,
-  DollarCircleOutlined,
-  RadarChartOutlined,
-  DashboardOutlined,
-  EditOutlined,
-  DeleteOutlined,
-  EnvironmentOutlined,
-} from '@ant-design/icons';
+import { Modal } from 'antd';
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import axios from 'axios';
 
 import TrainerEditCourseFormModal from './TrainerEditCourseFormModal';
+import CourseItemFooter from './CourseItemFooter';
 
+import {
+  setAllFirstCapitalLetter,
+  setFirstCapitalLetter,
+} from '../../lib/setCapitalLetter';
 import { COOKIE_NAME, API_HOST } from '../../config/config';
 
 const TrainerCourseItem = ({ course, courses, mutateCourse }) => {
@@ -34,18 +31,12 @@ const TrainerCourseItem = ({ course, courses, mutateCourse }) => {
     }
   };
 
-  const setFirstCapitalLetter = (text = '') =>
-    text
-      .split(' ')
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ');
-
   return (
     <>
       <div className="p-6 shadow-around mb-4">
         <div className="mb-6 flex justify-between">
           <span className=" text-blue font-bold text-xl">
-            {setFirstCapitalLetter(course.title)}
+            {setAllFirstCapitalLetter(course.title)}
           </span>
           <div className="text-lg text-gray-400">
             <EditOutlined
@@ -67,34 +58,7 @@ const TrainerCourseItem = ({ course, courses, mutateCourse }) => {
           </div>
         </div>
         <div>{setFirstCapitalLetter(course.description)}</div>
-        <List.Item
-          actions={[
-            <IconText
-              icon={<RadarChartOutlined />}
-              text={setFirstCapitalLetter(course.specialization)}
-            />,
-            <IconText
-              icon={<DashboardOutlined />}
-              text={setFirstCapitalLetter(course.level)}
-            />,
-            <IconText
-              icon={<ClockCircleOutlined />}
-              text={`${course.period} days`}
-            />,
-            <IconText
-              icon={<DollarCircleOutlined />}
-              text={`${Math.trunc(course.price)} bahts`}
-            />,
-            <IconText
-              icon={<EnvironmentOutlined />}
-              text={`${
-                course?.district
-                  ? setFirstCapitalLetter(course.district) + ','
-                  : ''
-              } ${setFirstCapitalLetter(course.province)}`}
-            />,
-          ]}
-        />
+        <CourseItemFooter course={course} />
       </div>
       <TrainerEditCourseFormModal
         courses={courses}
@@ -108,12 +72,5 @@ const TrainerCourseItem = ({ course, courses, mutateCourse }) => {
     </>
   );
 };
-
-const IconText = ({ icon, text }) => (
-  <Space className="text-gray-800">
-    {icon}
-    {text}
-  </Space>
-);
 
 export default TrainerCourseItem;
