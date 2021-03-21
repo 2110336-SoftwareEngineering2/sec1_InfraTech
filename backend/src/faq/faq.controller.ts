@@ -25,7 +25,7 @@ export class FAQController {
   @Get()
   @Role(UserType.Trainer)
   @UseGuards(RoleGuard)
-  async listCourses(@Req() request: LetXRequest): Promise<FAQ[]> {
+  async getFAQs(@Req() request: LetXRequest): Promise<FAQ[]> {
     return await this.faqService.listFAQs(request.user.id);
   }
 }
