@@ -10,6 +10,7 @@ import { User } from './user.entity';
 import { Review } from '../trainer/entities/review.entity';
 import { Expose } from 'class-transformer';
 import { Course } from '../course/entities/course.entity';
+import { FAQ } from '../faq/entities/faq.entity';
 import { TrainerUseCases } from '../trainer/enums/trainer-use-cases.enum';
 @Entity({ name: 'trainer' })
 export class Trainer {
@@ -91,4 +92,8 @@ export class Trainer {
     ],
   })
   averageRating: number;
+
+  @OneToMany(() => FAQ, (faq) => faq.trainer)
+  @Expose({ groups: [] })
+  faqs: FAQ[];
 }
