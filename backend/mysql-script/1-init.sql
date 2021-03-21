@@ -98,3 +98,10 @@ CREATE TABLE review(
     CONSTRAINT FK_review_trainer_user_id FOREIGN KEY (trainer_user_id) REFERENCES trainer(user_id) ON DELETE CASCADE
 );
 
+CREATE TABLE faq(
+    id VARCHAR(36) PRIMARY KEY,
+    trainer_user_id VARCHAR(36),
+    question VARCHAR(500),
+    answer VARCHAR(500),
+    CONSTRAINT FK_faq_trainer_user_id FOREIGN KEY (trainer_user_id) REFERENCES trainer(user_id) ON DELETE CASCADE
+);
