@@ -1,8 +1,8 @@
 import { Button, List } from 'antd';
-import Item from 'antd/lib/list/Item';
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
 import useSWR from 'swr';
+
 import { API_HOST, COOKIE_NAME } from '../../config/config';
 
 const TraineeRequest = ({ course_id, filter }) => {

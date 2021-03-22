@@ -1,16 +1,15 @@
-import { Button, List, Space } from 'antd';
-import {
-  ClockCircleOutlined,
-  DollarCircleOutlined,
-  RadarChartOutlined,
-  DashboardOutlined,
-  EnvironmentOutlined,
-  SyncOutlined,
-  CheckSquareOutlined,
-} from '@ant-design/icons';
-import { API_HOST, COOKIE_NAME } from '../../config/config';
-import axios from 'axios';
+import { Button } from 'antd';
 import { useCookies } from 'react-cookie';
+import { SyncOutlined, CheckSquareOutlined } from '@ant-design/icons';
+import axios from 'axios';
+
+import CourseItemFooter from './CourseItemFooter';
+
+import {
+  setAllFirstCapitalLetter,
+  setFirstCapitalLetter,
+} from '../../lib/setCapitalLetter';
+import { API_HOST, COOKIE_NAME } from '../../config/config';
 
 const TraineeApplicationItem = ({ course, showStatus }) => {
   const [token] = useCookies([COOKIE_NAME]);
@@ -75,60 +74,20 @@ const TraineeApplicationItem = ({ course, showStatus }) => {
     }
   };
 
-  const setFirstCapitalLetter = (text = '') =>
-    text
-      .split(' ')
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ');
-
   return (
     <div className="p-6 shadow-around mb-4">
       <div className="mb-6 flex justify-between">
         <span className=" text-blue font-bold text-xl">
-          {setFirstCapitalLetter(course.title)}
+          {setAllFirstCapitalLetter(course.title)}
         </span>
         <div className="text-lg text-gray-400">
           {showStatus && renderByStatus(course.status)}
         </div>
       </div>
       <div>{setFirstCapitalLetter(course.description)}</div>
-      <List.Item
-        actions={[
-          <IconText
-            icon={<RadarChartOutlined />}
-            text={setFirstCapitalLetter(course?.specialization)}
-          />,
-          <IconText
-            icon={<DashboardOutlined />}
-            text={setFirstCapitalLetter(course?.level)}
-          />,
-          <IconText
-            icon={<ClockCircleOutlined />}
-            text={`${course.period} days`}
-          />,
-          <IconText
-            icon={<DollarCircleOutlined />}
-            text={`${Math.trunc(course.price)} bahts`}
-          />,
-          <IconText
-            icon={<EnvironmentOutlined />}
-            text={`${
-              course?.district
-                ? setFirstCapitalLetter(course.district) + ','
-                : ''
-            } ${setFirstCapitalLetter(course.province)}`}
-          />,
-        ]}
-      />
+      <CourseItemFooter course={course} />
     </div>
   );
 };
-
-const IconText = ({ icon, text }) => (
-  <Space className="text-gray-800">
-    {icon}
-    {text}
-  </Space>
-);
 
 export default TraineeApplicationItem;
