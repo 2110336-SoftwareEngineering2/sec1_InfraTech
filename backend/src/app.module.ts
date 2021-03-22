@@ -10,6 +10,7 @@ import { TrainerModule } from './trainer/trainer.module';
 import * as config from 'config';
 import { CourseModule } from './course/course.module';
 import { ApplicationModule } from './application/application.module';
+import { FAQModule } from './faq/faq.module';
 
 const dbConfig = config.get('db');
 
@@ -33,6 +34,7 @@ const dbConfig = config.get('db');
     TrainerModule,
     CourseModule,
     ApplicationModule,
+    FAQModule,
   ],
   controllers: [AppController],
   providers: [AppService],
