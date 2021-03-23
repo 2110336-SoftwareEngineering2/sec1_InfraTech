@@ -69,4 +69,10 @@ export class FAQService {
     await this.faqRepository.update(id, faqDto);
     return await this.getFAQ(id);
   }
+
+  async deleteFAQ(id: string): Promise<void> {
+    await this.faqRepository.delete({
+      id: id,
+    });
+  }
 }

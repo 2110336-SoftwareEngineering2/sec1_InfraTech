@@ -71,4 +71,17 @@ export class FAQController {
   ): Promise<FAQ> {
     return await this.faqService.updateFAQ(id, faqDto);
   }
+
+  @Delete(':id')
+  @Role(UserType.Trainer)
+  @UseGuards(RoleGuard)
+  async deleteFAQ(@Param('id') id, @Req() request: LetXRequest): Promise<void> {
+    let faq = await this.faqService.getFAQ(id);
+
+    if (faq.trainerUserId != request.user.id) {
+      throw new ForbiddenException();
+    }
+
+    await this.faqService.deleteFAQ(id);
+  }
 }
