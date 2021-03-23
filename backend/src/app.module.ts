@@ -11,6 +11,7 @@ import * as config from 'config';
 import { CourseModule } from './course/course.module';
 import { ApplicationModule } from './application/application.module';
 import { FAQModule } from './faq/faq.module';
+import { ReviewModule } from './review/review.module';
 
 const dbConfig = config.get('db');
 
@@ -35,6 +36,7 @@ const dbConfig = config.get('db');
     CourseModule,
     ApplicationModule,
     FAQModule,
+    ReviewModule,
   ],
   controllers: [AppController],
   providers: [AppService],
