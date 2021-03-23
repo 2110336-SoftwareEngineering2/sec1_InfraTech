@@ -64,4 +64,9 @@ export class FAQService {
 
     return faq;
   }
+
+  async updateFAQ(id: string, faqDto: FAQDto): Promise<FAQ> {
+    await this.faqRepository.update(id, faqDto);
+    return await this.getFAQ(id);
+  }
 }

@@ -60,4 +60,15 @@ export class FAQController {
   ): Promise<FAQ> {
     return await this.faqService.createFAQ(request.user.id, faqDto);
   }
+
+  @Put(':id')
+  @Role(UserType.Trainer)
+  @UseGuards(RoleGuard)
+  async updateFAQ(
+    @Param('id') id,
+    @Body() faqDto: FAQDto,
+    @Req() request: LetXRequest,
+  ): Promise<FAQ> {
+    return await this.faqService.updateFAQ(id, faqDto);
+  }
 }
