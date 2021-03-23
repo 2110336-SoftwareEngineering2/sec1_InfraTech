@@ -17,6 +17,7 @@ import { FAQ } from './entities/faq.entity';
 import { RoleGuard } from 'src/guards/role.guard';
 import { Role } from 'src/decorators/role.decorator';
 import { UserType } from 'src/register/enums/user-type.enum';
+import { FAQDto } from './dtos/faq.dto';
 
 @Controller('faq')
 export class FAQController {
@@ -48,5 +49,15 @@ export class FAQController {
     }
 
     return faq;
+  }
+
+  @Post()
+  @Role(UserType.Trainer)
+  @UseGuards(RoleGuard)
+  async createFAQ(
+    @Body() faqDto: FAQDto,
+    @Req() request: LetXRequest,
+  ): Promise<FAQ> {
+    return await this.faqService.createFAQ(request.user.id, faqDto);
   }
 }

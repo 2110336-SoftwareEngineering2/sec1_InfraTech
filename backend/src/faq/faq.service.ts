@@ -36,4 +36,32 @@ export class FAQService {
 
     return faq;
   }
+
+  async createFAQ(trainerUserId: string, dto: FAQDto): Promise<FAQ> {
+    let faq = await this.faqRepository.create({
+      question: dto.question,
+      answer: dto.answer,
+      trainerUserId: trainerUserId,
+    });
+
+    const queryRunner = this.connection.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+
+    try {
+      faq = await queryRunner.manager.save(FAQ, faq);
+      await queryRunner.commitTransaction();
+    } catch (error) {
+      console.error(error);
+      await queryRunner.rollbackTransaction();
+
+      if (error.code === 'ER_DUP_ENTRY') {
+        throw new ConflictException('This course already exists');
+      } else {
+        throw new InternalServerErrorException();
+      }
+    }
+
+    return faq;
+  }
 }
