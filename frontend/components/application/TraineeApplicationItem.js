@@ -9,7 +9,7 @@ import { API_HOST, COOKIE_NAME } from '../../config/config';
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
 
-import CourseItemFooter from './CourseItemFooter';
+import CourseItemFooter from '../course/CourseItemFooter';
 
 import {
   setAllFirstCapitalLetter,
