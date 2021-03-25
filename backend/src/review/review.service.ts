@@ -60,7 +60,7 @@ export class ReviewService {
       return await this.reviewRepository.save(review);
     } catch (error) {
       if (error.code === 'ER_DUP_ENTRY') {
-        throw new ConflictException('The review of appliation already exists');
+        throw new ConflictException('The review of application already exists');
       } else {
         throw new InternalServerErrorException();
       }
