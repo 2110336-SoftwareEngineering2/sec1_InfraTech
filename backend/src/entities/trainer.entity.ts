@@ -7,7 +7,7 @@ import {
   PrimaryColumn,
 } from 'typeorm';
 import { User } from './user.entity';
-import { Review } from '../trainer/entities/review.entity';
+import { Review } from '../review/entities/review.entity';
 import { Expose } from 'class-transformer';
 import { Course } from '../course/entities/course.entity';
 import { FAQ } from '../faq/entities/faq.entity';
