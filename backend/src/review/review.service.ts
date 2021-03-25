@@ -3,6 +3,8 @@ import {
   ForbiddenException,
   Injectable,
   NotFoundException,
+  InternalServerErrorException,
+  ConflictException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -12,7 +14,6 @@ import {
   ApplicationStatus,
 } from '../application/entities/application.entity';
 import { CreateReviewDto } from './dtos/create-review-dto';
-import { InternalServerErrorException } from '@nestjs/common';
 
 @Injectable()
 export class ReviewService {
@@ -59,9 +60,7 @@ export class ReviewService {
       return await this.reviewRepository.save(review);
     } catch (error) {
       if (error.code === 'ER_DUP_ENTRY') {
-        throw new BadRequestException(
-          'The review of appliation already exists',
-        );
+        throw new ConflictException('The review of appliation already exists');
       } else {
         throw new InternalServerErrorException();
       }
