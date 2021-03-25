@@ -3,7 +3,6 @@ import {
   Req,
   Get,
   UseGuards,
-  Patch,
   Body,
   ForbiddenException,
   Param,
@@ -18,7 +17,10 @@ import { RoleGuard } from 'src/guards/role.guard';
 import { Role } from 'src/decorators/role.decorator';
 import { UserType } from 'src/register/enums/user-type.enum';
 import { FAQDto } from './dtos/faq.dto';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('FAQ')
+@ApiBearerAuth()
 @Controller('faq')
 export class FAQController {
   constructor(private faqService: FAQService) {}

@@ -14,7 +14,10 @@ import { UserType } from 'src/register/enums/user-type.enum';
 import { ApplicationService } from './application.service';
 import { Application } from './entities/application.entity';
 import { AuthGuard } from '../guards/auth.guard';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Appication')
+@ApiBearerAuth()
 @Controller('application')
 export class ApplicationController {
   constructor(private applicationService: ApplicationService) {}

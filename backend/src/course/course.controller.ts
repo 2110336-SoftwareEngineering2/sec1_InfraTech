@@ -18,11 +18,13 @@ import { RoleGuard } from 'src/guards/role.guard';
 import { Role } from 'src/decorators/role.decorator';
 import { UserType } from 'src/register/enums/user-type.enum';
 import { CourseDto } from './dtos/course.dto';
-
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+@ApiTags('Course')
 @Controller('course')
 export class CourseController {
   constructor(private courseService: CourseService) {}
 
+  @ApiBearerAuth()
   @Get()
   @Role(UserType.Trainer)
   @UseGuards(RoleGuard)
@@ -38,6 +40,7 @@ export class CourseController {
     return await this.courseService.listCourses(user_id);
   }
 
+  @ApiBearerAuth()
   @Get(':id')
   @Role(UserType.Trainer)
   @UseGuards(RoleGuard)
@@ -54,6 +57,7 @@ export class CourseController {
     return course;
   }
 
+  @ApiBearerAuth()
   @Post()
   @Role(UserType.Trainer)
   @UseGuards(RoleGuard)
@@ -64,6 +68,7 @@ export class CourseController {
     return await this.courseService.createCourse(request.user.id, courseDto);
   }
 
+  @ApiBearerAuth()
   @Put(':id')
   @Role(UserType.Trainer)
   @UseGuards(RoleGuard)
@@ -75,6 +80,7 @@ export class CourseController {
     return await this.courseService.updateCourse(id, courseDto);
   }
 
+  @ApiBearerAuth()
   @Delete(':id')
   @Role(UserType.Trainer)
   @UseGuards(RoleGuard)

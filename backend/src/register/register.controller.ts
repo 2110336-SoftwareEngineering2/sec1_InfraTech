@@ -6,8 +6,10 @@ import {
   ApiConflictResponse,
   ApiCreatedResponse,
   ApiInternalServerErrorResponse,
+  ApiTags,
 } from '@nestjs/swagger';
 
+@ApiTags('Register')
 @Controller('register')
 export class RegisterController {
   constructor(private registerService: RegisterService) {}

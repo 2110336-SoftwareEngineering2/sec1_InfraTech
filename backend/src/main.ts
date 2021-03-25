@@ -8,7 +8,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const appConfig = config.get('app');
 
-  if(process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === 'development') {
     app.enableCors();
   }
 
@@ -16,8 +16,12 @@ async function bootstrap() {
 
   const swaggerConfig = new DocumentBuilder()
     .setTitle('LetX')
-    .setDescription('The LetX API description')
+    .setDescription('LetX API description')
     .setVersion('1.0')
+    .addBearerAuth(
+      { type: 'http', scheme: 'Bearer', bearerFormat: 'JWT' },
+      // 'JWT',
+    )
     .build();
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('api', app, document);
