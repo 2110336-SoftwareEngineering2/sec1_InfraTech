@@ -13,7 +13,7 @@ export class ReviewService {
     return Promise.resolve(null);
   }
 
-  async getReviewsOfTrainer(
+  async getReviewsByTrainerId(
     trainerUserId: string,
     page: number,
     limit: number,

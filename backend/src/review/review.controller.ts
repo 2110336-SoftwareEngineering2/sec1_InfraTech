@@ -33,11 +33,11 @@ export class ReviewController {
   }
 
   @Get(':trainerUserId')
-  async getReviewsOfTrainer(
+  async getReviewsByTrainerId(
     @Param('trainerUserId') trainerUserId: string,
     @Query('page') page: number,
     @Query('limit') limit: number,
   ) {
-    return this.reviewService.getReviewsOfTrainer(trainerUserId, page, limit);
+    return this.reviewService.getReviewsByTrainerId(trainerUserId, page, limit);
   }
 }
