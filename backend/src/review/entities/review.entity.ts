@@ -4,9 +4,11 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
   Column,
+  OneToOne,
 } from 'typeorm';
 import { Trainer } from '../../entities/trainer.entity';
 import { Trainee } from '../../entities/trainee.entity';
+import { Application } from '../../application/entities/application.entity';
 
 @Entity({ name: 'review' })
 export class Review {
@@ -20,6 +22,10 @@ export class Review {
   @ManyToOne(() => Trainer, (trainer) => trainer.reviews)
   @JoinColumn({ name: 'trainer_user_id', referencedColumnName: 'userId' })
   trainer: Trainer;
+
+  @OneToOne(() => Application)
+  @JoinColumn({ name: 'application_id', referencedColumnName: 'id' })
+  application: Application;
 
   @Column()
   comment: string;
