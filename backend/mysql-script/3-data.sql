@@ -58,12 +58,13 @@ INSERT INTO course VALUES ("course-id-4","Course Title 4","description","interme
 
 INSERT INTO application VALUES ("application-id-0","user-id-0","course-id-0","pending");
 INSERT INTO application VALUES ("application-id-1","user-id-0","course-id-1","pending");
+INSERT INTO application VALUES ("application-id-2","user-id-0","course-id-1","complete");
 
 -- Mock Review --
-INSERT INTO review VALUES (UUID(), "user-id-6", "user-id-3", "You are good", 5);
-INSERT INTO review VALUES (UUID(), "user-id-6", "user-id-3", "You are bad", 2);
-INSERT INTO review VALUES (UUID(), "user-id-6", "user-id-4", "You are bad", 2);
-INSERT INTO review VALUES (UUID(), "user-id-6", "user-id-5", "You are bad", 3);
+-- INSERT INTO review VALUES (UUID(), "user-id-6", "user-id-3", "You are good", 5);
+-- INSERT INTO review VALUES (UUID(), "user-id-6", "user-id-3", "You are bad", 2);
+-- INSERT INTO review VALUES (UUID(), "user-id-6", "user-id-4", "You are bad", 2);
+-- INSERT INTO review VALUES (UUID(), "user-id-6", "user-id-5", "You are bad", 3);
 
 -- Mock FAQ --
 INSERT INTO faq VALUES (UUID(), "user-id-2", "can a private course with a specific requirements be requested ?", "yes, just send requirements to my chat.");
