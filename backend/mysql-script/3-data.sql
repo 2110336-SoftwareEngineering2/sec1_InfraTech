@@ -58,7 +58,7 @@ INSERT INTO course VALUES ("course-id-4","Course Title 4","description","interme
 
 INSERT INTO application VALUES ("application-id-0","user-id-0","course-id-0","pending");
 INSERT INTO application VALUES ("application-id-1","user-id-0","course-id-1","pending");
-INSERT INTO application VALUES ("application-id-2","user-id-0","course-id-1","complete");
+INSERT INTO application VALUES ("application-id-2","user-id-0","course-id-2","complete");
 
 -- Mock Review --
 -- INSERT INTO review VALUES (UUID(), "user-id-6", "user-id-3", "You are good", 5);
