@@ -17,6 +17,7 @@ import { FAQ } from './entities/faq.entity';
 import { RoleGuard } from 'src/guards/role.guard';
 import { Role } from 'src/decorators/role.decorator';
 import { UserType } from 'src/register/enums/user-type.enum';
+import { FAQDto } from './dtos/faq.dto';
 
 @Controller('faq')
 export class FAQController {
@@ -48,5 +49,39 @@ export class FAQController {
     }
 
     return faq;
+  }
+
+  @Post()
+  @Role(UserType.Trainer)
+  @UseGuards(RoleGuard)
+  async createFAQ(
+    @Body() faqDto: FAQDto,
+    @Req() request: LetXRequest,
+  ): Promise<FAQ> {
+    return await this.faqService.createFAQ(request.user.id, faqDto);
+  }
+
+  @Put(':id')
+  @Role(UserType.Trainer)
+  @UseGuards(RoleGuard)
+  async updateFAQ(
+    @Param('id') id,
+    @Body() faqDto: FAQDto,
+    @Req() request: LetXRequest,
+  ): Promise<FAQ> {
+    return await this.faqService.updateFAQ(id, faqDto);
+  }
+
+  @Delete(':id')
+  @Role(UserType.Trainer)
+  @UseGuards(RoleGuard)
+  async deleteFAQ(@Param('id') id, @Req() request: LetXRequest): Promise<void> {
+    let faq = await this.faqService.getFAQ(id);
+
+    if (faq.trainerUserId != request.user.id) {
+      throw new ForbiddenException();
+    }
+
+    await this.faqService.deleteFAQ(id);
   }
 }
