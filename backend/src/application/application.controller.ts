@@ -14,7 +14,7 @@ import { UserType } from 'src/register/enums/user-type.enum';
 import { ApplicationService } from './application.service';
 import { Application } from './entities/application.entity';
 import { AuthGuard } from '../guards/auth.guard';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiParam, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Appication')
 @ApiBearerAuth()
@@ -38,6 +38,7 @@ export class ApplicationController {
     }
   }
 
+  @ApiParam({ name: 'courseId', type: String, required: true })
   @Get(':courseId')
   @Role(UserType.Trainer)
   @UseGuards(RoleGuard)
@@ -51,6 +52,7 @@ export class ApplicationController {
     });
   }
 
+  @ApiParam({ name: 'courseId', type: String, required: true })
   @Post(':courseId')
   @Role(UserType.Trainee)
   @UseGuards(RoleGuard)
@@ -64,6 +66,7 @@ export class ApplicationController {
     });
   }
 
+  @ApiParam({ name: 'courseId', type: String, required: true })
   @Patch('/cancel/:courseId')
   @Role(UserType.Trainee)
   @UseGuards(RoleGuard)
@@ -79,6 +82,7 @@ export class ApplicationController {
     await this.applicationService.remove(application);
   }
 
+  @ApiParam({ name: 'courseId', type: String, required: true })
   @Patch('/approve/:courseId')
   @Role(UserType.Trainer)
   @UseGuards(RoleGuard)
@@ -99,6 +103,7 @@ export class ApplicationController {
     await this.applicationService.save(application);
   }
 
+  @ApiParam({ name: 'courseId', type: String, required: true })
   @Patch('/reject/:courseId')
   @Role(UserType.Trainer)
   @UseGuards(RoleGuard)

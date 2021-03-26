@@ -18,7 +18,7 @@ import { RoleGuard } from 'src/guards/role.guard';
 import { Role } from 'src/decorators/role.decorator';
 import { UserType } from 'src/register/enums/user-type.enum';
 import { CourseDto } from './dtos/course.dto';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiParam, ApiTags } from '@nestjs/swagger';
 @ApiTags('Course')
 @Controller('course')
 export class CourseController {
@@ -32,6 +32,7 @@ export class CourseController {
     return await this.courseService.listCourses(request.user.id);
   }
 
+  @ApiParam({ name: 'user_id', type: String, required: true })
   @Get('trainer/:user_id')
   async listCoursesByTrainer(
     @Param('user_id') user_id,
@@ -41,6 +42,7 @@ export class CourseController {
   }
 
   @ApiBearerAuth()
+  @ApiParam({ name: 'id', type: String, required: true })
   @Get(':id')
   @Role(UserType.Trainer)
   @UseGuards(RoleGuard)
@@ -69,6 +71,7 @@ export class CourseController {
   }
 
   @ApiBearerAuth()
+  @ApiParam({ name: 'id', type: String, required: true })
   @Put(':id')
   @Role(UserType.Trainer)
   @UseGuards(RoleGuard)
@@ -81,6 +84,7 @@ export class CourseController {
   }
 
   @ApiBearerAuth()
+  @ApiParam({ name: 'id', type: String, required: true })
   @Delete(':id')
   @Role(UserType.Trainer)
   @UseGuards(RoleGuard)
