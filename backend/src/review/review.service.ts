@@ -72,9 +72,16 @@ export class ReviewService {
     page: number,
     limit: number,
   ): Promise<Review[]> {
-    console.log('trainerUserId', trainerUserId);
-    console.log('page', page);
-    console.log('limit', limit);
-    return Promise.resolve(null);
+    // TODO: Add serialization for response
+    return this.reviewRepository.find({
+      where: {
+        trainer: {
+          userId: trainerUserId,
+        },
+      },
+      relations: ['trainer', 'trainee', 'application'],
+      skip: page * limit,
+      take: limit,
+    });
   }
 }
