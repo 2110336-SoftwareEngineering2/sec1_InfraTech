@@ -17,6 +17,7 @@ CREATE TABLE trainer (
     cid VARCHAR(13),
     profile_image_url VARCHAR(255),
     average_rating DECIMAL(3,2) DEFAULT 2.50,
+    number_of_registered_trainers INT DEFAULT 0,
     CONSTRAINT FK_trainer_user_id FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
 );
 
