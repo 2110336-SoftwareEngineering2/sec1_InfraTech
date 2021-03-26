@@ -17,7 +17,7 @@ import { RoleGuard } from 'src/guards/role.guard';
 import { Role } from 'src/decorators/role.decorator';
 import { UserType } from 'src/register/enums/user-type.enum';
 import { FAQDto } from './dtos/faq.dto';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiParam, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('FAQ')
 @ApiBearerAuth()
@@ -32,6 +32,7 @@ export class FAQController {
     return await this.faqService.listFAQs(request.user.id);
   }
 
+  @ApiParam({ name: 'user_id', type: String, required: true })
   @Get('/trainer/:user_id')
   async getFAQByTrainer(
     @Param('user_id') user_id,
@@ -40,6 +41,7 @@ export class FAQController {
     return await this.faqService.listFAQs(user_id);
   }
 
+  @ApiParam({ name: 'id', type: String, required: true })
   @Get(':id')
   @Role(UserType.Trainer)
   @UseGuards(RoleGuard)
@@ -63,6 +65,7 @@ export class FAQController {
     return await this.faqService.createFAQ(request.user.id, faqDto);
   }
 
+  @ApiParam({ name: 'id', type: String, required: true })
   @Put(':id')
   @Role(UserType.Trainer)
   @UseGuards(RoleGuard)
@@ -74,6 +77,7 @@ export class FAQController {
     return await this.faqService.updateFAQ(id, faqDto);
   }
 
+  @ApiParam({ name: 'id', type: String, required: true })
   @Delete(':id')
   @Role(UserType.Trainer)
   @UseGuards(RoleGuard)
