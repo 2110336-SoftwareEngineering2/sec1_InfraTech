@@ -12,7 +12,9 @@ import { Trainer } from '../entities/trainer.entity';
 import { TrainerService } from './trainer.service';
 import { TrainerSearchCriteriaDto } from './dtos/trainer-search-criteria-dto';
 import { TrainerUseCases } from './enums/trainer-use-cases.enum';
+import { ApiParam, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Trainer')
 @Controller('trainer')
 export class TrainerController {
   constructor(private trainerService: TrainerService) {}
@@ -30,6 +32,7 @@ export class TrainerController {
     );
   }
 
+  @ApiParam({ name: 'id', type: String, required: true })
   @UseInterceptors(ClassSerializerInterceptor)
   @SerializeOptions({
     groups: [TrainerUseCases.GetTrainerById],

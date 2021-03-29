@@ -6,8 +6,10 @@ import { TrainerProfileDto } from './dtos/trainer-profile-dto';
 import { TraineeProfileDto } from './dtos/trainee-profile-dto';
 import { UpdateTrainerProfileDto } from './dtos/update-trainer-profile-dto';
 import { UpdateTraineeProfileDto } from './dtos/update-trainee-profile-dto';
-import { ApiBody, ApiExtraModels, getSchemaPath } from '@nestjs/swagger';
+import { ApiBody, ApiExtraModels, getSchemaPath, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 
+@ApiTags('Profile')
+@ApiBearerAuth()
 @Controller('profile')
 export class ProfileController {
   constructor(private profileService: ProfileService) {}
