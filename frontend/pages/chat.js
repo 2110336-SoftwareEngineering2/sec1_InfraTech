@@ -4,7 +4,7 @@ import useUser from '../lib/useUser';
 import { AppLayout } from '../components/common';
 import TrainerListItem from '../components/TrainerListItem';
 import FilterTrainerList from '../components/FilterTrainerList';
-import { List } from 'antd';
+import { List, Input, Button } from 'antd';
 import { TrainerSortBy, TrainerSortType } from '../config/FilterTrainer.config';
 import { API_HOST } from '../config/config';
 import axios from 'axios';
@@ -66,6 +66,12 @@ const Chat = () => {
           itemLayout="vertical"
           renderItem={(item) => <ChatItem {...item} />}
         />
+
+        {/* Chat control system */}
+        <div className="flex mt-4">
+          <Input></Input>
+          <Button type="primary">Send</Button>
+        </div>
       </div>
     </AppLayout>
   );
