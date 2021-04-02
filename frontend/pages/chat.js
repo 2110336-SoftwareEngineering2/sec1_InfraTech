@@ -9,12 +9,15 @@ import { TrainerSortBy, TrainerSortType } from '../config/FilterTrainer.config';
 import { API_HOST } from '../config/config';
 import axios from 'axios';
 
-function ChatItem({message, avatar, bySelf}) {
+function ChatItem({message, avatar, at, bySelf}) {
   return (
     <div className={"flex " + (bySelf ? "justify-end" : "")}>
       <div className={"flex " + (bySelf ? "justify-end" : "")} style={{flexBasis: "75%"}}>
         <div></div>
-        <div className="p-2 bg-gray-200 rounded-xl">{message}</div>
+        <div className={"flex flex-col " + (bySelf ? "align-end" : "")}>
+          <div className="p-2 bg-gray-200 rounded-xl">{message}</div>
+          <div className="text-xs mt-1 text-gray-400">{at.toLocaleString()}</div>
+        </div>
       </div>
     </div>
   )
@@ -26,16 +29,19 @@ const Chat = () => {
     {
       message: "hello world",
       avatar: "/avatar.svg",
+      at: new Date(),
       bySelf: true
     },
     {
       message: "สวัสดีคนไทย",
       avatar: "/avatar.svg",
+      at: new Date(),
       bySelf: false
     },
     {
       message: "O_O",
       avatar: "/avatar.svg",
+      at: new Date(),
       bySelf: true
     }
   ])
