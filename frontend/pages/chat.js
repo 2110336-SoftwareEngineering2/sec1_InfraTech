@@ -29,6 +29,9 @@ function ChatItem({message, avatar, at, bySelf}) {
 
 const Chat = () => {
   const { user, mutateUser } = useUser({});
+
+  const [messageInput, setMessageInput] = useState("")
+
   const [messages, setMessages] = useState([
     {
       message: "hello world",
@@ -50,6 +53,18 @@ const Chat = () => {
     }
   ])
 
+  const sendMessage = () => {
+    console.log(messageInput, user)
+  }
+
+  const onMessageInputChange = (e) => {
+    setMessageInput(e.target.value);
+  }
+
+  const messageInputKeyDown = (e) => {
+    if (e.keyCode === 13) sendMessage()
+  }
+
   return (
     <AppLayout user={user} mutateUser={mutateUser}>
       <div className="min-h-screen bg-white mx-8 mt-8 py-12 px-12">
@@ -64,8 +79,8 @@ const Chat = () => {
 
         {/* Chat control system */}
         <div className="flex mt-4">
-          <Input></Input>
-          <Button type="primary">Send</Button>
+          <Input value={messageInput} onChange={onMessageInputChange} onKeyDown={messageInputKeyDown}></Input>
+          <Button type="primary" onClick={sendMessage}>Send</Button>
         </div>
       </div>
     </AppLayout>
