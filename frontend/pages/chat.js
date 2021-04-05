@@ -2,7 +2,7 @@ import React, {  useEffect, useState } from 'react';
 
 import useUser from '../lib/useUser';
 import { AppLayout } from '../components/common';
-import { Button, Card, Empty, Input, List } from 'antd';
+import { Button, Empty, Input, List } from 'antd';
 import Image from 'next/image';
 
 import {snapshotToArray, sendMessage, getMessages} from './api/chat';
@@ -30,7 +30,7 @@ const ChatItem = ({message, avatar, at, bySelf}) => {
 }
 
 const Room = ({oppositeUser}) => {
-  return <div className="text-center p-5 ">
+  return <div className="text-center p-5 hover:bg-gray-100 cursor-pointer">
     <Image
       src={"/avatar.svg"}
       width={36}
@@ -87,7 +87,10 @@ const Chat = () => {
   return (
     <AppLayout user={user} mutateUser={mutateUser}>
       <div className="flex overflow-x-scroll bg-white mx-8 mt-8">
-        {roomIndex.length ? roomIndex.map(room => <Room oppositeUser={room.oppositeUserId}/>) : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} className="flex-grow"/>}
+        {roomIndex.length ?
+          roomIndex.map(room => <Room oppositeUser={room.oppositeUserId}/>) :
+          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} imageStyle={{height: 20}} description="No Chat Room" className="flex-grow"/>
+        }
       </div>
       <div className="min-h-screen bg-white mx-8 mt-8 py-12 px-12">
         <div className="text-3xl font-bold">Chat</div>
