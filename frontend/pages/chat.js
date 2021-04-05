@@ -1,13 +1,13 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, {  useEffect, useState } from 'react';
 
 import useUser from '../lib/useUser';
 import { AppLayout } from '../components/common';
-import { Button, Input, List } from 'antd';
+import { Button, Card, Empty, Input, List } from 'antd';
 import Image from 'next/image';
 
 import {snapshotToArray, sendMessage, getMessages} from './api/chat';
 
-function ChatItem({message, avatar, at, bySelf}) {
+const ChatItem = ({message, avatar, at, bySelf}) => {
   return (
     <div className={"flex " + (bySelf ? "justify-end" : "")}>
       <div className={"flex " + (bySelf ? "justify-end" : "")} style={{flexBasis: "75%"}}>
@@ -29,13 +29,27 @@ function ChatItem({message, avatar, at, bySelf}) {
   )
 }
 
+const Room = ({oppositeUser}) => {
+  return <div className="text-center p-5 ">
+    <Image
+      src={"/avatar.svg"}
+      width={36}
+      height={36}
+      layout="fixed"
+      className="rounded-full"
+    />
+    <div>{oppositeUser}</div>
+  </div>
+}
+
+
 const Chat = () => {
   const { user, mutateUser } = useUser({});
 
   const [messages, setMessages] = useState([])
 
   const [messageInput, setMessageInput] = useState("");
-  const [roomIndex, setRoomIndex] = useState(['room-id']);
+  const [roomIndex, setRoomIndex] = useState([]);
   const [chatRoom, setChatRoom] = useState({
     id: '1234'
   });
@@ -72,8 +86,8 @@ const Chat = () => {
 
   return (
     <AppLayout user={user} mutateUser={mutateUser}>
-      <div className="bg-white mx-8 mt-8 py-12 px-12">
-        {roomIndex}
+      <div className="flex overflow-x-scroll bg-white mx-8 mt-8">
+        {roomIndex.length ? roomIndex.map(room => <Room oppositeUser={room.oppositeUserId}/>) : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} className="flex-grow"/>}
       </div>
       <div className="min-h-screen bg-white mx-8 mt-8 py-12 px-12">
         <div className="text-3xl font-bold">Chat</div>

@@ -35,8 +35,8 @@ export const createRoom = (userIdA, userIdB) => {
   const roomIndexRefB = getRoomIndexRef(userIdB)
   const roomRef = getRoomRef(roomId);
 
-  pushData(roomIndexRefA, { roomId, oppositeUser: userIdB });
-  pushData(roomIndexRefB, { roomId, oppositeUser: userIdA });
+  pushData(roomIndexRefA, { roomId, oppositeUserId: userIdB });
+  pushData(roomIndexRefB, { roomId, oppositeUserId: userIdA });
 
   roomRef.set({
     length: 0,
