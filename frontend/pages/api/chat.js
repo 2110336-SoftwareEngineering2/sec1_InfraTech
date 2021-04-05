@@ -49,6 +49,8 @@ export const createRoom = (userIdA, userIdB) => {
   roomRef.set({
     length: 0,
   }).then();
+
+  return roomId;
 }
 
 export const getRoom = (userId, handler) => {
