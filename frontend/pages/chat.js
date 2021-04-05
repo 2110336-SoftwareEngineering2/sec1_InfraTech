@@ -5,7 +5,7 @@ import { AppLayout } from '../components/common';
 import { Button, Input, List } from 'antd';
 import Image from 'next/image';
 
-import {sendMessage, getMessage} from './api/chat';
+import {snapshotToArray, sendMessage, getMessages} from './api/chat';
 
 function ChatItem({message, avatar, at, bySelf}) {
   return (
@@ -35,19 +35,24 @@ const Chat = () => {
   const [messages, setMessages] = useState([])
 
   const [messageInput, setMessageInput] = useState("");
-  const [historicalChat, setHistoricalChat] = useState(['room-id']);
-  const [chatRoom, setRoomId] = useState({
+  const [roomIndex, setRoomIndex] = useState(['room-id']);
+  const [chatRoom, setChatRoom] = useState({
     id: '1234'
   });
 
-  const getMessageHandler = (snapshot) => {
-    if (!user) return;
-    setMessages(Object.values(snapshot).slice(0, snapshot.length).map(msg => ({
+  const getMessagesHandler = (snapshot) => {
+    if (!user || !snapshot) return;
+    setMessages(snapshotToArray(snapshot).map(msg => ({
       message: msg.message,
       avatar: "/avatar.svg",
       bySelf: msg.sender === user.userId,
-      at: new Date(),
-    })))
+      at: msg.at,
+    })));
+  }
+
+  const getRoomHandler = (snapshot) => {
+    if (!user || !snapshot) return;
+    setRoomIndex(snapshotToArray(snapshot));
   }
 
   const onSendBtnClick = () => {
@@ -63,12 +68,12 @@ const Chat = () => {
     if (e.keyCode === 13) onSendBtnClick()
   }
 
-  useEffect(() => getMessage(chatRoom.id, getMessageHandler), [user])
+  useEffect(() => getMessages(chatRoom.id, getMessagesHandler), [user])
 
   return (
     <AppLayout user={user} mutateUser={mutateUser}>
       <div className="bg-white mx-8 mt-8 py-12 px-12">
-        Historical Trainer
+        {roomIndex}
       </div>
       <div className="min-h-screen bg-white mx-8 mt-8 py-12 px-12">
         <div className="text-3xl font-bold">Chat</div>
