@@ -64,7 +64,10 @@ const TrainerProfilePage = () => {
             <div className="flex justify-between text-3xl font-bold mb-6">
               Trainer's Profile
               {trainer ? <Button onClick={() => {
-                router.push("/chat/" + createRoom(user.userId, id))
+                const roomId = createRoom(user.userId, id);
+                console.log(roomId);
+
+                router.push("/chat/" + roomId)
               }}>Direct Message</Button> : <></>}
             </div>
             {trainer ? (
