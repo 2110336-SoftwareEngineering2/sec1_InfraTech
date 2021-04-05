@@ -3,6 +3,11 @@ import Image from 'next/image';
 import Router from 'next/router';
 import { AppLayout } from '../components/common';
 import { Button } from 'antd';
+import {
+  CalendarOutlined,
+  MessageOutlined,
+  StarOutlined,
+} from '@ant-design/icons';
 
 const Hero = () => {
   return (
@@ -100,6 +105,27 @@ const Trainee = () => {
   );
 };
 
+const Feature = ({ Icon, title, description }) => {
+  return (
+    <div className="flex flex-col items-center">
+      <div className="w-16 h-16 bg-white rounded-full flex justify-center items-center mb-2 align-baseline">
+        <Icon className="text-3xl" />
+      </div>
+      <div className="font-bold text-xl">{title}</div>
+    </div>
+  );
+};
+
+const Features = () => {
+  return (
+    <div className="flex justify-around p-10">
+      <Feature Icon={CalendarOutlined} title="Book Your Session" />
+      <Feature Icon={MessageOutlined} title="Chat with your trainer/trainee" />
+      <Feature Icon={StarOutlined} title="Review your trainer/trainee" />
+    </div>
+  );
+};
+
 const Landing = () => {
   const { user = {}, mutateUser } = useUser({ redirectTo: '/' });
   return (
@@ -107,6 +133,7 @@ const Landing = () => {
       <Hero />
       <Trainer />
       <Trainee />
+      <Features />
     </AppLayout>
   );
 };
