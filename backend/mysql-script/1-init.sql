@@ -92,10 +92,12 @@ CREATE TABLE review(
     id VARCHAR(36) PRIMARY KEY,
     trainee_user_id VARCHAR(36),
     trainer_user_id VARCHAR(36),
+    application_id VARCHAR(36) UNIQUE,
     comment VARCHAR(1000),
     rating TINYINT UNSIGNED,
     CONSTRAINT FK_review_trainee_user_id FOREIGN KEY (trainee_user_id) REFERENCES trainee(user_id) ON DELETE CASCADE,
-    CONSTRAINT FK_review_trainer_user_id FOREIGN KEY (trainer_user_id) REFERENCES trainer(user_id) ON DELETE CASCADE
+    CONSTRAINT FK_review_trainer_user_id FOREIGN KEY (trainer_user_id) REFERENCES trainer(user_id) ON DELETE CASCADE,
+    CONSTRAINT FK_review_application_id FOREIGN KEY (application_id) REFERENCES application(id) ON DELETE CASCADE
 );
 
 CREATE TABLE faq(

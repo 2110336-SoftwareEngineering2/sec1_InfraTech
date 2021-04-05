@@ -55,15 +55,32 @@ INSERT INTO course VALUES ("course-id-1","Course Title 1","description","interme
 INSERT INTO course VALUES ("course-id-2","Course Title 2","description","intermediate","strength",100000,200,"user-id-1","Sam Yan", "Bangkok");
 INSERT INTO course VALUES ("course-id-3","Course Title 3","description","intermediate","strength",100000,200,"user-id-1","Sam Yan", "Bangkok");
 INSERT INTO course VALUES ("course-id-4","Course Title 4","description","intermediate","strength",100000,200,"user-id-1","Sam Yan", "Bangkok");
+INSERT INTO course VALUES ("course-id-5","Course Title 5","description","intermediate","strength",100000,200,"user-id-1","Sam Yan", "Bangkok");
+INSERT INTO course VALUES ("course-id-6","Course Title 6","description","intermediate","strength",100000,200,"user-id-1","Sam Yan", "Bangkok");
+INSERT INTO course VALUES ("course-id-7","Course Title 7","description","intermediate","strength",100000,200,"user-id-1","Sam Yan", "Bangkok");
+INSERT INTO course VALUES ("course-id-8","Course Title 8","description","intermediate","strength",100000,200,"user-id-1","Sam Yan", "Bangkok");
+INSERT INTO course VALUES ("course-id-9","Course Title 9","description","intermediate","strength",100000,200,"user-id-1","Sam Yan", "Bangkok");
 
 INSERT INTO application VALUES ("application-id-0","user-id-0","course-id-0","pending");
 INSERT INTO application VALUES ("application-id-1","user-id-0","course-id-1","pending");
+INSERT INTO application VALUES ("application-id-2","user-id-0","course-id-2","complete");
+INSERT INTO application VALUES ("application-id-3","user-id-0","course-id-3","complete");
+INSERT INTO application VALUES ("application-id-4","user-id-0","course-id-4","complete");
+INSERT INTO application VALUES ("application-id-5","user-id-0","course-id-5","complete");
+INSERT INTO application VALUES ("application-id-6","user-id-0","course-id-6","complete");
+INSERT INTO application VALUES ("application-id-7","user-id-0","course-id-7","complete");
+INSERT INTO application VALUES ("application-id-8","user-id-0","course-id-8","complete");
+INSERT INTO application VALUES ("application-id-9","user-id-0","course-id-9","complete");
 
 -- Mock Review --
-INSERT INTO review VALUES (UUID(), "user-id-6", "user-id-3", "You are good", 5);
-INSERT INTO review VALUES (UUID(), "user-id-6", "user-id-3", "You are bad", 2);
-INSERT INTO review VALUES (UUID(), "user-id-6", "user-id-4", "You are bad", 2);
-INSERT INTO review VALUES (UUID(), "user-id-6", "user-id-5", "You are bad", 3);
+INSERT INTO review VALUES (UUID(), "user-id-0", "user-id-1", "application-id-2", "You are good", 3);
+INSERT INTO review VALUES (UUID(), "user-id-0", "user-id-1", "application-id-3", "You are good", 4);
+INSERT INTO review VALUES (UUID(), "user-id-0", "user-id-1", "application-id-4", "You are good", 4);
+INSERT INTO review VALUES (UUID(), "user-id-0", "user-id-1", "application-id-5", "You are bad", 2);
+INSERT INTO review VALUES (UUID(), "user-id-0", "user-id-1", "application-id-6", "You are good", 5);
+INSERT INTO review VALUES (UUID(), "user-id-0", "user-id-1", "application-id-7", "You are good", 3);
+INSERT INTO review VALUES (UUID(), "user-id-0", "user-id-1", "application-id-8", "You are bad", 1);
+INSERT INTO review VALUES (UUID(), "user-id-0", "user-id-1", "application-id-9", "You are good", 4);
 
 -- Mock FAQ --
 INSERT INTO faq VALUES (UUID(), "user-id-2", "can a private course with a specific requirements be requested ?", "yes, just send requirements to my chat.");
