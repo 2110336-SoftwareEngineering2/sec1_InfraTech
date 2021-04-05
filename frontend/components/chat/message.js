@@ -3,7 +3,7 @@ import React from 'react';
 
 const Message = ({message, avatar, at, bySelf}) => {
   return (
-    <div className={"flex " + (bySelf ? "justify-end" : "")}>
+    <div className={"flex mt-4 " + (bySelf ? "justify-end" : "")}>
       <div className={"flex " + (bySelf ? "justify-end" : "")} style={{flexBasis: "75%"}}>
         <div className="mr-2">
           <Image
