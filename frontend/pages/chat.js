@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import useUser from '../lib/useUser';
 import { AppLayout } from '../components/common';
 import { Button, Input, List } from 'antd';
 import Image from 'next/image';
+
+import {sendMessage, getMessage} from './api/chat';
 
 function ChatItem({message, avatar, at, bySelf}) {
   return (
@@ -30,31 +32,27 @@ function ChatItem({message, avatar, at, bySelf}) {
 const Chat = () => {
   const { user, mutateUser } = useUser({});
 
-  const [messageInput, setMessageInput] = useState("")
+  const [messages, setMessages] = useState([])
 
-  const [messages, setMessages] = useState([
-    {
-      message: "hello world",
-      avatar: "/avatar.svg",
-      at: new Date(),
-      bySelf: true
-    },
-    {
-      message: "สวัสดีคนไทย",
-      avatar: "/avatar.svg",
-      at: new Date(),
-      bySelf: false
-    },
-    {
-      message: "O_O",
-      avatar: "/avatar.svg",
-      at: new Date(),
-      bySelf: true
-    }
-  ])
+  const [messageInput, setMessageInput] = useState("");
+  const [historicalChat, setHistoricalChat] = useState(['room-id']);
+  const [chatRoom, setRoomId] = useState({
+    id: '1234'
+  });
 
-  const sendMessage = () => {
-    console.log(messageInput, user)
+  const getMessageHandler = (snapshot) => {
+    if (!user) return;
+    setMessages(Object.values(snapshot).slice(0, snapshot.length).map(msg => ({
+      message: msg.message,
+      avatar: "/avatar.svg",
+      bySelf: msg.sender === user.userId,
+      at: new Date(),
+    })))
+  }
+
+  const onSendBtnClick = () => {
+    sendMessage(user.userId, messageInput, chatRoom.id)
+    setMessageInput("")
   }
 
   const onMessageInputChange = (e) => {
@@ -62,11 +60,16 @@ const Chat = () => {
   }
 
   const messageInputKeyDown = (e) => {
-    if (e.keyCode === 13) sendMessage()
+    if (e.keyCode === 13) onSendBtnClick()
   }
+
+  useEffect(() => getMessage(chatRoom.id, getMessageHandler), [user])
 
   return (
     <AppLayout user={user} mutateUser={mutateUser}>
+      <div className="bg-white mx-8 mt-8 py-12 px-12">
+        Historical Trainer
+      </div>
       <div className="min-h-screen bg-white mx-8 mt-8 py-12 px-12">
         <div className="text-3xl font-bold">Chat</div>
         <div className="text-2xl font-bold my-6">Chomtana Chanjaraswichai</div>
@@ -80,7 +83,7 @@ const Chat = () => {
         {/* Chat control system */}
         <div className="flex mt-4">
           <Input value={messageInput} onChange={onMessageInputChange} onKeyDown={messageInputKeyDown}></Input>
-          <Button type="primary" onClick={sendMessage}>Send</Button>
+          <Button type="primary" onClick={onSendBtnClick}>Send</Button>
         </div>
       </div>
     </AppLayout>
