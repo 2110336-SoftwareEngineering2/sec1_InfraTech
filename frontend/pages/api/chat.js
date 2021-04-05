@@ -5,7 +5,11 @@ const getRoomRef = roomId => Firebase.database().ref(`/chat/${roomId}`);
 const getRoomIndexRef = userId => Firebase.database().ref(`/chat/index/${userId}`);
 
 const getOnce = async (ref) => (await ref.once("value")).val();
-const onValue = (ref, handler) => ref.on("value", snapshot => handler(snapshot.val()));
+
+const onValue = (ref, handler) => ref.on("value", snapshot => {
+  if (!snapshot.val()) return;
+  handler(snapshot.val())
+});
 
 const pushData = (ref, data) => {
   getOnce(ref).then(snapshot => {
@@ -18,10 +22,14 @@ const pushData = (ref, data) => {
   })
 }
 
+const isRoomExists = (userIdA, userIdB) => {
+
+}
+
 export const snapshotToArray = (snapshot) => Object.values(snapshot).slice(0, snapshot.length);
 
 export const sendMessage = (sender, message, roomId) => {
-  pushData(getRoomRef(roomId))
+  pushData(getRoomRef(roomId), {sender, message, at: new Date()})
 }
 
 export const getMessages = (roomId, handler) => {

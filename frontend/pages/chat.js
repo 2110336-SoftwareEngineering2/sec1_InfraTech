@@ -5,7 +5,7 @@ import { AppLayout } from '../components/common';
 import { Button, Divider, Empty, Input, List } from 'antd';
 import Link from 'next/link'
 
-import {snapshotToArray, sendMessage, getMessages} from './api/chat';
+import { snapshotToArray, sendMessage, getMessages, getRoom } from './api/chat';
 import Room from '../components/chat/room';
 import Message from '../components/chat/message';
 
@@ -21,21 +21,6 @@ const Chat = () => {
 
   const noRoomAvailable = !rooms.length;
 
-  const getMessagesHandler = (snapshot) => {
-    if (!user || !snapshot) return;
-    setMessages(snapshotToArray(snapshot).map(msg => ({
-      message: msg.message,
-      avatar: "/avatar.svg",
-      bySelf: msg.sender === user.userId,
-      at: msg.at,
-    })));
-  }
-
-  const getRoomHandler = (snapshot) => {
-    if (!user || !snapshot) return;
-    setRooms(snapshotToArray(snapshot));
-  }
-
   const onSendBtnClick = () => {
     sendMessage(user.userId, messageInput, rooms[selectedRoomIndex].roomId)
     setMessageInput("")
@@ -50,8 +35,21 @@ const Chat = () => {
   }
 
   useEffect(() => {
+    if (!user) return;
+
+    getRoom(user.userId, snapshot => {
+      setRooms(snapshotToArray(snapshot));
+    });
+
     if (noRoomAvailable) return;
-    getMessages(rooms[selectedRoomIndex].roomId, getMessagesHandler);
+    getMessages(rooms[selectedRoomIndex].roomId, snapshot => {
+      setMessages(snapshotToArray(snapshot).map(msg => ({
+        message: msg.message,
+        avatar: "/avatar.svg",
+        bySelf: msg.sender === user.userId,
+        at: msg.at,
+      })));
+    });
   }, [user])
 
   return (
@@ -68,12 +66,11 @@ const Chat = () => {
         </div>
         :
         <div className="min-h-screen bg-white mx-8 mt-8 py-12 px-12">
-          {rooms.map((room, index) => <Room oppositeUser={room.oppositeUserId} onClick={() => setSelectedRoomIndex(index)} />)}
+          {rooms.map((room, index) => <Room key={index} oppositeUser={room.oppositeUserId} onClick={() => setSelectedRoomIndex(index)} />)}
 
           <Divider />
 
-          <div className="text-3xl font-bold">Chat</div>
-          <div className="text-2xl font-bold my-6">Chomtana Chanjaraswichai</div>
+          <div className="text-2xl font-bold my-6">{rooms[selectedRoomIndex].oppositeUserId}</div>
 
           <List
             dataSource={messages}
