@@ -3,7 +3,7 @@ import React, {  useEffect, useState } from 'react';
 import useUser from '../lib/useUser';
 import { AppLayout } from '../components/common';
 import { Button, Divider, Empty, Input, List } from 'antd';
-import Image from 'next/image';
+import Link from 'next/link'
 
 import {snapshotToArray, sendMessage, getMessages} from './api/chat';
 import Room from '../components/chat/room';
@@ -62,7 +62,9 @@ const Chat = () => {
             image={Empty.PRESENTED_IMAGE_SIMPLE}
             description="Chat Room is Empty"
           />
-          <Button type="primary">Start New Chat</Button>
+          <Link href="/browse">
+            <Button type="primary">Start New Chat</Button>
+          </Link>
         </div>
         :
         <div className="min-h-screen bg-white mx-8 mt-8 py-12 px-12">
