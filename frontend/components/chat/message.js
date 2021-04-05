@@ -16,7 +16,7 @@ const Message = ({message, avatar, at, bySelf}) => {
         </div>
         <div className={"flex flex-col " + (bySelf ? "align-end" : "")}>
           <div className="p-2 bg-gray-200 rounded-xl">{message}</div>
-          <div className="text-xs mt-1 text-gray-400">{at.toLocaleString()}</div>
+          <div className="text-xs mt-1 text-gray-400">{at ? at.toLocaleString() : ""}</div>
         </div>
       </div>
     </div>

@@ -47,10 +47,10 @@ const Chat = () => {
         message: msg.message,
         avatar: "/avatar.svg",
         bySelf: msg.sender === user.userId,
-        at: msg.at,
+        at: new Date(msg.at),
       })));
     });
-  }, [user])
+  }, [user, noRoomAvailable])
 
   return (
     <AppLayout user={user} mutateUser={mutateUser}>
