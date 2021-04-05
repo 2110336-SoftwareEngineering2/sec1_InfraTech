@@ -9,10 +9,10 @@ const onValue = (ref, handler) => ref.on("value", snapshot => handler(snapshot.v
 
 const pushData = (ref, data) => {
   getOnce(ref).then(snapshot => {
-    const length = snapshot.length;
-    if (length === undefined) {
+    if (snapshot === null) {
       ref.set({ length: 1, 0: data }).then()
     } else {
+      const length = snapshot.length;
       ref.update({ length: length + 1, [length]: data }).then()
     }
   })

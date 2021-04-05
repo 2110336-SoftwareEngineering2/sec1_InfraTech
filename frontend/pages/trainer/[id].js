@@ -11,6 +11,8 @@ import { Button, Divider } from 'antd';
 import TraineeViewCourseList from '../../components/course/TraineeViewCourseList';
 import InformationProfile from '../../components/InformationProfile';
 
+import { createRoom } from '../api/chat';
+
 const TrainerProfilePage = () => {
   const router = useRouter();
   const { id } = router.query;
@@ -61,7 +63,7 @@ const TrainerProfilePage = () => {
           <div className="bg-white w-full mx-8 mt-8 p-7">
             <div className="flex justify-between text-3xl font-bold mb-6">
               Trainer's Profile
-              <Button>Direct Message</Button>
+              {trainer ? <Button onClick={() => createRoom(user.userId, id)}>Direct Message</Button> : <></>}
             </div>
             {trainer ? (
               <div>
