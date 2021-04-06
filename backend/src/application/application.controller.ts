@@ -105,7 +105,7 @@ export class ApplicationController {
       application: application,
     });
     application.approve();
-    trainer.increaseNumberOfRegisteredTrainer();
+    trainer.increaseNumberOfRegisteredTrainees();
 
     const queryRunner = getConnection().createQueryRunner();
     await queryRunner.startTransaction();
@@ -113,7 +113,10 @@ export class ApplicationController {
     try {
       await queryRunner.manager.save(application);
       await queryRunner.manager.save(trainer);
+
+      await queryRunner.commitTransaction();
     } catch (error) {
+      await queryRunner.rollbackTransaction();
       throw new InternalServerErrorException();
     }
   }
