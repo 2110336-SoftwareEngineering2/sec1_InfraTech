@@ -93,7 +93,20 @@ export class Trainer {
   })
   averageRating: number;
 
+  @Column({ name: 'number_of_registered_trainees' })
+  @Expose({
+    groups: [
+      TrainerUseCases.GetTrainerByPreferences,
+      TrainerUseCases.GetTrainerById,
+    ],
+  })
+  numberOfRegisteredTrainees: number;
+
   @OneToMany(() => FAQ, (faq) => faq.trainer)
   @Expose({ groups: [] })
   faqs: FAQ[];
+
+  increaseNumberOfRegisteredTrainees() {
+    this.numberOfRegisteredTrainees += 1;
+  }
 }

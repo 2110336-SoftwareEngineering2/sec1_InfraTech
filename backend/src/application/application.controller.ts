@@ -5,8 +5,9 @@ import {
   Post,
   Param,
   Query,
-  Get, Patch
-} from "@nestjs/common";
+  Get,
+  Patch,
+} from '@nestjs/common';
 import { LetXRequest } from 'src/middlewares/auth.middleware';
 import { RoleGuard } from 'src/guards/role.guard';
 import { Role } from 'src/decorators/role.decorator';
@@ -15,6 +16,8 @@ import { ApplicationService } from './application.service';
 import { Application } from './entities/application.entity';
 import { AuthGuard } from '../guards/auth.guard';
 import { ApiBearerAuth, ApiParam, ApiTags } from '@nestjs/swagger';
+import { getConnection } from 'typeorm';
+import { InternalServerErrorException } from '@nestjs/common';
 
 @ApiTags('Appication')
 @ApiBearerAuth()
@@ -95,12 +98,27 @@ export class ApplicationController {
       courseId: courseId,
       traineeId: traineeId,
     });
+    const trainer = application.course.trainer;
+
     await this.applicationService.validateTrainer({
       trainerId: request.user.id,
       application: application,
     });
     application.approve();
-    await this.applicationService.save(application);
+    trainer.increaseNumberOfRegisteredTrainees();
+
+    const queryRunner = getConnection().createQueryRunner();
+    await queryRunner.startTransaction();
+
+    try {
+      await queryRunner.manager.save(application);
+      await queryRunner.manager.save(trainer);
+
+      await queryRunner.commitTransaction();
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+      throw new InternalServerErrorException();
+    }
   }
 
   @ApiParam({ name: 'courseId', type: String, required: true })
@@ -114,7 +132,7 @@ export class ApplicationController {
   ): Promise<void> {
     const application = await this.applicationService.getPendingApplication({
       courseId: courseId,
-      traineeId:  traineeId,
+      traineeId: traineeId,
     });
     await this.applicationService.validateTrainer({
       trainerId: request.user.id,
