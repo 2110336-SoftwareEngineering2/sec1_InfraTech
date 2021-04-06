@@ -15,19 +15,19 @@ INSERT INTO trainee VALUES ("user-id-0","Wongtawan","Junthai","MALE","0882441120
 -- cookie: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLWlkLTEiLCJlbWFpbCI6Indvbmd0YXdhbi53cmtAZ21haWwuY29tIiwidHlwZSI6IlRSQUlORVIiLCJpYXQiOjE2MTU3MTA4MTEsImV4cCI6MTYxNjcxMDgxMX0.lrQIy7M9DQW5LbbqbE6natodrCZeLlqfh4rdX6hyggg
 -- password: 1103743852
 INSERT INTO user VALUES ("user-id-1","wongtawan.wrk@gmail.com","$2a$10$zLA95OWY3aH0lZzyEpKsGOA/DTb7JPqBJeKysldxk2AZSv9ZaphGG","$2a$10$zLA95OWY3aH0lZzyEpKsGO");
-INSERT INTO trainer VALUES ("user-id-1","Wongtawan","Junthai","MALE","0882441120","2000-01-01 00:00:00","1111111111","https://www.google.com", 1);
+INSERT INTO trainer VALUES ("user-id-1","Wongtawan","Junthai","MALE","0882441120","2000-01-01 00:00:00","1111111111","https://www.google.com", 1, 0);
 
 -- cookie: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLWlkLTIiLCJlbWFpbCI6InRhbmJvaUBsbnd6YW1haWwuY29tIiwidHlwZSI6IlRSQUlORVIiLCJpYXQiOjE2MTc0NDQwOTAsImV4cCI6MTYxODQ0NDA5MH0.abiYFWOCbAhY_od4ri3byGqhPCzvyxhloi6T5xNsE1A
 INSERT INTO user VALUES ("user-id-2", "tanboi@lnwzamail.com", "$2a$10$XPTfy6sx.TUnze7fHhP6XOWds8bdQaS2NTaELcIKHcyqwNPBKtQk6", "$2a$10$XPTfy6sx.TUnze7fHhP6XO");
-INSERT INTO trainer VALUES ("user-id-2", "Somlux", "Kamsing", "MALE", "081234567", "2017-06-15 00:00:00", "0", "https://www.aceshowbiz.com/images/photo/john_cena.jpg", 0);
+INSERT INTO trainer VALUES ("user-id-2", "Somlux", "Kamsing", "MALE", "081234567", "2017-06-15 00:00:00", "0", "https://www.aceshowbiz.com/images/photo/john_cena.jpg", 0, 0);
 
 -- password: root
 INSERT INTO user VALUES ("user-id-3", "tanboi1@lnwzamail.com", "$2a$10$XPTfy6sx.TUnze7fHhP6XOWds8bdQaS2NTaELcIKHcyqwNPBKtQk6", "$2a$10$XPTfy6sx.TUnze7fHhP6XO");
-INSERT INTO trainer VALUES ("user-id-3", "SomluxA", "KamsingA", "MALE", "081234567", "2017-06-15 00:00:00", "0", "https://www.aceshowbiz.com/images/photo/john_cena.jpg", 0);
+INSERT INTO trainer VALUES ("user-id-3", "SomluxA", "KamsingA", "MALE", "081234567", "2017-06-15 00:00:00", "0", "https://www.aceshowbiz.com/images/photo/john_cena.jpg", 0, 0);
 INSERT INTO user VALUES ("user-id-4", "tanboi2@lnwzamail.com", "$2a$10$XPTfy6sx.TUnze7fHhP6XOWds8bdQaS2NTaELcIKHcyqwNPBKtQk6", "$2a$10$XPTfy6sx.TUnze7fHhP6XO");
-INSERT INTO trainer VALUES ("user-id-4", "SomluxA", "KamsingB", "MALE", "081234567", "2017-06-15 00:00:00", "0", "https://www.aceshowbiz.com/images/photo/john_cena.jpg", 0);
+INSERT INTO trainer VALUES ("user-id-4", "SomluxA", "KamsingB", "MALE", "081234567", "2017-06-15 00:00:00", "0", "https://www.aceshowbiz.com/images/photo/john_cena.jpg", 0, 0);
 INSERT INTO user VALUES ("user-id-5", "tanboi3@lnwzamail.com", "$2a$10$XPTfy6sx.TUnze7fHhP6XOWds8bdQaS2NTaELcIKHcyqwNPBKtQk6", "$2a$10$XPTfy6sx.TUnze7fHhP6XO");
-INSERT INTO trainer VALUES ("user-id-5", "SomluxB", "KamsingA", "MALE", "081234567", "2017-06-15 00:00:00", "0", "https://www.aceshowbiz.com/images/photo/john_cena.jpg", 0);
+INSERT INTO trainer VALUES ("user-id-5", "SomluxB", "KamsingA", "MALE", "081234567", "2017-06-15 00:00:00", "0", "https://www.aceshowbiz.com/images/photo/john_cena.jpg", 0, 0);
 
 -- cookie: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLWlkLTYiLCJlbWFpbCI6InRvaWJhbkBsbnd6YW1haWwuY29tIiwidHlwZSI6IlRSQUlORUUiLCJpYXQiOjE2MTc0NDQ0NzIsImV4cCI6MTYxODQ0NDQ3Mn0.xvTvrK_661EDTZkTFBBngaP9NueArCx1rNJ8Y7oNGck
 -- password: root
