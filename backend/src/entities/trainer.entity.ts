@@ -93,20 +93,20 @@ export class Trainer {
   })
   averageRating: number;
 
-  @Column({ name: 'number_of_registered_trainers' })
+  @Column({ name: 'number_of_registered_trainees' })
   @Expose({
     groups: [
       TrainerUseCases.GetTrainerByPreferences,
       TrainerUseCases.GetTrainerById,
     ],
   })
-  numberOfRegisteredTrainer: number;
+  numberOfRegisteredTrainees: number;
 
   @OneToMany(() => FAQ, (faq) => faq.trainer)
   @Expose({ groups: [] })
   faqs: FAQ[];
 
-  increaseNumberOfRegisteredTrainer() {
-    this.numberOfRegisteredTrainer += 1;
+  increaseNumberOfRegisteredTrainees() {
+    this.numberOfRegisteredTrainees += 1;
   }
 }
