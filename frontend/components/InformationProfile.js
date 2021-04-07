@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Tag } from 'antd';
+import { Image, Tag, Rate } from 'antd';
 import CustomUpload from './CustomUpload';
 import { USER_TYPE } from '../config/UserType.config';
 
@@ -10,11 +10,18 @@ const InformationProfile = ({ profile, ownView = true }) => {
     var ageDate = new Date(ageDifMs);
     return Math.abs(ageDate.getUTCFullYear() - 1970);
   };
-
   return (
     <div className="flex mt-10">
       <div className="mr-16 text-center">
         <CustomUpload value={profile.profileImageUrl} disable={true} />
+        {!ownView && (
+          <Rate
+            disabled
+            allowHalf
+            value={profile.averageRating}
+            className="block text-2xl mt-6"
+          />
+        )}
       </div>
       <div className="w-3/5 text-lg mt-2">
         <div className="text-2xl font-bold">{`${profile.firstname} ${profile.lastname}`}</div>
@@ -41,6 +48,11 @@ const InformationProfile = ({ profile, ownView = true }) => {
         <div className="mt-4">
           Email: {ownView ? profile.email : profile.user.email}{' '}
         </div>
+        {!ownView && (
+          <div className="mt-8 text-base">
+            Registered trainee: {profile.numberOfRegisteredTrainees}
+          </div>
+        )}
       </div>
     </div>
   );
