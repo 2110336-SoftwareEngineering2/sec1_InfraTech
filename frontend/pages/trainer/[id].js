@@ -11,6 +11,7 @@ import { Divider } from 'antd';
 import TraineeViewCourseList from '../../components/course/TraineeViewCourseList';
 import InformationProfile from '../../components/InformationProfile';
 import FAQ from '../../components/FAQ/FAQ';
+import ReviewList from '../../components/review/ReviewList';
 
 const TrainerProfilePage = () => {
   const router = useRouter();
@@ -36,6 +37,11 @@ const TrainerProfilePage = () => {
       else return axios.get(url).then((res) => res?.data ?? []);
     },
   );
+
+  const { data: reviews } = useSWR(`${API_HOST}/review/${id}`, (url) => {
+    if (!id) return;
+    else return axios.get(url).then((res) => res?.data ?? {});
+  });
 
   const [token] = useCookies([COOKIE_NAME]);
   const { data: applications } = useSWR(
@@ -83,6 +89,9 @@ const TrainerProfilePage = () => {
                   mutateFAQ={mutateFAQ}
                   canEdit={id == user.userId}
                 />
+                <hr className="my-16" />
+                <div className="text-3xl font-bold mb-6">Trainer's Reviews</div>
+                <ReviewList reviews={reviews} />
               </div>
             ) : (
               <Loading />

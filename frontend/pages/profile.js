@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 
 import useUser from '../lib/useUser';
@@ -10,6 +10,7 @@ import Loading from '../components/common/Loading';
 import { USER_TYPE } from '../config/UserType.config';
 import { EditOutlined } from '@ant-design/icons';
 import FAQ from '../components/FAQ/FAQ';
+import ReviewList from '../components/review/ReviewList';
 import useSWR from 'swr';
 import { API_HOST, COOKIE_NAME } from '../config/config';
 import axios from 'axios';
@@ -31,6 +32,14 @@ const Profile = () => {
         },
       });
       return res?.data ?? {};
+    },
+  );
+
+  const { data: reviews } = useSWR(
+    `${API_HOST}/review/${user?.userId}`,
+    (url) => {
+      if (!user) return;
+      else return axios.get(url).then((res) => res?.data ?? {});
     },
   );
 
@@ -64,6 +73,9 @@ const Profile = () => {
                 <TrainerCourseList />
                 <hr className="my-16" />
                 <FAQ faqs={faqs} mutateFAQ={mutateFAQ} canEdit={true} />
+                <hr className="my-16" />
+                <div className="text-3xl font-bold mb-10">My Reviews</div>
+                <ReviewList reviews={reviews} />
               </>
             )}
           </div>
