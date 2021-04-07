@@ -49,6 +49,9 @@ export class ReviewService {
 
     const review = this.reviewRepository.create();
 
+    application.review();
+    await this.applicationRepository.save(application);
+
     review.trainer = application.course.trainer;
     review.trainee = application.trainee;
     review.application = application;
