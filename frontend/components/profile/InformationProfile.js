@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image, Tag, Rate } from 'antd';
 import CustomUpload from './CustomUpload';
-import { USER_TYPE } from '../config/UserType.config';
+import { USER_TYPE } from '../../config/UserType.config';
 
 const InformationProfile = ({ profile, ownView = true }) => {
   const calculateAge = (birthdate) => {

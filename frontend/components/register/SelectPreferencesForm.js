@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Form } from 'antd';
-import SelectPreferencesInput from '../SelectPreferencesInput';
+import SelectPreferencesInput from '../registerInput/SelectPreferencesInput';
 import StepHeader from './StepHeader';
 
 const SelectPreferencesForm = ({

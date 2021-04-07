@@ -1,6 +1,6 @@
 import { Row } from 'antd';
 import SelectionCard from './SelectionCard';
-import { USER_TYPE } from '../config/UserType.config';
+import { USER_TYPE } from '../../config/UserType.config';
 
 const SelectRoleInput = ({ value, onChange }) => {
   const onClick = (role) => {

@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 
 import useUser from '../lib/useUser';
 import { AppLayout } from '../components/common';
-import TrainerListItem from '../components/TrainerListItem';
-import FilterTrainerList from '../components/FilterTrainerList';
+import TrainerListItem from '../components/browse/TrainerListItem';
+import FilterTrainerList from '../components/browse/FilterTrainerList';
 import { List } from 'antd';
 import { TrainerSortBy, TrainerSortType } from '../config/FilterTrainer.config';
 import { API_HOST } from '../config/config';

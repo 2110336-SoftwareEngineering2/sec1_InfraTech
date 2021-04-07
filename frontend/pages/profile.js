@@ -3,8 +3,8 @@ import moment from 'moment';
 
 import useUser from '../lib/useUser';
 import { AppLayout } from '../components/common';
-import EditProfile from '../components/EditProfile';
-import InformationProfile from '../components/InformationProfile';
+import EditProfile from '../components/profile/EditProfile';
+import InformationProfile from '../components/profile/InformationProfile';
 import TrainerCourseList from '../components/course/TrainerCourseList';
 import Loading from '../components/common/Loading';
 import { USER_TYPE } from '../config/UserType.config';

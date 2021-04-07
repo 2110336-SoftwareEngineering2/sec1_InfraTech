@@ -4,7 +4,7 @@ import Image from 'next/image';
 import getConfig from 'next/config';
 import { LoadingOutlined } from '@ant-design/icons';
 import isBase64 from 'is-base64';
-import { getBase64 } from '../lib/utils';
+import { getBase64 } from '../../lib/utils';
 
 const { publicRuntimeConfig } = getConfig();
 

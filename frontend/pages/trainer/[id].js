@@ -9,7 +9,7 @@ import { API_HOST, COOKIE_NAME } from '../../config/config';
 import { AppLayout, Loading } from '../../components/common';
 import { Divider } from 'antd';
 import TraineeViewCourseList from '../../components/course/TraineeViewCourseList';
-import InformationProfile from '../../components/InformationProfile';
+import InformationProfile from '../../components/profile/InformationProfile';
 import FAQ from '../../components/FAQ/FAQ';
 import ReviewList from '../../components/review/ReviewList';
 

@@ -7,7 +7,7 @@ import axios from 'axios';
 import { COOKIE_NAME, API_HOST } from '../config/config';
 import { REDIRECT_CONDITION } from '../config/RedirectCondition.config';
 import useUser from '../lib/useUser';
-import LoginForm from '../components/LoginForm';
+import LoginForm from '../components/login/LoginForm';
 import { Footer } from '../components/common';
 
 const Login = () => {
