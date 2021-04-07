@@ -48,9 +48,9 @@ const TraineeRequest = ({ course_id, filter }) => {
     );
   };
 
-  const handleKick = (traineeId) => {
+  const handleComplete = (traineeId) => {
     axios.patch(
-      `${API_HOST}/application/cancel/${course_id}?traineeId=${traineeId}`,
+      `${API_HOST}/application/complete/${course_id}?traineeId=${traineeId}`,
       {},
       {
         headers: {
@@ -95,12 +95,12 @@ const TraineeRequest = ({ course_id, filter }) => {
             <Button
               className="ml-6"
               type="primary"
-              danger
+              primary
               onClick={() => {
-                handleKick(item.traineeUserId);
+                handleComplete(item.traineeUserId);
               }}
             >
-              Kick
+              Complete
             </Button>
           )}
         </div>

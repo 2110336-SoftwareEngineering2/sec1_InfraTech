@@ -42,7 +42,7 @@ const TraineeApplicationItem = ({ app }) => {
             <CloseSquareOutlined className="m-2" />
           </>
         );
-      case 'complete':
+      case 'complete' || 'reviewed':
         return (
           <>
             Complete Course <CrownOutlined className="m-2" />
@@ -75,6 +75,8 @@ const TraineeApplicationItem = ({ app }) => {
     );
   };
 
+  const handleReview = () => {};
+
   return (
     <div className={`bg-${colorSwitch(app.status)} p-6 shadow-around mb-4`}>
       <div
@@ -100,6 +102,16 @@ const TraineeApplicationItem = ({ app }) => {
                 onClick={handleCancel}
               >
                 cancel
+              </Button>
+            )}
+            {app.status == 'complete' && (
+              <Button
+                className="ml-6"
+                type="primary"
+                danger
+                onClick={handleReview}
+              >
+                Review
               </Button>
             )}
           </>
