@@ -9,7 +9,7 @@ import {
 } from '@ant-design/icons';
 import axios from 'axios';
 
-import { setAllFirstCapitalLetter } from '../../lib/setCapitalLetter';
+import { setFirstCapitalLetter } from '../../lib/setCapitalLetter';
 import { COOKIE_NAME, API_HOST } from '../../config/config';
 import FAQEditFormModal from './FAQEditFormModal';
 
@@ -36,7 +36,7 @@ const FAQItem = ({ faq, faqs, mutateFAQ, canEdit }) => {
         <div className="mb-6 flex justify-between">
           <span className=" text-green-400 font-bold text-xl">
             <QuestionCircleOutlined />
-            {` : ${setAllFirstCapitalLetter(faq.question)}`}
+            {` : ${setFirstCapitalLetter(faq.question)}`}
           </span>
           {canEdit && (
             <div className="text-lg text-gray-400">
@@ -60,7 +60,7 @@ const FAQItem = ({ faq, faqs, mutateFAQ, canEdit }) => {
           )}
         </div>
         <span className=" text-red-500 font-bold text-xl">
-          <AlertOutlined /> {` : ${setAllFirstCapitalLetter(faq.answer)}`}
+          <AlertOutlined /> {` : ${setFirstCapitalLetter(faq.answer)}`}
         </span>
       </div>
       <FAQEditFormModal
