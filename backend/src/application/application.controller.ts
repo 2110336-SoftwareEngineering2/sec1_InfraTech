@@ -141,4 +141,25 @@ export class ApplicationController {
     application.reject();
     await this.applicationService.save(application);
   }
+
+  @ApiParam({ name: 'courseId', type: String, required: true })
+  @Patch('/complete/:courseId')
+  @Role(UserType.Trainer)
+  @UseGuards(RoleGuard)
+  async completeCourse(
+    @Param('courseId') courseId,
+    @Query('traineeId') traineeId,
+    @Req() request: LetXRequest,
+  ): Promise<void> {
+    const application = await this.applicationService.getApprovedApplication({
+      courseId: courseId,
+      traineeId: traineeId,
+    });
+    await this.applicationService.validateTrainer({
+      trainerId: request.user.id,
+      application: application,
+    });
+    application.complete();
+    await this.applicationService.save(application);
+  }
 }

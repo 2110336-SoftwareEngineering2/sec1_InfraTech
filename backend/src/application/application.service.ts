@@ -122,6 +122,26 @@ export class ApplicationService {
     }
   }
 
+  async getApprovedApplication({
+    traineeId,
+    courseId,
+  }: TraineeApplication): Promise<Application> {
+    try {
+      return await this.applicationRepository.findOneOrFail({
+        where: [
+          {
+            traineeUserId: traineeId,
+            courseId: courseId,
+            status: ApplicationStatus.APPROVED,
+          },
+        ],
+        relations: ['course', 'course.trainer'],
+      });
+    } catch (e) {
+      throw new HttpException('application not found', HttpStatus.NOT_FOUND);
+    }
+  }
+
   async save(application: Application) {
     await this.applicationRepository.save(application);
   }

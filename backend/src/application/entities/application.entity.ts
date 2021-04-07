@@ -49,4 +49,8 @@ export class Application {
   public reject() {
     this.status = ApplicationStatus.REJECTED;
   }
+
+  public complete() {
+    this.status = ApplicationStatus.COMPLETE;
+  }
 }
