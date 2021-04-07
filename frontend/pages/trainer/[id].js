@@ -13,6 +13,7 @@ import InformationProfile from '../../components/InformationProfile';
 import FAQ from '../../components/FAQ/FAQ';
 
 import { createRoom } from '../api/chat';
+import { USER_TYPE } from '../../config/UserType.config';
 
 const TrainerProfilePage = () => {
   const router = useRouter();
@@ -72,7 +73,7 @@ const TrainerProfilePage = () => {
           <div className="bg-white w-full mx-8 mt-8 p-7">
             <div className="flex justify-between text-3xl font-bold mb-6">
               Trainer's Profile
-              {trainer ? (
+              {trainer && user?.type === USER_TYPE.TRAINEE ? (
                 <Button onClick={() => {
                   const roomId = createRoom({
                     id: user.userId,

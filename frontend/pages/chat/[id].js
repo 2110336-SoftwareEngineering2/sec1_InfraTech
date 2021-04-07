@@ -10,6 +10,7 @@ import Room from '../../components/chat/Room';
 import MessageInput from '../../components/chat/MessageInput';
 import { useRouter } from 'next/router';
 import MessageView from '../../components/chat/MessageView';
+import { USER_TYPE } from '../../config/UserType.config';
 
 const Chat = () => {
   const router = useRouter();
@@ -46,9 +47,13 @@ const Chat = () => {
             image={Empty.PRESENTED_IMAGE_SIMPLE}
             description="Chat Room is Empty"
           />
-          <Link href="/browse">
-            <Button type="primary">Start New Chat</Button>
-          </Link>
+          {user?.type === USER_TYPE.TRAINEE ? (
+            <Link href="/browse">
+              <Button type="primary">Start New Chat</Button>
+            </Link>
+          ) : (
+            <></>
+          )}
         </div>
       ) : (
         <div className="flex flex-grow bg-white mx-8 mt-8 items-start">
