@@ -9,10 +9,30 @@ import TrainerCourseList from '../components/course/TrainerCourseList';
 import Loading from '../components/common/Loading';
 import { USER_TYPE } from '../config/UserType.config';
 import { EditOutlined } from '@ant-design/icons';
+import FAQ from '../components/FAQ/FAQ';
+import useSWR from 'swr';
+import { API_HOST, COOKIE_NAME } from '../config/config';
+import axios from 'axios';
+import { useCookies } from 'react-cookie';
 
 const Profile = () => {
   const { user, mutateUser } = useUser({ redirectTo: '/login' });
   const [isEditing, setIsEditing] = useState(false);
+  const [token] = useCookies([COOKIE_NAME]);
+  const { data: faqs, mutate: mutateFAQ } = useSWR(
+    [`${API_HOST}/faq`, token],
+    async (url, token) => {
+      if (!token[COOKIE_NAME]) return;
+
+      const res = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${token[COOKIE_NAME] || ''}`,
+          'Access-Control-Allow-Origin': '*',
+        },
+      });
+      return res?.data ?? {};
+    },
+  );
 
   const onClick = () => {
     setIsEditing(true);
@@ -21,7 +41,6 @@ const Profile = () => {
   if (user) {
     user.birthdate = moment(user.birthdate);
   }
-
   return (
     <AppLayout user={user} mutateUser={mutateUser}>
       {user ? (
@@ -43,6 +62,8 @@ const Profile = () => {
                 <hr className="my-16" />
                 <div className="text-3xl font-bold mb-10">My Courses</div>
                 <TrainerCourseList />
+                <hr className="my-16" />
+                <FAQ faqs={faqs} mutateFAQ={mutateFAQ} canEdit={true} />
               </>
             )}
           </div>
