@@ -1,11 +1,14 @@
-import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
-import { Trainee } from "../entities/trainee.entity";
-import { Builder } from "builder-pattern";
-import { Application, ApplicationStatus } from "../application/entities/application.entity";
-import { Course } from "../course/entities/course.entity";
+import { Trainee } from '../entities/trainee.entity';
+import { Builder } from 'builder-pattern';
+import {
+  Application,
+  ApplicationStatus,
+} from '../application/entities/application.entity';
+import { Course } from '../course/entities/course.entity';
 
 interface TraineeApplication {
   courseId: string;
@@ -112,7 +115,27 @@ export class ApplicationService {
             status: ApplicationStatus.PENDING,
           },
         ],
-        relations: ['course'],
+        relations: ['course', 'course.trainer'],
+      });
+    } catch (e) {
+      throw new HttpException('application not found', HttpStatus.NOT_FOUND);
+    }
+  }
+
+  async getApprovedApplication({
+    traineeId,
+    courseId,
+  }: TraineeApplication): Promise<Application> {
+    try {
+      return await this.applicationRepository.findOneOrFail({
+        where: [
+          {
+            traineeUserId: traineeId,
+            courseId: courseId,
+            status: ApplicationStatus.APPROVED,
+          },
+        ],
+        relations: ['course', 'course.trainer'],
       });
     } catch (e) {
       throw new HttpException('application not found', HttpStatus.NOT_FOUND);

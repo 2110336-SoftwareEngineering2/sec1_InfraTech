@@ -14,6 +14,7 @@ export enum ApplicationStatus {
   REJECTED = 'rejected',
   CANCELED = 'canceled',
   COMPLETE = 'complete',
+  REVIEWED = 'reviewed',
 }
 
 @Entity({ name: 'application' })
@@ -48,5 +49,13 @@ export class Application {
 
   public reject() {
     this.status = ApplicationStatus.REJECTED;
+  }
+
+  public complete() {
+    this.status = ApplicationStatus.COMPLETE;
+  }
+
+  public review() {
+    this.status = ApplicationStatus.REVIEWED;
   }
 }

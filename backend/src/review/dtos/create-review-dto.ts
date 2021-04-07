@@ -1,5 +1,5 @@
 export class CreateReviewDto {
-  trainerUserId: string;
+  applicationId: string;
   rating: number;
   comment: string;
 }

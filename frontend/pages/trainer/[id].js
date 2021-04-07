@@ -10,6 +10,7 @@ import { AppLayout, Loading } from '../../components/common';
 import { Divider } from 'antd';
 import TraineeViewCourseList from '../../components/course/TraineeViewCourseList';
 import InformationProfile from '../../components/InformationProfile';
+import FAQ from '../../components/FAQ/FAQ';
 
 const TrainerProfilePage = () => {
   const router = useRouter();
@@ -22,6 +23,14 @@ const TrainerProfilePage = () => {
 
   const { data: courses } = useSWR(
     `${API_HOST}/course/trainer/${id}`,
+    async (url) => {
+      if (!id) return;
+      else return axios.get(url).then((res) => res?.data ?? []);
+    },
+  );
+
+  const { data: faqs, mutate: mutateFAQ } = useSWR(
+    `${API_HOST}/faq/trainer/${id}`,
     async (url) => {
       if (!id) return;
       else return axios.get(url).then((res) => res?.data ?? []);
@@ -53,7 +62,6 @@ const TrainerProfilePage = () => {
             'notApply',
           ...course,
         }));
-
   return (
     <AppLayout user={user} mutateUser={mutateUser}>
       {user ? (
@@ -68,6 +76,12 @@ const TrainerProfilePage = () => {
                 <TraineeViewCourseList
                   courses={coursesWithApp}
                   showStatus={user.type === 'TRAINEE'}
+                />
+                <hr className="my-16" />
+                <FAQ
+                  faqs={faqs}
+                  mutateFAQ={mutateFAQ}
+                  canEdit={id == user.userId}
                 />
               </div>
             ) : (
