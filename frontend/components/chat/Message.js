@@ -7,8 +7,8 @@ const Message = ({profile, text, at, bySelf}) => {
 
   console.log("render")
 
-  return <div className={"flex flex-col mt-4 w-1/4" + (bySelf ? "justify-end items-end" : "")}>
-      <div className={"flex " + (bySelf ? "justify-end" : "")}>
+  return <div className={"flex flex-col my-4 " + (bySelf ? "justify-end items-end" : "")}>
+      <div className={"flex " + (bySelf ? "justify-end" : "")} style={{maxWidth: "75%"}}>
         <div className="mr-2">
           <Image
             src={profile}
@@ -18,8 +18,8 @@ const Message = ({profile, text, at, bySelf}) => {
             className="rounded-full"
           />
         </div>
-        <div className={"flex flex-col w-auto " + (bySelf ? "align-end" : "")}>
-          <div className="p-2 bg-gray-200 rounded-xl">{text}</div>
+        <div className={"flex flex-col " + (bySelf ? "align-end" : "")}>
+          <div className="p-2 break-words flex-wrap bg-gray-200 rounded-xl">{text}</div>
         </div>
       </div>
     <div className="text-xs mt-1 text-gray-400">{at === undefined ? "" : localeDateString}</div>
