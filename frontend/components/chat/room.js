@@ -1,42 +1,32 @@
-import Image from 'next/image';
+import { useEffect, useState } from 'react';
 
 import Link from 'next/link'
+import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import { USER_TYPE } from '../../config/UserType.config';
-import axios from 'axios';
-import { API_HOST } from '../../config/config';
-import useUser from '../../lib/useUser';
-import { Loading } from '../common';
+
+import { Spin } from 'antd';
 
 const Room = ({room}) => {
-  const { user, _ } = useUser({});
+  const router = useRouter();
+  const { currentRoomId } = router.query.id;
 
-  const [ oppositeUserInfo, setOppositeUserInfo] = useState(undefined);
-
-  useEffect(() => {
-    if (user === null) return;
-    switch(user.type) {
-      case USER_TYPE.TRAINEE:
-        axios.get(`${API_HOST}/trainer/${room.oppositeUserId}`).then(res => setOppositeUserInfo(res.data));
-    }
-  }, [user, room.oppositeUserId])
+  console.log(room)
 
   return <Link href={`/chat/${room.roomId}`}>
-    <div className={"text-center p-5 cursor-pointer bg-grey hover:bg-gray-100"}>
+    <div className={`text-center p-5 cursor-pointer w-52 ${currentRoomId === room.roomId ? 'bg-current' : 'hover:bg-gray-100'}`}>
     {
-      oppositeUserInfo === undefined ? (
-        <Loading/>
+      room === undefined ? (
+        <Spin/>
       ) : (
         <div>
           <Image
-            src={oppositeUserInfo.profileImageUrl}
+            src={room.oppositeUser.profile}
             width={36}
             height={36}
             layout="fixed"
             className="rounded-full"
           />
-          <div>{oppositeUserInfo.firstname} {oppositeUserInfo.lastname}</div>
+          <div>{room.oppositeUser.name}</div>
         </div>
       )
     }

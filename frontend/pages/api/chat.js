@@ -22,10 +22,6 @@ const pushData = (ref, data) => {
   })
 }
 
-const isRoomExists = (userIdA, userIdB) => {
-
-}
-
 export const snapshotToArray = (snapshot) => Object.values(snapshot).slice(0, snapshot.length);
 
 export const sendMessage = (sender, message, roomId) => {
@@ -36,19 +32,35 @@ export const getMessages = (roomId, handler) => {
   onValue(getRoomRef(roomId), handler);
 }
 
-export const createRoom = (userIdA, userIdB) => {
-  const roomId = UUID();
-
-  const roomIndexRefA = getRoomIndexRef(userIdA)
-  const roomIndexRefB = getRoomIndexRef(userIdB)
+export const createRoom = (trainee, trainer) => {
+  const roomId = `${trainee.id}-${trainer.id}`;
   const roomRef = getRoomRef(roomId);
 
-  pushData(roomIndexRefA, { roomId, oppositeUserId: userIdB });
-  pushData(roomIndexRefB, { roomId, oppositeUserId: userIdA });
+  getOnce(roomRef).then(snapshot => {
+    if (snapshot === null) {
+      const traineeRoomIndex = getRoomIndexRef(trainee.id)
+      const trainerRoomIndex = getRoomIndexRef(trainer.id)
 
-  roomRef.set({
-    length: 0,
-  }).then();
+      pushData(traineeRoomIndex, {
+        roomId,
+        oppositeUser: {
+          name: trainer.name,
+          profile: trainer.profile,
+        }
+      });
+      pushData(trainerRoomIndex, {
+        roomId,
+        oppositeUser: {
+          name: trainee.name,
+          profile: trainee.profile,
+        }
+      });
+
+      roomRef.set({
+        length: 0,
+      }).then();
+    }
+  })
 
   return roomId;
 }

@@ -64,6 +64,7 @@ const TrainerProfilePage = () => {
             'notApply',
           ...course,
         }));
+
   return (
     <AppLayout user={user} mutateUser={mutateUser}>
       {user ? (
@@ -71,12 +72,23 @@ const TrainerProfilePage = () => {
           <div className="bg-white w-full mx-8 mt-8 p-7">
             <div className="flex justify-between text-3xl font-bold mb-6">
               Trainer's Profile
-              {trainer ? <Button onClick={() => {
-                const roomId = createRoom(user.userId, id);
-                console.log(roomId);
-
-                router.push("/chat/" + roomId)
-              }}>Direct Message</Button> : <></>}
+              {trainer ? (
+                <Button onClick={() => {
+                  const roomId = createRoom({
+                    id: user.userId,
+                    name: `${user.firstname} ${user.lastname}`,
+                    profile: user.profileImageUrl,
+                  }, {
+                    id: trainer.userId,
+                    name: `${trainer.firstname} ${trainer.lastname}`,
+                    profile: trainer.profileImageUrl,
+                  });
+                  router.push("/chat/" + roomId)
+                }}>Direct Message</Button>
+              ) : (
+                <>
+                </>
+              )}
             </div>
             {trainer ? (
               <div>
