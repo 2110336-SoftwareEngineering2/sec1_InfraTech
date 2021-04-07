@@ -39,8 +39,8 @@ const Chat = () => {
   }, [user, id]);
 
   return (
-    <AppLayout user={user} mutateUser={mutateUser}>
-      <div className="flex flex-grow h-screen">
+    <AppLayout user={user} mutateUser={mutateUser} fitScreen={true}>
+      <div className="flex h-full" style={{height: "calc(100vh-64px)"}}>
       {!roomList.length ? (
         <div className="flex flex-col flex-grow bg-white mx-8 mt-8 py-12 px-12" >
           <Empty
