@@ -24,7 +24,7 @@ const Profile = () => {
     [`${API_HOST}/faq`, token],
     async (url, token) => {
       if (!token[COOKIE_NAME]) return;
-
+      if (user.type === USER_TYPE.TRAINEE) return;
       const res = await axios.get(url, {
         headers: {
           Authorization: `Bearer ${token[COOKIE_NAME] || ''}`,
@@ -72,6 +72,7 @@ const Profile = () => {
                 <div className="text-3xl font-bold mb-10">My Courses</div>
                 <TrainerCourseList />
                 <hr className="my-16" />
+                <div className="text-3xl font-bold mb-6">My FAQ</div>
                 <FAQ faqs={faqs} mutateFAQ={mutateFAQ} canEdit={true} />
                 <hr className="my-16" />
                 <div className="text-3xl font-bold mb-10">My Reviews</div>

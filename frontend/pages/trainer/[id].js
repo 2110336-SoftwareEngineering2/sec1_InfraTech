@@ -84,6 +84,7 @@ const TrainerProfilePage = () => {
                   showStatus={user.type === 'TRAINEE'}
                 />
                 <hr className="my-16" />
+                <div className="text-3xl font-bold mb-6">Trainer's FAQ</div>
                 <FAQ
                   faqs={faqs}
                   mutateFAQ={mutateFAQ}

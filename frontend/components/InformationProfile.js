@@ -37,11 +37,15 @@ const InformationProfile = ({ profile, ownView = true }) => {
           {ownView
             ? profile.preferences &&
               profile.preferences.map((preference) => (
-                <Tag className="mx-2">{preference.name}</Tag>
+                <Tag className="mx-2" key={preference.id}>
+                  {preference.name}
+                </Tag>
               ))
             : profile.user.preferences &&
               profile.user.preferences.map((preference) => (
-                <Tag className="mx-2">{preference.name}</Tag>
+                <Tag className="mx-2" key={preference.id}>
+                  {preference.name}
+                </Tag>
               ))}
         </div>
         <div className="mt-4">Tel: {profile.phoneNumber}</div>

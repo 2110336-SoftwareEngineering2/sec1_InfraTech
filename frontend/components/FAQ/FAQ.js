@@ -7,7 +7,6 @@ const FAQ = ({ faqs, mutateFAQ, canEdit }) => {
   const [showCreateFAQ, setShowCreateFAQ] = useState(false);
   return (
     <>
-      <div className="text-3xl font-bold mb-6">Trainer's FAQ</div>
       <FAQList faqs={faqs} mutateFAQ={mutateFAQ} canEdit={canEdit} />
       {canEdit && (
         <div
