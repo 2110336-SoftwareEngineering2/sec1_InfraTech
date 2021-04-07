@@ -9,6 +9,10 @@ import { snapshotToArray, sendMessage, getMessages, getRoom } from '../api/chat'
 import Room from '../../components/chat/room';
 import Message from '../../components/chat/message';
 import { useRouter } from 'next/router';
+import useSWR from 'swr';
+import { API_HOST } from '../../config/config';
+import axios from 'axios';
+import { USER_TYPE } from '../../config/UserType.config';
 
 const Chat = () => {
   const router = useRouter();
@@ -20,6 +24,8 @@ const Chat = () => {
 
   const [rooms, setRooms] = useState([]);
   const [selectedRoomIndex, setSelectedRoomIndex] = useState();
+
+  const [oppositeUserInformation, setOppositeUserInformation] = useState({});
 
   const [messageInput, setMessageInput] = useState("");
 
@@ -63,7 +69,7 @@ const Chat = () => {
         at: new Date(msg.at),
       })));
     });
-  }, [noRoomAvailable, selectedRoomIndex])
+  }, [noRoomAvailable, selectedRoomIndex]);
 
   return (
     <AppLayout user={user} mutateUser={mutateUser}>
@@ -80,7 +86,7 @@ const Chat = () => {
         :
         <div className="flex h-screen bg-white mx-8 mt-8 items-end">
           <div className="flex flex-col overflow-y-scroll h-full">
-            {rooms.map((room, index) => <Room key={index} oppositeUser={room.oppositeUserId} selected={id === room.roomId} roomId={room.roomId}/>)}
+            {rooms.map((room, index) => <Room key={index} room={room}/>)}
           </div>
 
           <div className="flex flex-col flex-grow h-full pl-4">

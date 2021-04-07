@@ -1,24 +1,46 @@
 import Image from 'next/image';
-import React from 'react';
+
+import Link from 'next/link'
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { USER_TYPE } from '../../config/UserType.config';
+import axios from 'axios';
+import { API_HOST } from '../../config/config';
+import useUser from '../../lib/useUser';
+import { Loading } from '../common';
 
-const Room = ({oppositeUser, roomId, selected}) => {
-  const router = useRouter();
+const Room = ({room}) => {
+  const { user, _ } = useUser({});
 
-  const onClickHandler = () => {
-    router.push("/chat/" + roomId)
-  }
+  const [ oppositeUserInfo, setOppositeUserInfo] = useState(undefined);
 
-  return <div className={"text-center p-5 cursor-pointer " + (selected ? "bg-indigo-900 text-white": "hover:bg-gray-100")} onClick={onClickHandler}>
-    <Image
-      src={"https://www.aceshowbiz.com/images/photo/john_cena.jpg"}
-      width={36}
-      height={36}
-      layout="fixed"
-      className="rounded-full"
-    />
-    <div>Somlux Kamsing</div>
-    {/* <div>{oppositeUser}</div> */}
-  </div>
+  useEffect(() => {
+    if (user === null) return;
+    switch(user.type) {
+      case USER_TYPE.TRAINEE:
+        axios.get(`${API_HOST}/trainer/${room.oppositeUserId}`).then(res => setOppositeUserInfo(res.data));
+    }
+  }, [user, room.oppositeUserId])
+
+  return <Link href={`/chat/${room.roomId}`}>
+    <div className={"text-center p-5 cursor-pointer bg-grey hover:bg-gray-100"}>
+    {
+      oppositeUserInfo === undefined ? (
+        <Loading/>
+      ) : (
+        <div>
+          <Image
+            src={oppositeUserInfo.profileImageUrl}
+            width={36}
+            height={36}
+            layout="fixed"
+            className="rounded-full"
+          />
+          <div>{oppositeUserInfo.firstname} {oppositeUserInfo.lastname}</div>
+        </div>
+      )
+    }
+    </div>
+  </Link>
 }
 export default Room;
