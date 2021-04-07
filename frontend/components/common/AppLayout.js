@@ -8,11 +8,11 @@ import { USER_TYPE } from '../../config/UserType.config';
 
 const { Content } = Layout;
 
-const AppLayout = ({ user, mutateUser, children, selectedMenu }) => {
+const AppLayout = ({ user, mutateUser, children, selectedMenu, fitScreen }) => {
   const [collapsed, setCollapsed] = useState(true);
 
   return (
-    <Layout>
+    <Layout className={fitScreen === true ? "h-screen" : ""}>
       <Sider
         collapsed={collapsed}
         userType={user?.type ?? USER_TYPE.GUEST}

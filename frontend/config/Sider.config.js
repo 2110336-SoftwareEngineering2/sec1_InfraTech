@@ -46,7 +46,7 @@ export const MENU_ITEMS = {
     {
       text: 'Chat',
       icon: <MessageOutlined />,
-      href: '/chat',
+      href: '/chat/0',
     },
   ],
   [USER_TYPE.TRAINEE]: [
@@ -73,7 +73,7 @@ export const MENU_ITEMS = {
     {
       text: 'Chat',
       icon: <MessageOutlined />,
-      href: '/chat',
+      href: '/chat/0',
     },
   ],
 };
