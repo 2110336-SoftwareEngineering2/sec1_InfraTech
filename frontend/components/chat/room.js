@@ -11,13 +11,14 @@ const Room = ({oppositeUser, roomId, selected}) => {
 
   return <div className={"text-center p-5 cursor-pointer " + (selected ? "bg-indigo-900 text-white": "hover:bg-gray-100")} onClick={onClickHandler}>
     <Image
-      src={"/avatar.svg"}
+      src={"https://www.aceshowbiz.com/images/photo/john_cena.jpg"}
       width={36}
       height={36}
       layout="fixed"
       className="rounded-full"
     />
-    <div>{oppositeUser}</div>
+    <div>Somlux Kamsing</div>
+    {/* <div>{oppositeUser}</div> */}
   </div>
 }
 export default Room;
