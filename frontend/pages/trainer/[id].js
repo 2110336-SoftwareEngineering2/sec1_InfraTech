@@ -7,13 +7,13 @@ import { useCookies } from 'react-cookie';
 import { API_HOST, COOKIE_NAME } from '../../config/config';
 
 import { AppLayout, Loading } from '../../components/common';
-import { Button, Divider } from 'antd';
+import { Divider } from 'antd';
 import TraineeViewCourseList from '../../components/course/TraineeViewCourseList';
 import InformationProfile from '../../components/InformationProfile';
 import FAQ from '../../components/FAQ/FAQ';
 
-import { createRoom } from '../api/chat';
 import { USER_TYPE } from '../../config/UserType.config';
+import DirectMessageButton from '../../components/chat/DirectMessageButton';
 
 const TrainerProfilePage = () => {
   const router = useRouter();
@@ -74,21 +74,9 @@ const TrainerProfilePage = () => {
             <div className="flex justify-between text-3xl font-bold mb-6">
               Trainer's Profile
               {trainer && user?.type === USER_TYPE.TRAINEE ? (
-                <Button onClick={() => {
-                  const roomId = createRoom({
-                    id: user.userId,
-                    name: `${user.firstname} ${user.lastname}`,
-                    profile: user.profileImageUrl,
-                  }, {
-                    id: trainer.userId,
-                    name: `${trainer.firstname} ${trainer.lastname}`,
-                    profile: trainer.profileImageUrl,
-                  });
-                  setTimeout(() => router.push("/chat/" + roomId).then(), 1000)
-                }}>Direct Message</Button>
+                <DirectMessageButton trainer={trainer}/>
               ) : (
-                <>
-                </>
+                <></>
               )}
             </div>
             {trainer ? (
