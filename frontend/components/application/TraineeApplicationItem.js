@@ -46,7 +46,13 @@ const TraineeApplicationItem = ({ app }) => {
             <CloseSquareOutlined className="m-2" />
           </>
         );
-      case 'complete' || 'reviewed':
+      case 'complete':
+        return (
+          <>
+            Complete Course <CrownOutlined className="m-2" />
+          </>
+        );
+      case 'reviewed':
         return (
           <>
             Complete Course <CrownOutlined className="m-2" />
@@ -62,6 +68,8 @@ const TraineeApplicationItem = ({ app }) => {
       case 'rejected':
         return 'red-100';
       case 'complete':
+        return 'green-100';
+      case 'reviewed':
         return 'green-100';
     }
   };

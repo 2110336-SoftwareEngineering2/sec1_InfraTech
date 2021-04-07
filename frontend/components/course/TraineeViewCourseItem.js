@@ -69,6 +69,8 @@ const TraineeApplicationItem = ({ course, showStatus }) => {
             Registered Course <CheckSquareOutlined className="m-2" />
           </div>
         );
+      case 'reviewed':
+        return <div>complete</div>;
       default:
         return <div>{status}</div>;
     }
