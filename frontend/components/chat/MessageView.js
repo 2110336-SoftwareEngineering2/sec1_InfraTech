@@ -22,6 +22,7 @@ const MessageView = ({selectedRoom}) => {
   }, [messages])
 
   const renderListItem = useCallback((message, index) => {
+    if (user === null) return <></>
     if (message.sender === user.userId) {
       return <Message key={index} bySelf={true} text={message.text} at={message.at} profile={user.profileImageUrl}/>
     } else {

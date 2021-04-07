@@ -25,6 +25,7 @@ module.exports = {
       indigo: colors.indigo,
       purple: colors.violet,
       pink: colors.pink,
+      room: '#011529',
     },
     spacing: {
       px: '1px',

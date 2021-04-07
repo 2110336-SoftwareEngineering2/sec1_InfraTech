@@ -1,13 +1,12 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import useUser from '../../lib/useUser';
 import { AppLayout } from '../../components/common';
-import { Button, Empty, Input, List } from 'antd';
+import { Button, Empty } from 'antd';
 import Link from 'next/link';
 
-import { subscribeMessages, subscribeRoomList, pushMessage, snapshotToArray } from '../api/chat';
+import { snapshotToArray, subscribeRoomList } from '../api/chat';
 import Room from '../../components/chat/Room';
-import Message from '../../components/chat/Message';
 import MessageInput from '../../components/chat/MessageInput';
 import { useRouter } from 'next/router';
 import MessageView from '../../components/chat/MessageView';
@@ -17,8 +16,6 @@ const Chat = () => {
   const { id } = router.query;
 
   const { user, mutateUser } = useUser({ redirectTo: '/login' });
-
-  const [ messages, setMessages ] = useState([]);
 
   const [ roomList, setRoomList ] = useState([]);
   const [ selectedRoom, setSelectedRoom ] = useState({});
@@ -42,8 +39,9 @@ const Chat = () => {
 
   return (
     <AppLayout user={user} mutateUser={mutateUser}>
+      <div className="flex flex-grow h-screen">
       {!roomList.length ? (
-        <div className="flex flex-col min-h-screen bg-white mx-8 mt-8 py-12 px-12">
+        <div className="flex flex-col flex-grow bg-white mx-8 mt-8 py-12 px-12" >
           <Empty
             image={Empty.PRESENTED_IMAGE_SIMPLE}
             description="Chat Room is Empty"
@@ -51,8 +49,9 @@ const Chat = () => {
           <Link href="/browse">
             <Button type="primary">Start New Chat</Button>
           </Link>
-        </div> ) : (
-        <div className="flex h-screen bg-white mx-8 mt-8 items-end">
+        </div>
+      ) : (
+        <div className="flex flex-grow bg-white mx-8 mt-8 items-start">
           <div className="flex flex-col overflow-y-scroll h-full min-w-min">
             {roomList.map((room, index) => <Room key={index} room={room}/>)}
           </div>
@@ -66,6 +65,7 @@ const Chat = () => {
           )}
         </div>
       )}
+      </div>
     </AppLayout>
   );
 };
