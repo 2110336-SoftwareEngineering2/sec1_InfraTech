@@ -7,10 +7,12 @@ import { useCookies } from 'react-cookie';
 import { API_HOST, COOKIE_NAME } from '../../config/config';
 
 import { AppLayout, Loading } from '../../components/common';
-import { Divider } from 'antd';
+import { Button, Divider } from 'antd';
 import TraineeViewCourseList from '../../components/course/TraineeViewCourseList';
 import InformationProfile from '../../components/InformationProfile';
 import FAQ from '../../components/FAQ/FAQ';
+
+import { createRoom } from '../api/chat';
 
 const TrainerProfilePage = () => {
   const router = useRouter();
@@ -67,7 +69,15 @@ const TrainerProfilePage = () => {
       {user ? (
         <div className="min-h-screen flex justify-center">
           <div className="bg-white w-full mx-8 mt-8 p-7">
-            <div className="text-3xl font-bold mb-6">Trainer's Profile</div>
+            <div className="flex justify-between text-3xl font-bold mb-6">
+              Trainer's Profile
+              {trainer ? <Button onClick={() => {
+                const roomId = createRoom(user.userId, id);
+                console.log(roomId);
+
+                router.push("/chat/" + roomId)
+              }}>Direct Message</Button> : <></>}
+            </div>
             {trainer ? (
               <div>
                 <InformationProfile profile={trainer} ownView={false} />
