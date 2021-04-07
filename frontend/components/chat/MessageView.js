@@ -1,12 +1,13 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { List } from 'antd';
-import Message from './message';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import Message from './Message';
 import { snapshotToArray, subscribeMessages } from '../../pages/api/chat';
 import useUser from '../../lib/useUser';
 
 const MessageView = ({selectedRoom}) => {
   const { user, _ } = useUser({ redirectTo: '/login' });
   const [ messages, setMessages ] = useState([]);
+
+  const ending = useRef(null);
 
   useEffect(() => {
     if (selectedRoom === undefined) return;
@@ -15,6 +16,10 @@ const MessageView = ({selectedRoom}) => {
       setMessages(snapshotToArray(snapshot));
     })
   }, [selectedRoom]);
+
+  useEffect(() => {
+    ending.current?.scrollIntoView();
+  }, [messages])
 
   const renderListItem = useCallback((message, index) => {
     if (message.sender === user.userId) {
@@ -26,6 +31,7 @@ const MessageView = ({selectedRoom}) => {
 
   return <div className="flex-grow overflow-y-scroll p-4">
     {messages.map(renderListItem)}
+    <div ref={ending}></div>
   </div>
 }
 export default MessageView;

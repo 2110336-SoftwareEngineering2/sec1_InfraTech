@@ -6,8 +6,8 @@ import { Button, Empty, Input, List } from 'antd';
 import Link from 'next/link';
 
 import { subscribeMessages, subscribeRoomList, pushMessage, snapshotToArray } from '../api/chat';
-import Room from '../../components/chat/room';
-import Message from '../../components/chat/message';
+import Room from '../../components/chat/Room';
+import Message from '../../components/chat/Message';
 import MessageInput from '../../components/chat/MessageInput';
 import { useRouter } from 'next/router';
 import MessageView from '../../components/chat/MessageView';
@@ -53,7 +53,7 @@ const Chat = () => {
           </Link>
         </div> ) : (
         <div className="flex h-screen bg-white mx-8 mt-8 items-end">
-          <div className="flex flex-col overflow-y-scroll h-full">
+          <div className="flex flex-col overflow-y-scroll h-full min-w-min">
             {roomList.map((room, index) => <Room key={index} room={room}/>)}
           </div>
           {selectedRoom === undefined ? (
