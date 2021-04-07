@@ -83,7 +83,7 @@ const TrainerProfilePage = () => {
                     name: `${trainer.firstname} ${trainer.lastname}`,
                     profile: trainer.profileImageUrl,
                   });
-                  router.push("/chat/" + roomId)
+                  setTimeout(() => router.push("/chat/" + roomId).then(), 1000)
                 }}>Direct Message</Button>
               ) : (
                 <>

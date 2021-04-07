@@ -11,7 +11,7 @@ const Room = ({room}) => {
   const currentRoomId  = router.query.id;
 
   return <Link href={`/chat/${room.roomId}`}>
-    <div className={`text-center p-5 cursor-pointer w-52 ${currentRoomId === room.roomId ? 'border-r-8 border-room' : 'hover:bg-gray-100'}`}>
+    <div className={`text-center p-5 cursor-pointer w-52 ${currentRoomId === room.roomId ? 'border-l-8 border-room' : 'hover:bg-gray-100'}`}>
     {
       room === undefined ? (
         <Spin/>
