@@ -10,8 +10,6 @@ const Room = ({room}) => {
   const router = useRouter();
   const { currentRoomId } = router.query.id;
 
-  console.log(room)
-
   return <Link href={`/chat/${room.roomId}`}>
     <div className={`text-center p-5 cursor-pointer w-52 ${currentRoomId === room.roomId ? 'bg-current' : 'hover:bg-gray-100'}`}>
     {

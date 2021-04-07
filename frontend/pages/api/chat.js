@@ -24,12 +24,8 @@ const pushData = (ref, data) => {
 
 export const snapshotToArray = (snapshot) => Object.values(snapshot).slice(0, snapshot.length);
 
-export const sendMessage = (sender, message, roomId) => {
-  pushData(getRoomRef(roomId), {sender, message, at: new Date()})
-}
-
-export const getMessages = (roomId, handler) => {
-  onValue(getRoomRef(roomId), handler);
+export const pushMessage = (sender, text, roomId) => {
+  pushData(getRoomRef(roomId), {sender, text, at: new Date()})
 }
 
 export const createRoom = (trainee, trainer) => {
@@ -44,6 +40,7 @@ export const createRoom = (trainee, trainer) => {
       pushData(traineeRoomIndex, {
         roomId,
         oppositeUser: {
+          id: trainer.id,
           name: trainer.name,
           profile: trainer.profile,
         }
@@ -51,6 +48,7 @@ export const createRoom = (trainee, trainer) => {
       pushData(trainerRoomIndex, {
         roomId,
         oppositeUser: {
+          id: trainee.id,
           name: trainee.name,
           profile: trainee.profile,
         }
@@ -65,6 +63,10 @@ export const createRoom = (trainee, trainer) => {
   return roomId;
 }
 
-export const getRoom = (userId, handler) => {
+export const subscribeRoomList = (userId, handler) => {
   onValue(getRoomIndexRef(userId), handler);
+}
+
+export const subscribeMessages = (roomId, handler) => {
+  onValue(getRoomRef(roomId), handler);
 }

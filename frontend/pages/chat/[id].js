@@ -1,79 +1,66 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import useUser from '../../lib/useUser';
 import { AppLayout } from '../../components/common';
 import { Button, Empty, Input, List } from 'antd';
-import Link from 'next/link'
+import Link from 'next/link';
 
-import { snapshotToArray, sendMessage, getMessages, getRoom } from '../api/chat';
+import { subscribeMessages, subscribeRoomList, pushMessage, snapshotToArray } from '../api/chat';
 import Room from '../../components/chat/room';
 import Message from '../../components/chat/message';
 import { useRouter } from 'next/router';
-import useSWR from 'swr';
-import { API_HOST } from '../../config/config';
-import axios from 'axios';
-import { USER_TYPE } from '../../config/UserType.config';
 
 const Chat = () => {
   const router = useRouter();
   const { id } = router.query;
 
-  const { user, mutateUser } = useUser({});
+  const { user, mutateUser } = useUser({ redirectTo: '/login' });
 
-  const [messages, setMessages] = useState([])
+  const [ messages, setMessages ] = useState([]);
 
-  const [rooms, setRooms] = useState([]);
-  const [selectedRoomIndex, setSelectedRoomIndex] = useState();
-
-  const [oppositeUserInformation, setOppositeUserInformation] = useState({});
+  const [ roomList, setRoomList ] = useState([]);
+  const [ selectedRoom, setSelectedRoom] = useState({});
 
   const [messageInput, setMessageInput] = useState("");
 
-  const noRoomAvailable = !rooms.length;
+  const sendMessage = useCallback(() => {
+    pushMessage(user.userId, messageInput, selectedRoom.roomId);
+    setMessageInput("");
+  }, [user, selectedRoom, messageInput]);
 
-  const onSendBtnClick = () => {
-    sendMessage(user.userId, messageInput, rooms[selectedRoomIndex].roomId)
-    setMessageInput("")
-  }
-
-  const onMessageInputChange = (e) => {
+  const updateMessageInput = useCallback((e) => {
     setMessageInput(e.target.value);
-  }
+  }, []);
 
-  const messageInputKeyDown = (e) => {
-    if (e.keyCode === 13) onSendBtnClick()
-  }
-
+  // subscribe to room list and select room by query.id
   useEffect(() => {
-    if (!user) return;
+    if (user === null) return;
 
-    getRoom(user.userId, snapshot => {
-      const rooms = snapshotToArray(snapshot);
-      const selectedRoomIndex = rooms.findIndex(room => room.roomId === id);
-      if (selectedRoomIndex < 0 && rooms.length) {
-        router.push("/chat/" + rooms[0].roomId);
-      } else {
-        setRooms(snapshotToArray(snapshot));
-        setSelectedRoomIndex(selectedRoomIndex);
+    subscribeRoomList(user.userId, snapshot => {
+      const roomList = snapshotToArray(snapshot);
+      setRoomList(roomList);
+
+      const selectedRoom = roomList.find(room => room.roomId === id);
+      setSelectedRoom(selectedRoom);
+
+      if (selectedRoom === undefined && roomList.length) {
+        router.push(`/chat/${roomList[0].roomId}`).then();
       }
     });
-  }, [user, id])
+  }, [user, id]);
 
+  // subscribe to messages for selected room
   useEffect(() => {
-    if (noRoomAvailable || selectedRoomIndex === undefined) return;
-    getMessages(rooms[selectedRoomIndex].roomId, snapshot => {
-      setMessages(snapshotToArray(snapshot).map(msg => ({
-        message: msg.message,
-        avatar: "/avatar.svg",
-        bySelf: msg.sender === user.userId,
-        at: new Date(msg.at),
-      })));
-    });
-  }, [noRoomAvailable, selectedRoomIndex]);
+    if (selectedRoom === undefined) return;
+
+    subscribeMessages(selectedRoom.roomId, snapshot => {
+      setMessages(snapshotToArray(snapshot));
+    })
+  }, [selectedRoom])
 
   return (
     <AppLayout user={user} mutateUser={mutateUser}>
-      {noRoomAvailable ?
+      {!roomList.length ?
         <div className="flex flex-col min-h-screen bg-white mx-8 mt-8 py-12 px-12">
           <Empty
             image={Empty.PRESENTED_IMAGE_SIMPLE}
@@ -86,7 +73,7 @@ const Chat = () => {
         :
         <div className="flex h-screen bg-white mx-8 mt-8 items-end">
           <div className="flex flex-col overflow-y-scroll h-full">
-            {rooms.map((room, index) => <Room key={index} room={room}/>)}
+            {roomList.map((room, index) => <Room key={index} room={room}/>)}
           </div>
 
           <div className="flex flex-col flex-grow h-full pl-4">
@@ -94,14 +81,14 @@ const Chat = () => {
               <List
                 dataSource={messages}
                 itemLayout="vertical"
-                renderItem={(item) => <Message {...item} />}
+                renderItem={(message) => <Message room={selectedRoom} message={message} />}
               />
             </div>
 
             {/* Chat control system */}
             <div className="flex my-4 mr-4">
-              <Input value={messageInput} onChange={onMessageInputChange} onKeyDown={messageInputKeyDown}></Input>
-              <Button type="primary" onClick={onSendBtnClick}>Send</Button>
+              <Input value={messageInput} onChange={updateMessageInput} onPressEnter={sendMessage}></Input>
+              <Button type="primary" onClick={sendMessage}>Send</Button>
             </div>
           </div>
         </div>
