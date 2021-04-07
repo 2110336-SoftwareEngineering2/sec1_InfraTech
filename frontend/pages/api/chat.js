@@ -1,5 +1,4 @@
 import Firebase from '../../config/firebase';
-import { v4 as UUID } from 'uuid';
 
 const getRoomRef = roomId => Firebase.database().ref(`/chat/${roomId}`);
 const getRoomIndexRef = userId => Firebase.database().ref(`/chat/index/${userId}`);
