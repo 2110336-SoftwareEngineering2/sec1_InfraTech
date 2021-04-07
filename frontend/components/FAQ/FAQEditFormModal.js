@@ -53,7 +53,7 @@ const FAQEditFormModal = ({
   return (
     <FAQFormModal
       form={form}
-      formId={`edit-form-${id}`}
+      formId={`edit-faq-form-${id}`}
       title="Edit FAQ"
       visible={visible}
       loading={submitLoading}

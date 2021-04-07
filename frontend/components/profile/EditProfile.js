@@ -5,10 +5,10 @@ import moment from 'moment';
 import axios from 'axios';
 import Router from 'next/router';
 import { useCookies } from 'react-cookie';
-import fire from '../config/firebase';
+import fire from '../../config/firebase';
 
-import { USER_TYPE } from '../config/UserType.config';
-import { COOKIE_NAME, API_HOST } from '../config/config';
+import { USER_TYPE } from '../../config/UserType.config';
+import { COOKIE_NAME, API_HOST } from '../../config/config';
 
 const validateCitizenID = (id) => {
   // ref: https://snasui.com/wordpress/identification/

@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 
 import useUser from '../lib/useUser';
 import { AppLayout } from '../components/common';
-import EditProfile from '../components/EditProfile';
-import InformationProfile from '../components/InformationProfile';
+import EditProfile from '../components/profile/EditProfile';
+import InformationProfile from '../components/profile/InformationProfile';
 import TrainerCourseList from '../components/course/TrainerCourseList';
 import Loading from '../components/common/Loading';
 import { USER_TYPE } from '../config/UserType.config';
 import { EditOutlined } from '@ant-design/icons';
 import FAQ from '../components/FAQ/FAQ';
+import ReviewList from '../components/review/ReviewList';
 import useSWR from 'swr';
 import { API_HOST, COOKIE_NAME } from '../config/config';
 import axios from 'axios';
@@ -20,17 +21,18 @@ const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [token] = useCookies([COOKIE_NAME]);
   const { data: faqs, mutate: mutateFAQ } = useSWR(
-    [`${API_HOST}/faq`, token],
-    async (url, token) => {
-      if (!token[COOKIE_NAME]) return;
+    `${API_HOST}/faq/trainer/${user?.userId}`,
+    (url) => {
+      if (!user) return;
+      else return axios.get(url).then((res) => res?.data ?? []);
+    },
+  );
 
-      const res = await axios.get(url, {
-        headers: {
-          Authorization: `Bearer ${token[COOKIE_NAME] || ''}`,
-          'Access-Control-Allow-Origin': '*',
-        },
-      });
-      return res?.data ?? {};
+  const { data: reviews } = useSWR(
+    `${API_HOST}/review/${user?.userId}`,
+    (url) => {
+      if (!user) return;
+      else return axios.get(url).then((res) => res?.data ?? {});
     },
   );
 
@@ -63,7 +65,11 @@ const Profile = () => {
                 <div className="text-3xl font-bold mb-10">My Courses</div>
                 <TrainerCourseList />
                 <hr className="my-16" />
+                <div className="text-3xl font-bold mb-6">My FAQ</div>
                 <FAQ faqs={faqs} mutateFAQ={mutateFAQ} canEdit={true} />
+                <hr className="my-16" />
+                <div className="text-3xl font-bold mb-10">My Reviews</div>
+                <ReviewList reviews={reviews} />
               </>
             )}
           </div>

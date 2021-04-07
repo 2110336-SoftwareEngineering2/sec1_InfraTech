@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Form } from 'antd';
 
 import StepHeader from './StepHeader';
-import SelectRoleInput from '../SelectRoleInput';
+import SelectRoleInput from '../registerInput/SelectRoleInput';
 import { USER_TYPE } from '../../config/UserType.config';
 
 const SelectRoleForm = ({ getState, setState, size, current, prev, next }) => {

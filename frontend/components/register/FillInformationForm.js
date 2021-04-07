@@ -8,12 +8,12 @@ import {
   Row,
   Select,
   message,
-  Modal
+  Modal,
 } from 'antd';
 import fire from './../../config/firebase';
-import CustomUpload from '../CustomUpload';
+import CustomUpload from '../profile/CustomUpload';
 import StepHeader from './StepHeader';
-import moment from 'moment'
+import moment from 'moment';
 import axios from 'axios';
 
 import { API_HOST } from '../../config/config';
@@ -51,7 +51,7 @@ const FillInformationForm = ({ getState, setState, size, current, prev }) => {
   const handleSubmit = async (profile) => {
     try {
       const { data } = await axios.post(`${API_HOST}/register`, profile);
-      Router.push('/login')
+      Router.push('/login');
     } catch (error) {
       console.error('An unexpected error happened:', error);
       Modal.error({
@@ -69,8 +69,8 @@ const FillInformationForm = ({ getState, setState, size, current, prev }) => {
       ...getState('select-role'),
       ...getState('select-preferences'),
       ...getState('information'),
-      birthdate: moment(getState('information').birthdate).format('YYYY-MM-DD')
-    }
+      birthdate: moment(getState('information').birthdate).format('YYYY-MM-DD'),
+    };
 
     if (!file) {
       handleSubmit(profile);
@@ -85,23 +85,19 @@ const FillInformationForm = ({ getState, setState, size, current, prev }) => {
     const imageName = Date.now().toString() + '_' + file.originFileObj.name; //a unique name for the image
     const imgFile = storageRef.child(`profileImage/${imageName}`);
     try {
-      await imgFile.put(file.originFileObj, metadata).then(snapshot => snapshot.ref.getDownloadURL().then(imageUrl => {
-        handleSubmit({ ...profile, profileImageUrl: imageUrl });
-      }));
+      await imgFile.put(file.originFileObj, metadata).then((snapshot) =>
+        snapshot.ref.getDownloadURL().then((imageUrl) => {
+          handleSubmit({ ...profile, profileImageUrl: imageUrl });
+        }),
+      );
     } catch (e) {
-      message.error("Error, can not upload file");
+      message.error('Error, can not upload file');
     }
   };
 
   const onContinue = (values) => {
     setState('information', values);
     setSubmit(true);
-
-    // TODO: remove console.log
-    console.log('create-account', getState('create-account'));
-    console.log('select-role', getState('select-role'));
-    console.log('select-preferences', getState('select-preferences'));
-    console.log('information', getState('information'));
   };
 
   const onBack = () => {
@@ -172,8 +168,7 @@ const FillInformationForm = ({ getState, setState, size, current, prev }) => {
               </Form.Item>
             </Row>
 
-            {
-              getState('select-role').userType === USER_TYPE.TRAINER &&
+            {getState('select-role').userType === USER_TYPE.TRAINER && (
               <Form.Item
                 name="cid"
                 hasFeedback
@@ -184,7 +179,7 @@ const FillInformationForm = ({ getState, setState, size, current, prev }) => {
               >
                 <Input placeholder="Citizen ID" />
               </Form.Item>
-            }
+            )}
 
             <Form.Item
               name="phoneNumber"
@@ -216,4 +211,3 @@ const FillInformationForm = ({ getState, setState, size, current, prev }) => {
 };
 
 export default FillInformationForm;
-

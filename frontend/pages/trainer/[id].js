@@ -9,8 +9,9 @@ import { API_HOST, COOKIE_NAME } from '../../config/config';
 import { AppLayout, Loading } from '../../components/common';
 import { Divider } from 'antd';
 import TraineeViewCourseList from '../../components/course/TraineeViewCourseList';
-import InformationProfile from '../../components/InformationProfile';
+import InformationProfile from '../../components/profile/InformationProfile';
 import FAQ from '../../components/FAQ/FAQ';
+import ReviewList from '../../components/review/ReviewList';
 
 import { USER_TYPE } from '../../config/UserType.config';
 import DirectMessageButton from '../../components/chat/DirectMessageButton';
@@ -39,6 +40,11 @@ const TrainerProfilePage = () => {
       else return axios.get(url).then((res) => res?.data ?? []);
     },
   );
+
+  const { data: reviews } = useSWR(`${API_HOST}/review/${id}`, (url) => {
+    if (!id) return;
+    else return axios.get(url).then((res) => res?.data ?? {});
+  });
 
   const [token] = useCookies([COOKIE_NAME]);
   const { data: applications } = useSWR(
@@ -89,11 +95,15 @@ const TrainerProfilePage = () => {
                   showStatus={user.type === 'TRAINEE'}
                 />
                 <hr className="my-16" />
+                <div className="text-3xl font-bold mb-6">Trainer's FAQ</div>
                 <FAQ
                   faqs={faqs}
                   mutateFAQ={mutateFAQ}
                   canEdit={id == user.userId}
                 />
+                <hr className="my-16" />
+                <div className="text-3xl font-bold mb-6">Trainer's Reviews</div>
+                <ReviewList reviews={reviews} />
               </div>
             ) : (
               <Loading />

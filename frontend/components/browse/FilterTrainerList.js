@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Tag, Select } from 'antd';
-import { API_HOST } from '../config/config';
+import { API_HOST } from '../../config/config';
 import axios from 'axios';
 import { CheckOutlined, PlusOutlined } from '@ant-design/icons';
-import { TrainerSortBy, TrainerSortType } from '../config/FilterTrainer.config';
+import {
+  TrainerSortBy,
+  TrainerSortType,
+} from '../../config/FilterTrainer.config';
 
 const { Option } = Select;
 
