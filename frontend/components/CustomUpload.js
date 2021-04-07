@@ -3,13 +3,14 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import getConfig from 'next/config';
 import { LoadingOutlined } from '@ant-design/icons';
+import isBase64 from 'is-base64';
 import { getBase64 } from '../lib/utils';
 
 const { publicRuntimeConfig } = getConfig();
 
 const CustomUpload = ({ value = '', onChange, setFile, disable = false }) => {
   const isProfileImageUrlValid =
-    setFile ||
+    isBase64(value, { allowMime: true, allowEmpty: false }) ||
     publicRuntimeConfig.imageDomains.filter(
       (domain) => value && value.includes(domain),
     ).length !== 0;
