@@ -1,28 +1,29 @@
 import Image from 'next/image';
 
-const Message = ({ room, message }) => {
-  const { sender, text, at } = message;
-  const { oppositeUser } = room;
+const Message = ({profile, text, at, bySelf}) => {
+  const date = new Date(at);
+  const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+  const localeDateString = date.toLocaleString("en-US", dateOptions);
 
-  const bySelf = oppositeUser.id !== sender;
+  console.log("render")
 
-  return <div className={"flex mt-4 " + (bySelf ? "justify-end" : "")}>
-      <div className={"flex " + (bySelf ? "justify-end" : "")} style={{flexBasis: "75%"}}>
+  return <div className={"flex flex-col mt-4 w-1/4" + (bySelf ? "justify-end items-end" : "")}>
+      <div className={"flex " + (bySelf ? "justify-end" : "")}>
         <div className="mr-2">
           <Image
-            src={oppositeUser.profile}
+            src={profile}
             width={36}
             height={36}
             layout="fixed"
             className="rounded-full"
           />
         </div>
-        <div className={"flex flex-col " + (bySelf ? "align-end" : "")}>
+        <div className={"flex flex-col w-auto " + (bySelf ? "align-end" : "")}>
           <div className="p-2 bg-gray-200 rounded-xl">{text}</div>
-          <div className="text-xs mt-1 text-gray-400">{at ? at.toLocaleString() : ""}</div>
         </div>
       </div>
-    </div>
+    <div className="text-xs mt-1 text-gray-400">{at === undefined ? "" : localeDateString}</div>
+  </div>
 }
 
 export default Message;
