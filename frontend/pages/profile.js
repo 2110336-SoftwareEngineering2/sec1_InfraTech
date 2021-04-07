@@ -21,17 +21,10 @@ const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [token] = useCookies([COOKIE_NAME]);
   const { data: faqs, mutate: mutateFAQ } = useSWR(
-    [`${API_HOST}/faq`, token],
-    async (url, token) => {
-      if (!token[COOKIE_NAME]) return;
-      if (user.type === USER_TYPE.TRAINEE) return;
-      const res = await axios.get(url, {
-        headers: {
-          Authorization: `Bearer ${token[COOKIE_NAME] || ''}`,
-          'Access-Control-Allow-Origin': '*',
-        },
-      });
-      return res?.data ?? {};
+    `${API_HOST}/faq/trainer/${user?.userId}`,
+    (url) => {
+      if (!user) return;
+      else return axios.get(url).then((res) => res?.data ?? []);
     },
   );
 

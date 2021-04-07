@@ -44,7 +44,7 @@ const FAQCreateFormModal = ({ faqs, mutateFAQ, visible, setVisible }) => {
   return (
     <FAQFormModal
       form={form}
-      formId="create-form"
+      formId="create-faq-form"
       title="Create FAQ"
       visible={visible}
       loading={submitLoading}
