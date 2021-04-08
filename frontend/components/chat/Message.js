@@ -5,8 +5,6 @@ const Message = ({profile, text, at, bySelf}) => {
   const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
   const localeDateString = date.toLocaleString("en-US", dateOptions);
 
-  console.log("render")
-
   return <div className={"flex flex-col my-4 " + (bySelf ? "justify-end items-end" : "")}>
       <div className={"flex " + (bySelf ? "justify-end" : "")} style={{maxWidth: "75%"}}>
         <div className="mr-2">

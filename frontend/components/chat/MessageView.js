@@ -1,28 +1,32 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import Message from './Message';
-import { snapshotToArray, subscribeMessages } from '../../pages/api/chat';
+import { read, snapshotToArray, subscribeMessages } from '../../pages/api/chat';
 import useUser from '../../lib/useUser';
+import { ChatContext } from '../../pages/chat/[id]';
 
-const MessageView = ({selectedRoom}) => {
-  const { user, _ } = useUser({ redirectTo: '/login' });
+const MessageView = () => {
+  const { user, } = useUser({ redirectTo: '/login' });
+  const selectedRoom = useContext(ChatContext)
+
   const [ messages, setMessages ] = useState([]);
 
   const ending = useRef(null);
 
   useEffect(() => {
-    if (selectedRoom === undefined) return;
+    if (user === null || selectedRoom === undefined) return;
 
     subscribeMessages(selectedRoom.roomId, snapshot => {
       setMessages(snapshotToArray(snapshot));
-    })
-  }, [selectedRoom]);
+    });
+  }, [selectedRoom?.roomId, user]);
 
   useEffect(() => {
     ending.current?.scrollIntoView();
   }, [messages])
 
+
   const renderListItem = useCallback((message, index) => {
-    if (user === null) return <></>
+    if (user === null || selectedRoom === undefined) return;
     if (message.sender === user.userId) {
       return <Message key={index} bySelf={true} text={message.text} at={message.at} profile={user.profileImageUrl}/>
     } else {

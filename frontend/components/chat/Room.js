@@ -2,7 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
-import { Spin } from 'antd';
+import { Badge, Spin } from 'antd';
 
 const Room = ({room}) => {
   const router = useRouter();
@@ -15,13 +15,15 @@ const Room = ({room}) => {
         <Spin/>
       ) : (
         <div>
-          <Image
-            src={room.oppositeUser.profile}
-            width={36}
-            height={36}
-            layout="fixed"
-            className="rounded-full"
-          />
+          <Badge count={0}>
+            <Image
+              src={room.oppositeUser.profile}
+              width={36}
+              height={36}
+              layout="fixed"
+              className="rounded-full"
+            />
+          </Badge>
           <div>{room.oppositeUser.name}</div>
         </div>
       )

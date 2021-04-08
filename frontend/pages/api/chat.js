@@ -23,8 +23,15 @@ const pushData = (ref, data) => {
 
 export const snapshotToArray = (snapshot) => Object.values(snapshot).slice(0, snapshot.length);
 
-export const pushMessage = (sender, text, roomId) => {
-  pushData(getRoomRef(roomId), {sender, text, at: new Date()})
+export const pushMessage = (sender, receiver, text, roomId) => {
+  pushData(getRoomRef(roomId), {sender, text, at: new Date()});
+
+  getRoomIndexRef(sender).child(roomId).update({
+    lastUpdate: new Date().toLocaleString(),
+  }).then();
+  getRoomIndexRef(receiver).child(roomId).update({
+    lastUpdate: new Date().toLocaleString(),
+  }).then();
 }
 
 export const createRoom = (trainee, trainer) => {
@@ -33,25 +40,26 @@ export const createRoom = (trainee, trainer) => {
 
   getOnce(roomRef).then(snapshot => {
     if (snapshot === null) {
-      const traineeRoomIndex = getRoomIndexRef(trainee.id)
-      const trainerRoomIndex = getRoomIndexRef(trainer.id)
-
-      pushData(traineeRoomIndex, {
-        roomId,
-        oppositeUser: {
-          id: trainer.id,
-          name: trainer.name,
-          profile: trainer.profile,
+      getRoomIndexRef(trainee.id).update({
+        [roomId]: {
+          oppositeUser: {
+            id: trainer.id,
+            name: trainer.name,
+            profile: trainer.profile,
+          },
+          lastUpdate: new Date().toLocaleString(),
         }
-      });
-      pushData(trainerRoomIndex, {
-        roomId,
-        oppositeUser: {
-          id: trainee.id,
-          name: trainee.name,
-          profile: trainee.profile,
+      }).then();
+      getRoomIndexRef(trainer.id).update({
+        [roomId]: {
+          oppositeUser: {
+            id: trainee.id,
+            name: trainee.name,
+            profile: trainee.profile,
+          },
+          lastUpdate: new Date().toLocaleString(),
         }
-      });
+      }).then();
 
       roomRef.set({
         length: 0,
@@ -60,6 +68,12 @@ export const createRoom = (trainee, trainer) => {
   })
 
   return roomId;
+}
+
+export const read = (userId, roomId) => {
+  getRoomIndexRef(userId).child(roomId).update({
+    unread: 0,
+  }).then();
 }
 
 export const subscribeRoomList = (userId, handler) => {
