@@ -40,8 +40,18 @@ const TrainerCourseForm = ({
         <Form.Item
           name="title"
           label="Course Title"
-          rules={[{ required: true, message: 'Title is required' }]}
           initialValue={initialValues.title}
+          rules={[
+            { required: true, message: 'Title is required' },
+            () => ({
+              validator(_, value) {
+                if (value.length <= 50) return Promise.resolve();
+                return Promise.reject(
+                  'Title length must no exceed 50 characters.',
+                );
+              },
+            }),
+          ]}
         >
           <Input />
         </Form.Item>
@@ -141,6 +151,16 @@ const TrainerCourseForm = ({
           name="district"
           label="District"
           initialValue={initialValues.district}
+          rules={[
+            () => ({
+              validator(_, value) {
+                if (value.length <= 30) return Promise.resolve();
+                return Promise.reject(
+                  'Title length must no exceed 30 characters.',
+                );
+              },
+            }),
+          ]}
         >
           <Input />
         </Form.Item>
