@@ -1,6 +1,6 @@
 export default {
   app: {
-    port: process.env.PROD_APP_PORT ?? 3000,
+    port: process.env.PROD_APP_PORT,
   },
   db: {
     host: process.env.PROD_DB_HOST,
@@ -11,6 +11,6 @@ export default {
     synchronize: process.env.PROD_DB_SYNCHRONIZE || false,
   },
   auth: {
-    jwtSecret: process.env.PROD_AUTH_JWT_SECRET ?? 'secret',
+    jwtSecret: process.env.PROD_AUTH_JWT_SECRET,
   },
 };
