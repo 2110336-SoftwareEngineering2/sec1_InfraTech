@@ -1,12 +1,12 @@
-version: '3.3'
+version: "3.3"
 
 services:
   mysqldb:
     image: mysql:latest
     restart: always
     environment:
-      MYSQL_DATABASE: 'letx'
-      MYSQL_ROOT_PASSWORD: 'admin'
+      MYSQL_DATABASE: "letx"
+      MYSQL_ROOT_PASSWORD: "admin"
     ports:
       - 3307:3306
     volumes:
@@ -15,20 +15,30 @@ services:
     logging:
       driver: none
   api:
-    build: ./backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.production
     ports:
       - 3001:3000
     volumes:
-      - ./backend:/usr/src/app
       - /usr/src/app/node_modules
+      - /usr/src/app/dist
     depends_on:
       - mysqldb
   app:
-    build: ./frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.production
+      # args:
+      #   NEXT_PUBLIC_APIKEY:
+      #   NEXT_PUBLIC_AUTHDOMAIN:
+      #   NEXT_PUBLIC_PROJECTID:
+      #   NEXT_PUBLIC_STORAGEBUCKET:
+      #   NEXT_PUBLIC_MESSEGINGSENDID:
+      #   NEXT_PUBLIC_APPID:
     ports:
       - 3000:3000
     volumes:
-      - ./frontend:/usr/src/app
       - /usr/src/app/node_modules
       - /usr/src/app/.next
     links:

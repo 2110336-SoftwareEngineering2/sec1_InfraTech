@@ -15,7 +15,9 @@ services:
     logging:
       driver: none
   api:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile.development
     ports:
       - 3001:3000
     volumes:
