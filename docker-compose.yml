@@ -15,20 +15,30 @@ services:
     logging:
       driver: none
   api:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile.production
+    image: bluewhale12345/letx_backend:latest
+    # build:
+    #   context: ./backend
+    #   dockerfile: Dockerfile.production
     ports:
       - 3001:3000
+    environment:
+      PROD_APP_PORT: 3000
+      PROD_DB_HOST: 'mysqldb'
+      PROD_DB_PORT: 3306
+      PROD_DB_USERNAME: 'root'
+      PROD_DB_PASSWORD: 'admin'
+      PROD_DB_DATABASE: 'letx'
+      PROD_AUTH_JWT_SECRET: 'secret'
     volumes:
       - /usr/src/app/node_modules
       - /usr/src/app/dist
     depends_on:
       - mysqldb
   app:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile.production
+    image: bluewhale12345/letx_frontend:latest
+    # build:
+    #   context: ./frontend
+    #   dockerfile: Dockerfile.production
       # args:
       #   NEXT_PUBLIC_APIKEY:
       #   NEXT_PUBLIC_AUTHDOMAIN:
@@ -41,7 +51,7 @@ services:
     volumes:
       - /usr/src/app/node_modules
       - /usr/src/app/.next
-    links:
+    depends_on:
       - api
 volumes:
   letx-db:
