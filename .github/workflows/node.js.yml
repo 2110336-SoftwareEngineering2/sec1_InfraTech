@@ -5,9 +5,13 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
+    # paths: 
+    #   - ./backend/**
   pull_request:
-    branches: [ main ]
+    branches: [main]
+    # paths: 
+    #   - ./backend/**
 
 jobs:
   build:
@@ -16,7 +20,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x]
+        node-version: [12.x, 14.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
@@ -32,3 +36,33 @@ jobs:
         yarn install --frozen-lockfile
         yarn run build
         yarn test
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v1
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build and push backend
+      uses: docker/build-push-action@v2
+      with:
+        context: ./backend
+        file: ./backend/Dockerfile.production
+        push: true
+        tags: bluewhale12345/letx_backend:latest
+    - name: Build and push frontend
+      uses: docker/build-push-action@v2
+      with:
+        context: ./frontend
+        file: ./frontend/Dockerfile.production
+        push: true
+        tags: bluewhale12345/letx_frontend:latest
+        build-args: |
+          NEXT_PUBLIC_LETX_API_HOST=${{ secrets.NEXT_PUBLIC_LETX_API_HOST }}
+          NEXT_PUBLIC_APIKEY=${{ secrets.NEXT_PUBLIC_APIKEY }}
+          NEXT_PUBLIC_AUTHDOMAIN=${{ secrets.NEXT_PUBLIC_AUTHDOMAIN }}
+          NEXT_PUBLIC_PROJECTID=${{ secrets.NEXT_PUBLIC_PROJECTID }}
+          NEXT_PUBLIC_MESSEGINGSENDID=${{ secrets.NEXT_PUBLIC_MESSEGINGSENDID }}
+          NEXT_PUBLIC_APPID=${{ secrets.NEXT_PUBLIC_APPID }}
