@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
-import { AppModule } from './../src/app.module';
+import { AppModule } from '../app.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { RegisterModule } from 'src/register/register.module';
 import { LoginModule } from 'src/login/login.module';
@@ -15,7 +15,7 @@ import { ReviewModule } from 'src/review/review.module';
 import { AppController } from 'src/app.controller';
 import { AppService } from 'src/app.service';
 
-import config from '../config/development';
+import config from '../../config/development';
 import { CourseService } from 'src/course/course.service';
 
 const dbConfig = config.db;
@@ -30,12 +30,12 @@ describe('Course Module', () => {
         TypeOrmModule.forRoot({
           // TODO: use configs
           type: 'mysql',
-          host: dbConfig.host,
+          host: "127.0.0.1",
           port: 3307,
           username: dbConfig.username,
           password: dbConfig.password,
           database: dbConfig.database,
-          entities: ['dist/**/*.entity{.ts,.js}'],
+          entities: ['src/**/*.entity{.ts,.js}'],
           synchronize: false,
         }),
         RegisterModule,
