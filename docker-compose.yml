@@ -12,8 +12,8 @@ services:
     volumes:
       - ./backend/mysql-script:/docker-entrypoint-initdb.d
       - letx-db:/var/lib/mysql
-    logging:
-      driver: none
+    # logging:
+    #   driver: none
   api:
     image: bluewhale12345/letx_backend:latest
     # build:
