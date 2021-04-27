@@ -62,6 +62,7 @@ jobs:
             NEXT_PUBLIC_APIKEY=${{ secrets.NEXT_PUBLIC_APIKEY }}
             NEXT_PUBLIC_AUTHDOMAIN=${{ secrets.NEXT_PUBLIC_AUTHDOMAIN }}
             NEXT_PUBLIC_PROJECTID=${{ secrets.NEXT_PUBLIC_PROJECTID }}
+            NEXT_PUBLIC_STORAGEBUCKET=${{ secrets.NEXT_PUBLIC_STORAGEBUCKET }}
             NEXT_PUBLIC_MESSEGINGSENDID=${{ secrets.NEXT_PUBLIC_MESSEGINGSENDID }}
             NEXT_PUBLIC_APPID=${{ secrets.NEXT_PUBLIC_APPID }}
       - uses: google-github-actions/setup-gcloud@master
