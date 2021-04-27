@@ -4,15 +4,10 @@
 name: Node.js CI
 
 on:
-  push:
-    branches: [main]
   pull_request:
     branches: [main]
-
-env:
-  PROJECT_ID: ${{ secrets.GCE_PROJECT }}
-  GCE_INSTANCE: letx
-  GCE_INSTANCE_ZONE: us-central1-a
+    paths:
+      - ./backend/**
 
 jobs:
   build:
@@ -29,58 +24,10 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
-      # - run: npm install -g yarn
-      # - name: Setup and test
-      #   working-directory: ./backend
-      #   run: |
-      #     yarn install --frozen-lockfile
-      #     yarn run build
-      #     yarn test
-      # - name: Set up QEMU
-      #   uses: docker/setup-qemu-action@v1
-      # - name: Set up Docker Buildx
-      #   uses: docker/setup-buildx-action@v1
-      # - name: Login to DockerHub
-      #   uses: docker/login-action@v1
-      #   with:
-      #     username: ${{ secrets.DOCKERHUB_USERNAME }}
-      #     password: ${{ secrets.DOCKERHUB_TOKEN }}
-      # - name: Build and push backend
-      #   uses: docker/build-push-action@v2
-      #   with:
-      #     context: ./backend
-      #     file: ./backend/Dockerfile.production
-      #     push: true
-      #     tags: bluewhale12345/letx_backend:latest
-      # - name: Build and push frontend
-      #   uses: docker/build-push-action@v2
-      #   with:
-      #     context: ./frontend
-      #     file: ./frontend/Dockerfile.production
-      #     push: true
-      #     tags: bluewhale12345/letx_frontend:latest
-      #     build-args: |
-      #       NEXT_PUBLIC_LETX_API_HOST=${{ secrets.NEXT_PUBLIC_LETX_API_HOST }}
-      #       NEXT_PUBLIC_APIKEY=${{ secrets.NEXT_PUBLIC_APIKEY }}
-      #       NEXT_PUBLIC_AUTHDOMAIN=${{ secrets.NEXT_PUBLIC_AUTHDOMAIN }}
-      #       NEXT_PUBLIC_PROJECTID=${{ secrets.NEXT_PUBLIC_PROJECTID }}
-      #       NEXT_PUBLIC_MESSEGINGSENDID=${{ secrets.NEXT_PUBLIC_MESSEGINGSENDID }}
-      #       NEXT_PUBLIC_APPID=${{ secrets.NEXT_PUBLIC_APPID }}
-      - uses: google-github-actions/setup-gcloud@master
-        with:
-          service_account_key: ${{ secrets.GCE_SA_KEY }}
-          project_id: ${{ secrets.GCE_PROJECT }}
-          export_default_credentials: true
-      - name: Use gcloud CLI
+      - run: npm install -g yarn
+      - name: Setup and test
+        working-directory: ./backend
         run: |
-          echo "${{secrets.GCE_SSH_KEY}}" > ssh_key
-          echo "${{secrets.GCE_SSH_PUBLIC_KEY}}" > ssh_key.pub
-          chmod 600 ./ssh_key
-          chmod 600 ./ssh_key.pub
-          gcloud compute ssh --ssh-key-file="./ssh_key" --zone "$GCE_INSTANCE_ZONE" "$GCE_INSTANCE"  --project "$PROJECT_ID" --command="cd /home/g6131040021/letx && \
-          export DOCKER_CLIENT_TIMEOUT=500 && \
-          export COMPOSE_HTTP_TIMEOUT=500 && \
-          docker-compose down -v --remove-orphans --rmi all && \
-          sudo git pull https://github.com/2110336-SoftwareEngineering2/sec1_InfraTech.git && \
-          docker-compose pull && \
-          docker-compose up -d"
+          yarn install --frozen-lockfile
+          yarn run build
+          yarn test
