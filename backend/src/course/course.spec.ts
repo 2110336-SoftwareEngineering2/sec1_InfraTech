@@ -17,6 +17,7 @@ import { AppService } from 'src/app.service';
 
 import config from '../../config/development';
 import { CourseService } from 'src/course/course.service';
+import { CourseDto } from './dtos/course.dto';
 
 const dbConfig = config.db;
 
@@ -24,13 +25,13 @@ describe('Course Module', () => {
   let app: INestApplication;
   let courseService: CourseService;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [
         TypeOrmModule.forRoot({
           // TODO: use configs
           type: 'mysql',
-          host: "127.0.0.1",
+          host: '127.0.0.1',
           port: 3307,
           username: dbConfig.username,
           password: dbConfig.password,
@@ -59,6 +60,306 @@ describe('Course Module', () => {
   });
 
   it('listCourses', async () => {
-    expect(await courseService.listCourses("user-id-1")).toEqual([])
+    const result = JSON.parse(JSON.stringify(await courseService.listCourses('user-id-1')));
+
+    // console.log(result)
+
+    expect(result).toEqual([
+      {
+        id: 'course-id-1',
+        title: 'Course Title 1',
+        description: 'description',
+        level: 'intermediate',
+        specialization: 'strength',
+        price: '100000.00',
+        period: 200,
+        district: 'Sam Yan',
+        province: 'Bangkok',
+        trainerUserId: 'user-id-1',
+        trainer: {
+          userId: 'user-id-1',
+          firstname: 'Wongtawan',
+          lastname: 'Junthai',
+          cid: '1111111111',
+          gender: 'MALE',
+          birthdate: '1999-12-31T17:00:00.000Z',
+          phoneNumber: '0882441120',
+          profileImageUrl: 'https://www.google.com',
+          averageRating: '3.25',
+          numberOfRegisteredTrainees: 0
+        }
+      },
+      {
+        id: 'course-id-2',
+        title: 'Course Title 2',
+        description: 'description',
+        level: 'intermediate',
+        specialization: 'strength',
+        price: '100000.00',
+        period: 200,
+        district: 'Sam Yan',
+        province: 'Bangkok',
+        trainerUserId: 'user-id-1',
+        trainer: {
+          userId: 'user-id-1',
+          firstname: 'Wongtawan',
+          lastname: 'Junthai',
+          cid: '1111111111',
+          gender: 'MALE',
+          birthdate: '1999-12-31T17:00:00.000Z',
+          phoneNumber: '0882441120',
+          profileImageUrl: 'https://www.google.com',
+          averageRating: '3.25',
+          numberOfRegisteredTrainees: 0
+        }
+      },
+      {
+        id: 'course-id-3',
+        title: 'Course Title 3',
+        description: 'description',
+        level: 'intermediate',
+        specialization: 'strength',
+        price: '100000.00',
+        period: 200,
+        district: 'Sam Yan',
+        province: 'Bangkok',
+        trainerUserId: 'user-id-1',
+        trainer: {
+          userId: 'user-id-1',
+          firstname: 'Wongtawan',
+          lastname: 'Junthai',
+          cid: '1111111111',
+          gender: 'MALE',
+          birthdate: '1999-12-31T17:00:00.000Z',
+          phoneNumber: '0882441120',
+          profileImageUrl: 'https://www.google.com',
+          averageRating: '3.25',
+          numberOfRegisteredTrainees: 0
+        }
+      },
+      {
+        id: 'course-id-4',
+        title: 'Course Title 4',
+        description: 'description',
+        level: 'intermediate',
+        specialization: 'strength',
+        price: '100000.00',
+        period: 200,
+        district: 'Sam Yan',
+        province: 'Bangkok',
+        trainerUserId: 'user-id-1',
+        trainer: {
+          userId: 'user-id-1',
+          firstname: 'Wongtawan',
+          lastname: 'Junthai',
+          cid: '1111111111',
+          gender: 'MALE',
+          birthdate: '1999-12-31T17:00:00.000Z',
+          phoneNumber: '0882441120',
+          profileImageUrl: 'https://www.google.com',
+          averageRating: '3.25',
+          numberOfRegisteredTrainees: 0
+        }
+      },
+      {
+        id: 'course-id-5',
+        title: 'Course Title 5',
+        description: 'description',
+        level: 'intermediate',
+        specialization: 'strength',
+        price: '100000.00',
+        period: 200,
+        district: 'Sam Yan',
+        province: 'Bangkok',
+        trainerUserId: 'user-id-1',
+        trainer: {
+          userId: 'user-id-1',
+          firstname: 'Wongtawan',
+          lastname: 'Junthai',
+          cid: '1111111111',
+          gender: 'MALE',
+          birthdate: '1999-12-31T17:00:00.000Z',
+          phoneNumber: '0882441120',
+          profileImageUrl: 'https://www.google.com',
+          averageRating: '3.25',
+          numberOfRegisteredTrainees: 0
+        }
+      },
+      {
+        id: 'course-id-6',
+        title: 'Course Title 6',
+        description: 'description',
+        level: 'intermediate',
+        specialization: 'strength',
+        price: '100000.00',
+        period: 200,
+        district: 'Sam Yan',
+        province: 'Bangkok',
+        trainerUserId: 'user-id-1',
+        trainer: {
+          userId: 'user-id-1',
+          firstname: 'Wongtawan',
+          lastname: 'Junthai',
+          cid: '1111111111',
+          gender: 'MALE',
+          birthdate: '1999-12-31T17:00:00.000Z',
+          phoneNumber: '0882441120',
+          profileImageUrl: 'https://www.google.com',
+          averageRating: '3.25',
+          numberOfRegisteredTrainees: 0
+        }
+      },
+      {
+        id: 'course-id-7',
+        title: 'Course Title 7',
+        description: 'description',
+        level: 'intermediate',
+        specialization: 'strength',
+        price: '100000.00',
+        period: 200,
+        district: 'Sam Yan',
+        province: 'Bangkok',
+        trainerUserId: 'user-id-1',
+        trainer: {
+          userId: 'user-id-1',
+          firstname: 'Wongtawan',
+          lastname: 'Junthai',
+          cid: '1111111111',
+          gender: 'MALE',
+          birthdate: '1999-12-31T17:00:00.000Z',
+          phoneNumber: '0882441120',
+          profileImageUrl: 'https://www.google.com',
+          averageRating: '3.25',
+          numberOfRegisteredTrainees: 0
+        }
+      },
+      {
+        id: 'course-id-8',
+        title: 'Course Title 8',
+        description: 'description',
+        level: 'intermediate',
+        specialization: 'strength',
+        price: '100000.00',
+        period: 200,
+        district: 'Sam Yan',
+        province: 'Bangkok',
+        trainerUserId: 'user-id-1',
+        trainer: {
+          userId: 'user-id-1',
+          firstname: 'Wongtawan',
+          lastname: 'Junthai',
+          cid: '1111111111',
+          gender: 'MALE',
+          birthdate: '1999-12-31T17:00:00.000Z',
+          phoneNumber: '0882441120',
+          profileImageUrl: 'https://www.google.com',
+          averageRating: '3.25',
+          numberOfRegisteredTrainees: 0
+        }
+      },
+      {
+        id: 'course-id-9',
+        title: 'Course Title 9',
+        description: 'description',
+        level: 'intermediate',
+        specialization: 'strength',
+        price: '100000.00',
+        period: 200,
+        district: 'Sam Yan',
+        province: 'Bangkok',
+        trainerUserId: 'user-id-1',
+        trainer: {
+          userId: 'user-id-1',
+          firstname: 'Wongtawan',
+          lastname: 'Junthai',
+          cid: '1111111111',
+          gender: 'MALE',
+          birthdate: '1999-12-31T17:00:00.000Z',
+          phoneNumber: '0882441120',
+          profileImageUrl: 'https://www.google.com',
+          averageRating: '3.25',
+          numberOfRegisteredTrainees: 0
+        }
+      }
+    ]);
+  });
+
+  it('getCourse', async () => {
+    const result = JSON.parse(JSON.stringify(await courseService.getCourse('course-id-0')));
+    expect(result)
+      .toEqual({
+        description: 'Up size you biceps and prepare to go beyond human limits',
+        district: 'Sam Yan',
+        id: 'course-id-0',
+        level: 'beginner',
+        period: 20,
+        price: '1999.00',
+        province: 'Bangkok',
+        specialization: 'strength',
+        title: 'Biceps Burst',
+        trainer: {
+          averageRating: '0.00',
+          birthdate: '2017-06-14T17:00:00.000Z',
+          cid: '0',
+          firstname: 'Somlux',
+          gender: 'MALE',
+          lastname: 'Kamsing',
+          numberOfRegisteredTrainees: 0,
+          phoneNumber: '081234567',
+          profileImageUrl:
+            'https://www.aceshowbiz.com/images/photo/john_cena.jpg',
+          userId: 'user-id-2',
+        },
+        trainerUserId: 'user-id-2',
+      });
+  });
+
+  it('create, update and delete course', async () => {
+    const course: CourseDto = {
+      description: 'Up size you biceps and prepare to go beyond human limits of your body',
+      district: 'Nong Kheam',
+      level: 'beginner',
+      period: 20,
+      price: 1999.00,
+      province: 'Bangkok',
+      specialization: 'strength',
+      title: 'Biceps Burst and Burn',
+    }
+
+    let createResult = JSON.parse(JSON.stringify(await courseService.createCourse('user-id-2', course)));
+
+    let baselineAfterCreate: any = {
+      description: 'Up size you biceps and prepare to go beyond human limits of your body',
+      district: 'Nong Kheam',
+      level: 'beginner',
+      id: createResult.id,
+      period: 20,
+      price: 1999,
+      province: 'Bangkok',
+      specialization: 'strength',
+      title: 'Biceps Burst and Burn',
+      trainerUserId: 'user-id-2',
+    }
+
+    expect(createResult).toEqual(baselineAfterCreate);
+
+    const getResult = JSON.parse(JSON.stringify(await courseService.getCourse(createResult.id)));
+
+    baselineAfterCreate.trainer = {
+      averageRating: '0.00',
+      birthdate: '2017-06-14T17:00:00.000Z',
+      cid: '0',
+      firstname: 'Somlux',
+      gender: 'MALE',
+      lastname: 'Kamsing',
+      numberOfRegisteredTrainees: 0,
+      phoneNumber: '081234567',
+      profileImageUrl:
+        'https://www.aceshowbiz.com/images/photo/john_cena.jpg',
+      userId: 'user-id-2',
+    };
+    baselineAfterCreate.price = '1999.00';
+
+    expect(getResult).toEqual(baselineAfterCreate);
   });
 });
