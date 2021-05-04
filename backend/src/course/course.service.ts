@@ -1,4 +1,8 @@
-import { Injectable, InternalServerErrorException, ConflictException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  ConflictException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, In, Connection, EntityTarget } from 'typeorm';
 import { User } from '../entities/user.entity';
@@ -23,7 +27,7 @@ export class CourseService {
       where: {
         trainerUserId: userId,
       },
-      relations: ["trainer"],
+      relations: ['trainer'],
     });
 
     return courses;
@@ -34,7 +38,7 @@ export class CourseService {
       where: {
         id: id,
       },
-      relations: ["trainer"],
+      relations: ['trainer'],
     });
 
     return course;
@@ -51,7 +55,7 @@ export class CourseService {
       trainerUserId: trainerUserId,
       district: dto.district,
       province: dto.province,
-    })
+    });
 
     const queryRunner = this.connection.createQueryRunner();
     await queryRunner.connect();
@@ -76,7 +80,8 @@ export class CourseService {
 
   async updateCourse(id: string, courseDto: CourseDto): Promise<Course> {
     await this.courseRepository.update(id, courseDto);
-    return await this.getCourse(id);
+    const courseId = courseDto.id || id;
+    return await this.getCourse(courseId);
   }
 
   async deleteCourse(id: string): Promise<void> {
