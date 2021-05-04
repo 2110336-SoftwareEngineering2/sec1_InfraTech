@@ -436,6 +436,57 @@ describe('Course Module', () => {
   });
 
   it('delete course', async () => {
+    const course: CourseDto = {
+      description: 'Up size you biceps and prepare to go beyond human limits of your body',
+      district: 'Nong Kheam',
+      level: 'beginner',
+      period: 20,
+      price: 1999.00,
+      province: 'Bangkok',
+      specialization: 'strength',
+      title: 'Biceps Burst and Burn',
+    }
+
+    let createResult = JSON.parse(JSON.stringify(await courseService.createCourse('user-id-2', course)));
+
+    let baselineAfterCreate: any = {
+      description: 'Up size you biceps and prepare to go beyond human limits of your body',
+      district: 'Nong Kheam',
+      level: 'beginner',
+      id: createResult.id,
+      period: 20,
+      price: 1999,
+      province: 'Bangkok',
+      specialization: 'strength',
+      title: 'Biceps Burst and Burn',
+      trainerUserId: 'user-id-2',
+    }
+
+    expect(createResult).toEqual(baselineAfterCreate);
+
+    const getResult = JSON.parse(JSON.stringify(await courseService.getCourse(createResult.id)));
+
+    baselineAfterCreate.trainer = {
+      averageRating: '0.00',
+      birthdate: '2017-06-14T17:00:00.000Z',
+      cid: '0',
+      firstname: 'Somlux',
+      gender: 'MALE',
+      lastname: 'Kamsing',
+      numberOfRegisteredTrainees: 0,
+      phoneNumber: '081234567',
+      profileImageUrl:
+        'https://www.aceshowbiz.com/images/photo/john_cena.jpg',
+      userId: 'user-id-2',
+    };
+    baselineAfterCreate.price = '1999.00';
+
+    expect(getResult).toEqual(baselineAfterCreate);
+
+    await courseService.deleteCourse(createResult.id);
+    await expect(async () => {
+      await courseService.getCourse(createResult.id);
+    }).rejects.toThrow()
 
   });
 });
