@@ -434,4 +434,8 @@ describe('Course Module', () => {
 
     expect(updateResult).toEqual(baselineAfterUpdate);
   });
+
+  it('delete course', async () => {
+
+  });
 });
